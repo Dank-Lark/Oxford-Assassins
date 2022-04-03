@@ -1,11 +1,11 @@
 # Oxford-Assassins
 Website for the Oxford Guild of Assassins.
 Written in:
-- Python     - Primary Language
-- Django     - Web Framework
-- HTML       - Page Templates
-- CSS        - Page Styling 
-- JavaScript - Page Responsiveness
+| Python     | Primary Language
+| Django     | Web Framework
+| HTML       | Page Templates
+| CSS        | Page Styling 
+| JavaScript | Page Responsiveness
 
 
 ## Overview of File Structure:
@@ -29,36 +29,35 @@ The templates directory contains generic html templates for the pages that are b
 
 ## Webpage Structure:
 ### /
--   /             - Home Page
--   /about/       - About the Guild
--   /blog/        - Recent Guild Activity
--   /cabal/       - Profiles of the Cabal
--   /discord/     - Invite to the Discord
-### /account/
--   ../           - User Account Settings
--   ../login/     - Login
--   ../logout/    - Logout
--   ../signup/    - Signup
--   ../profile/_/ - View _'s Profile
+|   /                | Home Page
+|   /about/          | About the Guild
+|   /blog/           | Recent Guild Activity
+|   /cabal/          | Profiles of the Cabal
+|   /discord/        | Invite to the Discord
+### /account/   
+|   ../              | User Account Settings
+|   ../login/        | Login
+|   ../logout/       | Logout
+|   ../signup/       | Signup
+|   ../profile/*id*/ | View *id*'s Profile
 ### /admin/
--   ../           - Admin Overview
--   ../about/     - Edit About Content
--   ../blog/      - Edit Blog Posts DB
--   ../cabal/     - Edit Cabal Profiles DB
--   ../users/     - Edit Users DB
--   ../
--   ../ ToDo..
-### /games/
--   ../           - List of all Games
--   ../_/         - View Game (or signup)
-### /play/
--   ../           - Play Overview
--   ../events/    - View In-Game Events
--   ../map/       - Map of Active Assassins
--   ../report/    - Report a Kill/Death
--   ../stats/     - Veiw Stats for the game
--   ../teams/     - View Teams
+|   ../              | Admin Overview
+|   ../about/        | Edit About Content
+|   ../blog/         | Edit Blog Posts DB
+|   ../cabal/        | Edit Cabal Profiles DB
+|   ../users/        | Edit Users DB
+|   ../games/        | Manage Games 
+### /games/   
+|   ../              | List of all Games
+|   ../*id*/         | View Game (or signup)
+### /play/   
+|   ../              | Play Overview
+|   ../events/       | View In|Game Events
+|   ../map/          | Map of Active Assassins
+|   ../report/       | Report a Kill/Death
+|   ../stats/        | Veiw Stats for the game
+|   ../teams/        | View Teams
 
 
 ## Task List:
-- [ ] Create a Task List
+| [ ] Create a Task List
