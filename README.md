@@ -1,11 +1,13 @@
 # Oxford-Assassins
 Website for the Oxford Guild of Assassins.
 Written in:
-| Python     | Primary Language
-| Django     | Web Framework
-| HTML       | Page Templates
-| CSS        | Page Styling 
-| JavaScript | Page Responsiveness
+| Language   | Feature             |
+|------------|---------------------|
+| Python     | Primary Language    |
+| Django     | Web Framework       |
+| HTML       | Page Templates      |
+| CSS        | Page Styling        |
+| JavaScript | Page Responsiveness |
 
 
 ## Overview of File Structure:
@@ -70,4 +72,4 @@ The templates directory contains generic html templates for the pages that are b
 
 
 ## Task List:
-| [ ] Create a Task List
+- [ ] Create a Task List
