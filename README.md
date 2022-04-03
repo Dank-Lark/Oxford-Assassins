@@ -29,18 +29,24 @@ The templates directory contains generic html templates for the pages that are b
 
 ## Webpage Structure:
 ### /
+| URL                | Page                    |
+|--------------------|-------------------------|
 |   /                | Home Page               |
 |   /about/          | About the Guild         |
 |   /blog/           | Recent Guild Activity   |
 |   /cabal/          | Profiles of the Cabal   |
 |   /discord/        | Invite to the Discord   |
 ### /account/   
+| URL                | Page                    |
+|--------------------|-------------------------|
 |   ../              | User Account Settings   |
 |   ../login/        | Login                   |
 |   ../logout/       | Logout                  |
 |   ../signup/       | Signup                  |
 |   ../profile/*id*/ | View *id*'s Profile     |
 ### /admin/
+| URL                | Page                    |
+|--------------------|-------------------------|
 |   ../              | Admin Overview          |
 |   ../about/        | Edit About Content      |
 |   ../blog/         | Edit Blog Posts DB      |
@@ -48,9 +54,13 @@ The templates directory contains generic html templates for the pages that are b
 |   ../users/        | Edit Users DB           |
 |   ../games/        | Manage Games            |
 ### /games/   
+| URL                | Page                    |
+|--------------------|-------------------------|
 |   ../              | List of all Games       |
 |   ../*id*/         | View Game (or signup)   |
 ### /play/   
+| URL                | Page                    |
+|--------------------|-------------------------|
 |   ../              | Play Overview           |
 |   ../events/       | View In|Game Events     |
 |   ../map/          | Map of Active Assassins |
