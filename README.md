@@ -29,34 +29,34 @@ The templates directory contains generic html templates for the pages that are b
 
 ## Webpage Structure:
 ### /
-|   /                | Home Page
-|   /about/          | About the Guild
-|   /blog/           | Recent Guild Activity
-|   /cabal/          | Profiles of the Cabal
-|   /discord/        | Invite to the Discord
+|   /                | Home Page               |
+|   /about/          | About the Guild         |
+|   /blog/           | Recent Guild Activity   |
+|   /cabal/          | Profiles of the Cabal   |
+|   /discord/        | Invite to the Discord   |
 ### /account/   
-|   ../              | User Account Settings
-|   ../login/        | Login
-|   ../logout/       | Logout
-|   ../signup/       | Signup
-|   ../profile/*id*/ | View *id*'s Profile
+|   ../              | User Account Settings   |
+|   ../login/        | Login                   |
+|   ../logout/       | Logout                  |
+|   ../signup/       | Signup                  |
+|   ../profile/*id*/ | View *id*'s Profile     |
 ### /admin/
-|   ../              | Admin Overview
-|   ../about/        | Edit About Content
-|   ../blog/         | Edit Blog Posts DB
-|   ../cabal/        | Edit Cabal Profiles DB
-|   ../users/        | Edit Users DB
-|   ../games/        | Manage Games 
+|   ../              | Admin Overview          |
+|   ../about/        | Edit About Content      |
+|   ../blog/         | Edit Blog Posts DB      |
+|   ../cabal/        | Edit Cabal Profiles DB  |
+|   ../users/        | Edit Users DB           |
+|   ../games/        | Manage Games            |
 ### /games/   
-|   ../              | List of all Games
-|   ../*id*/         | View Game (or signup)
+|   ../              | List of all Games       |
+|   ../*id*/         | View Game (or signup)   |
 ### /play/   
-|   ../              | Play Overview
-|   ../events/       | View In|Game Events
-|   ../map/          | Map of Active Assassins
-|   ../report/       | Report a Kill/Death
-|   ../stats/        | Veiw Stats for the game
-|   ../teams/        | View Teams
+|   ../              | Play Overview           |
+|   ../events/       | View In|Game Events     |
+|   ../map/          | Map of Active Assassins |
+|   ../report/       | Report a Kill/Death     |
+|   ../stats/        | Veiw Stats for the game |
+|   ../teams/        | View Teams              |
 
 
 ## Task List:
