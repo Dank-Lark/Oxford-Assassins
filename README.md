@@ -7,9 +7,10 @@ Written in:
 | Django     | Web Framework       |
 | HTML       | Page Templates      |
 | CSS        | Page Styling        |
-| JavaScript | Page Responsiveness |\
+| JavaScript | Page Responsiveness |
 <br>
 <br>
+
 
 ## Overview of File Structure:
 | File | Description |
@@ -23,9 +24,10 @@ Written in:
 | static          | The static directory contains styles (.css), scripts (.js), and resources (image, audio, etc) for the website. |
 | templates       | The templates directory contains generic html templates for the pages that are built upon. |
 | Website-Design  | Directory for non-functional mockups of the website. |
-| Website-Text    | Directory for website text. |\
+| Website-Text    | Directory for website text. |
 <br>
 <br>
+
 
 ## Webpage Structure:
 ### /
@@ -66,23 +68,26 @@ Written in:
 |   ../map/          | Map of Active Assassins |
 |   ../report/       | Report a Kill/Death     |
 |   ../stats/        | Veiw Stats for the game |
-|   ../teams/        | View Teams              |\
+|   ../teams/        | View Teams              |
 <br>
 <br>
+
 
 ## Todo List:
 ### Website Text:
 - [ ] About the Guild Text
 - [ ] About the Cabal Text
 - [ ] About the Games Text
-- [ ] About the Discord Small Paragraph\
+- [ ] About the Discord Small Paragraph
 <br>
+
 - [ ] Guildmaster Role Paragraph
 - [ ] Treasurer Role Paragraph
 - [ ] Archivist Role Paragraph
 - [ ] Social Sec Role Paragraph
-- [ ] MWP Role Paragraph\
+- [ ] MWP Role Paragraph
 <br>
+
 - [ ] Freshers Game Summary Paragraph
 - [ ] Freshers Game Blog Post Text
 - [ ] Data Breach Game Summary Paragraph
@@ -96,24 +101,28 @@ Written in:
 
 ### Website Design and Non-Functional Mockups:
 - [ ] Colour Palette
-- [ ] General Styling\
+- [ ] General Styling
 <br>
+
 - [ ] Home Page
 - [ ] About the Guild Page
 - [ ] Blog Page
 - [ ] Cabal Page
-- [ ] Discord Page\
+- [ ] Discord Page
 <br>
+
 - [ ] Account Settings Page
 - [ ] Account Login Page
 - [ ] Account Logout Page
 - [ ] Account Signup Page
-- [ ] User Profile Page\
+- [ ] User Profile Page
 <br>
+
 - [ ] Games Page
 - [ ] Historic Game Page
-- [ ] Signup Game Page\
+- [ ] Signup Game Page
 <br>
+
 - [ ] Play Overview Page
 - [ ] In-Game Events Page
 - [ ] In-Game Map Page
@@ -124,29 +133,35 @@ Written in:
 ### Website Backend:
 - [ ] URL Tree (Per App)
 - [ ] Data Models (Per App)
-- [ ] Database Setup\
+- [ ] Database Setup
 <br>
+
 - [ ] Navigation Bar
-- [ ] Main Template\
+- [ ] Main Template
 <br>
+
 - [ ] Home Page
 - [ ] About the Guild Page
 - [ ] Blog Page
 - [ ] Cabal Page
-- [ ] Discord Page\
+- [ ] Discord Page
 <br>
+
 - [ ] Account Settings Page
 - [ ] Account Login Page
 - [ ] Account Logout Page
 - [ ] Account Signup Page
-- [ ] User Profile Page\
+- [ ] User Profile Page
 <br>
-- [ ] Admin Pages\
+
+- [ ] Admin Pages
 <br>
+
 - [ ] Games Page
 - [ ] Historic Game Page
-- [ ] Signup Game Page\
+- [ ] Signup Game Page
 <br>
+
 - [ ] Play Overview Page
 - [ ] In-Game Events Page
 - [ ] In-Game Map Page
