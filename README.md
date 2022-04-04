@@ -12,22 +12,18 @@ Written in:
 <br>
 
 ## Overview of File Structure:
-### oxfordassassins
-The Django entrypoint, contains the settings for the project and primary URLs.
-### base
-The base app manages the home page and other public facing information pages.
-### account
-The account app manages user accounts, sessions, and user information.
-### admin
-The admin app allows administrator level users to view and modify the website's databases.
-### games
-The games app shows all games, historic, ongoing, and upcoming, and manages sign-ups.
-### play
-The play app is what assassins interact with in-game, it manages all the game mechanics and info.
-### static
-The static directory contains styles (.css), scripts (.js), and resources (image, audio, etc) for the website.
-### templates
-The templates directory contains generic html templates for the pages that are built upon.\
+| File | Description |
+| ---- | ----------- |
+| oxfordassassins | The Django entrypoint, contains the settings for the project and primary URLs. |
+| base            | The base app manages the home page and other public facing information pages. |
+| account         | The account app manages user accounts, sessions, and user information. |
+| admin           | The admin app allows administrator level users to view and modify the website's databases. |
+| games           | The games app shows all games, historic, ongoing, and upcoming, and manages sign-ups. |
+| play            | The play app is what assassins interact with in-game, it manages all the game mechanics and info. |
+| static          | The static directory contains styles (.css), scripts (.js), and resources (image, audio, etc) for the website. |
+| templates       | The templates directory contains generic html templates for the pages that are built upon. |
+| Website-Design  | Directory for non-functional mockups of the website. |
+| Website-Text    | Directory for website text. |\
 <br>
 <br>
 
