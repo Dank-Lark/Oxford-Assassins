@@ -46,7 +46,7 @@ The templates directory contains generic html templates for the pages that are b
 |   ../              | User Account Settings   |
 |   ../login/        | Login                   |
 |   ../logout/       | Logout                  |
-|   ../signup/       | Signup                  |
+|   ../register/     | Register                |
 |   ../profile/*id*/ | View *id*'s Profile     |
 ### /admin/
 | URL                | Page                    |
@@ -100,6 +100,9 @@ The templates directory contains generic html templates for the pages that are b
 
 ### Website Design and Non-Functional Mockups:
 - [ ] Colour Palette
+- [ ] Assets
+- [ ] Logo with Transparency
+- [ ] Logo as 32x32 icon
 - [ ] General Styling\
 <br>
 - [ ] Home Page
@@ -111,7 +114,7 @@ The templates directory contains generic html templates for the pages that are b
 - [ ] Account Settings Page
 - [ ] Account Login Page
 - [ ] Account Logout Page
-- [ ] Account Signup Page
+- [ ] Account Register Page
 - [ ] User Profile Page\
 <br>
 - [ ] Games Page
@@ -142,7 +145,7 @@ The templates directory contains generic html templates for the pages that are b
 - [ ] Account Settings Page
 - [ ] Account Login Page
 - [ ] Account Logout Page
-- [ ] Account Signup Page
+- [ ] Account Register Page
 - [ ] User Profile Page\
 <br>
 - [ ] Admin Pages\

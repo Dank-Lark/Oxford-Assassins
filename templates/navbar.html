@@ -1,0 +1,51 @@
+{% load static %}
+
+<header class="navbar">
+    <a href="{% url 'home' %}" class="navbar_logo">
+        <img src="{% static 'assets/logo.png' %}" />
+        <h1>Oxford Guild of Assassins</h1>
+    </a>
+
+    <nav class="navbar_menu">
+        <!-- About Link -->
+        <a href="{% url 'about' %}">
+            <p>About</p>
+        </a>
+        <!-- Blog Link -->
+        <a href="{% url 'blog' %}">
+            <p>Blog</p>
+        </a>
+        <!-- Cabal Link -->
+        <a href="{% url 'cabal' %}">
+            <p>Cabal</p>
+        </a>
+        <!-- Discord Link -->
+        <a href="{% url 'discord' %}">
+            <p>Discord</p>
+        </a>
+        <!-- Games Link -->
+        <a href="{% url 'games' %}">
+            <p>Games</p>
+        </a>
+        <!-- Play Link -->
+        <a href="{% url 'play' %}">
+            <p>Play</p>
+        </a>
+        
+        <!-- Login or Account/Logout -->
+        {% if request.user.is_authenticated %}
+            <a href="{% url 'account' %}">
+                <p>{{request.user.username}}</p>
+            </a>
+            <a href="{% url 'logout' %}">
+                <p>Logout</p>
+            </a>
+        {% else %}
+            <a href="{% url 'login' %}">
+                <p>Login</p>
+            </a>
+        {% endif %}
+        
+    </nav>
+</header>
+

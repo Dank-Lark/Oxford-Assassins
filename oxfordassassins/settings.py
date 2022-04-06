@@ -40,6 +40,7 @@ INSTALLED_APPS = [
 
     'account.apps.AccountConfig',
     'admin.apps.AdminConfig',
+    'games.apps.AdminConfig',
     'play.apps.PlayConfig',
     'base.apps.BaseConfig',
 ]
