@@ -134,13 +134,13 @@ Written in:
 - [ ] In-Game Teams Page
 
 ### Website Backend:
-- [ ] URL Tree (Per App)
+- [X] URL Tree (Per App)
 - [ ] Data Models (Per App)
 - [ ] Database Setup
 <br>
 
 - [ ] Navigation Bar
-- [ ] Main Template
+- [X] Main Template
 <br>
 
 - [ ] Home Page
