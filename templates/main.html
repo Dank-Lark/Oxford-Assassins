@@ -8,7 +8,10 @@
         <meta charset="UTF-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <link rel="shortcut icon" href="assets/favicon.ico" type="image/x-icon" />
+        <link rel="icon" href="{% static 'assets/favicon.ico' %}" type="image/x-icon" />
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=EB+Garamond&family=Orbitron&family=Titillium+Web:wght@300">
         <link rel="stylesheet" href="{% static 'styles/main.css' %}" />
         <title>Oxford Guild of Assassins</title>
     </head>
@@ -18,9 +21,11 @@
         {% include 'navbar.html' %}
 
         <!-- Insert page content here -->
-        {% block content %}
-        {% endblock content %}
-
+        <div class="wrapper">
+            {% block content %}
+            {% endblock content %}
+        </div>
+        
         <!-- Debug messages will be output here, Todo Remove -->
         {% if messages %}
         <ul class="debug-messages">

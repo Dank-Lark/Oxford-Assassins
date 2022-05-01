@@ -1,51 +1,65 @@
 {% load static %}
 
-<header class="navbar">
-    <a href="{% url 'home' %}" class="navbar_logo">
-        <img src="{% static 'assets/logo.png' %}" />
-        <h1>Oxford Guild of Assassins</h1>
-    </a>
+<header>
+    <nav class="navbar">
+        <!-- OGA Logo -->
+        <a href="{% url 'home' %}" class="navbar_logo">
+            <img src="{% static 'assets/logo128.png' %}" />
+            <h1>Oxford Guild of Assassins</h1>
+        </a>
 
-    <nav class="navbar_menu">
-        <!-- About Link -->
-        <a href="{% url 'about' %}">
-            <p>About</p>
-        </a>
-        <!-- Blog Link -->
-        <a href="{% url 'blog' %}">
-            <p>Blog</p>
-        </a>
-        <!-- Cabal Link -->
-        <a href="{% url 'cabal' %}">
-            <p>Cabal</p>
-        </a>
-        <!-- Discord Link -->
-        <a href="{% url 'discord' %}">
-            <p>Discord</p>
-        </a>
-        <!-- Games Link -->
-        <a href="{% url 'games' %}">
-            <p>Games</p>
-        </a>
-        <!-- Play Link -->
-        <a href="{% url 'play' %}">
-            <p>Play</p>
-        </a>
+        <!-- Menu bar-->
+        <ul class="navbar_menu">
+            <!-- Home Link -->
+            <a href="{% url 'home' %}" class="navbar_element">
+                <li> Home </li>
+            </a>
+
+            <!-- About Link -->
+            <a href="{% url 'about' %}" class="navbar_element">
+                <li> About </li>
+            </a>
+
+            <!-- Blog Link -->
+            <a href="{% url 'blog' %}" class="navbar_element">
+                <li> Blog </li>
+            </a>
+
+            <!-- Cabal Link -->
+            <a href="{% url 'cabal' %}" class="navbar_element">
+                <li> Cabal </li>
+            </a>
+
+            <!-- Discord Link -->
+            <a href="{% url 'discord' %}" class="navbar_element">
+                <li> Discord </li>
+            </a>
+
+            <!-- Games Link -->
+            <a href="{% url 'game_list' %}" class="navbar_element">
+                <li> Games </li>
+            </a>
+
+            <!-- ToDo Logic for when to show -->
+            <!-- Play Link -->
+            <a href="{% url 'play_overview' %}" class="navbar_element">
+                <li> Play </li>
+            </a>
         
-        <!-- Login or Account/Logout -->
-        {% if request.user.is_authenticated %}
-            <a href="{% url 'account' %}">
-                <p>{{request.user.username}}</p>
-            </a>
-            <a href="{% url 'logout' %}">
-                <p>Logout</p>
-            </a>
-        {% else %}
-            <a href="{% url 'login' %}">
-                <p>Login</p>
-            </a>
-        {% endif %}
-        
+            <!-- Login or Account/Logout -->
+            {% if request.user.is_authenticated %}
+                <a href="{% url 'account' %}" class="navbar_element navbar_account">
+                    <li> {{request.user.username}} </li>
+                </a>
+                <a href="{% url 'logout' %}" class="navbar_element navbar_account">
+                    <li> Logout </li>
+                </a>
+            {% else %}
+                <a href="{% url 'login' %}" class="navbar_element navbar_account">
+                    <li> Login </li>
+                </a>
+            {% endif %}
+        </ul>
     </nav>
 </header>
 
