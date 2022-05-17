@@ -78,7 +78,6 @@ a {
     
     display: grid;
     margin: 1em;
-    padding: 0;
 
     grid-template-columns: repeat(8, 1fr);
     gap: 0.25em;
