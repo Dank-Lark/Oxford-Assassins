@@ -4,7 +4,6 @@ from . import views
 # Admin URLs:
 #   admin_home
 #   admin_about
-#   admin_blog
 #   admin_cabal
 #   admin_users
 #   admin_games
@@ -15,9 +14,6 @@ urlpatterns = [
 
     # About the Guild Admin Page
     path('about/', views.about, name="admin_about"),
-
-    # Blog Admin Page
-    path('blog/', views.blog, name="admin_blog"),
 
     # Cabal Admin Page
     path('cabal/', views.cabal, name="admin_cabal"),

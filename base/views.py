@@ -4,8 +4,6 @@ from django.shortcuts import render
 # Base Views:
 #   home
 #   about
-#   blog
-#   blog_post
 #   cabal
 #   discord
 
@@ -16,14 +14,6 @@ def home(request):
 def about(request):
     context = {}
     return render(request, 'base/about.html', context)
-
-def blog(request):
-    context = {}
-    return render(request, 'base/blog.html', context)
-
-def blogPost(request):
-    context = {}
-    return render(request, 'base/blog_post.html', context)
 
 def cabal(request):
     context = {}

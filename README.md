@@ -35,7 +35,6 @@ Written in:
 |--------------------|-------------------------|
 |   /                | Home Page               |
 |   /about/          | About the Guild         |
-|   /blog/           | Recent Guild Activity   |
 |   /cabal/          | Profiles of the Cabal   |
 |   /discord/        | Invite to the Discord   |
 ### /account/   
@@ -51,14 +50,13 @@ Written in:
 |--------------------|-------------------------|
 |   ../              | Admin Overview          |
 |   ../about/        | Edit About Content      |
-|   ../blog/         | Edit Blog Posts DB      |
 |   ../cabal/        | Edit Cabal Profiles DB  |
 |   ../users/        | Edit Users DB           |
-|   ../games/        | Manage Games            |
+|   ../games/        | Manage Games/Events     |
 ### /games/   
 | URL                | Page                    |
 |--------------------|-------------------------|
-|   ../              | List of all Games       |
+|   ../              | List of Games/Events    |
 |   ../*id*/         | View Game (or signup)   |
 ### /play/   
 | URL                | Page                    |

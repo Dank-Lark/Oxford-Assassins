@@ -4,7 +4,6 @@ from django.shortcuts import render
 # Admin Views:
 #   admin_home
 #   admin_about
-#   admin_blog
 #   admin_cabal
 #   admin_users
 #   admin_games
@@ -16,10 +15,6 @@ def home(request):
 def about(request):
     context = {}
     return render(request, 'admin/admin_about.html', context)
-
-def blog(request):
-    context = {}
-    return render(request, 'admin/admin_blog.html', context)
 
 def cabal(request):
     context = {}

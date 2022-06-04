@@ -2,7 +2,7 @@
 */
 :root {
     --oga-black:#000000;
-    --oga-dark: #101010;
+    --oga-dark: #171717;
     --oga-mid:  #222222;
     --oga-light:#444444;
     --oga-white:#FFFFFF;
@@ -39,34 +39,22 @@ a {
 
 }
 
-/* navbar.html ################################################################
-    navbar
-        navbar_logo
-        navbar_menu
-            navbar_element
-            ...
-            navbar_element
-            navbar_element navbar_account
-*/
-.navbar {
+/* navbar.html ################################################################*/
+
+.navbar {    
     background-color: var(--oga-black);
-    
     display: grid;
-    grid-template-columns: auto 1fr auto;
-    grid-template-areas: "ga_logo . ga_menu";
 }
-
+    
 .navbar_logo {
-    grid-area: ga_logo;
+    grid-area: "ga_logo";
 
     display: grid;
-    margin-left: 1em;
-
-    grid-template-columns: auto auto;
+    grid-template-columns: auto 1fr;
 }
 
 .navbar_logo img {
-    width: 66px;
+    width: 72px;
 }
 
 .navbar_logo h1 {
@@ -74,19 +62,23 @@ a {
 }
 
 .navbar_menu {
-    grid-area: ga_menu;
+    grid-area: "ga_menu";
     
     display: grid;
     margin: 1em;
     padding: 0;
 
-    grid-template-columns: repeat(8, 1fr);
-    gap: 0.25em;
+    grid-template-columns: repeat(7, auto);
+    gap: 1em;
 }
 
 .navbar_element {
+    border-bottom-width: 2px;
+    border-bottom-style: solid;
+    border-color: var(--oga-white);
+
     list-style-type: none;
-    background-color: var(--oga-mid);
+    padding: 0;
 }
 
 .navbar_element:hover {
@@ -106,11 +98,46 @@ a {
 
 }
 
+@media (min-width: 975px) {
+    .navbar {
+        grid-template-columns: 1fr auto;
+        grid-template-areas: "ga_logo ga_menu";
+    }
+}
+@media (max-width: 975px) {
+    .navbar {
+        grid-template-areas: "ga_logo", "ga_menu";
+    }
+    .navbar_menu {
+        margin-top: 0;
+        margin-bottom: 0;
+        gap: 0.25em;
+    }
+    .navbar_element li {
+        padding-left: 0;
+        padding-right: 0;
+        text-align: center;
+    }
+}
+@media (max-width: 440px) {
+    .navbar_logo img {
+        margin-top: 1em;
+    }    
+}
+
 /* ################################################################
 wrapper
 */
 
 .wrapper {
+    margin: 0.5em;
     display: grid;
-    margin: 1em;
+    grid-template-columns: 2fr 1fr;
+}
+
+.content {
+    padding-left: 1em;
+    padding-right: 1em;
+    margin: 0.5em;
+    background-color: var(--oga-mid);
 }

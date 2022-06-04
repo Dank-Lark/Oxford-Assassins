@@ -4,8 +4,6 @@ from . import views
 # Base URLs:
 #   home
 #   about
-#   blog
-#   blog_post
 #   cabal
 #   discord
 
@@ -15,10 +13,6 @@ urlpatterns = [
 
     # About the Guild Page
     path('about/', views.about, name="about"),
-
-    # Blog Page and Article Page
-    path('blog/', views.blog, name="blog"),
-    path('blog/<str:pk>/', views.blogPost, name="blog_post"),
 
     # Cabal Page
     path('cabal/', views.cabal, name="cabal"),
