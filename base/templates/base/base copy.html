@@ -1,0 +1,229 @@
+{% extends 'main.html' %}
+
+{% load static %}
+<!-- base/home.html -->
+
+{% block content %}
+
+<section id="home">
+    <div class="center">
+        <img id="home_logo" src="{% static 'assets/logo512.png' %}">
+    </div>
+    
+    <h2 id="home_tagline">Welcome to the Oxford Guild of Assassins!</h2>
+    
+    <div id="home_buttons">
+        <a class="home_button" href="{% url 'play_overview' %}">
+            <h3> Play </h3>
+        </a>
+        
+        <a class="home_button" href="https://discord.gg/e9WNb4Ywse">
+            <h3>Discord</h3>
+        </a>
+    </div>
+    
+    <div id="home_pad"></div>
+    
+    <img id="home_background" src={% static 'assets/home_background.jpg' %}>
+
+    <div class="scroll">
+        <a class="scroll_down" href="#about">
+            {% include "chevron_down.html" %}
+            <p>
+                about
+            </p>
+        </a>
+    </div>
+</section>
+
+<section id="about">
+    <div id="about_head">
+        <h2>About the Guild</h2>
+        <div class="scroll">
+            <a class="scroll_up" href="#home">
+                {% include "chevron_up.html" %}
+                <p>
+                    home
+                </p>
+            </a>
+        </div>
+        <h2>Our Games</h2>
+    </div>
+
+    <div id="about_boxes">
+        <div class="content">
+            <p>
+                Death! Destruction! Terror in the streets of Oxford! The Oxford Guild of Assassins are feared, hungry an-
+            </p>
+            <p>
+                Ok, so no. There was once a time where the Guild was more like… That, although I’ll leave you to do your own research. Now, however? The Oxford Guild of Assassins, or OGA for short, is an (unofficial) society of the University of Oxford, whose members dedicate several weeks of their busy Uni lives per term to repeatedly hunt down and kill fellow Assassins. Nerf guns, pens, spatulas, heck, even boxes labelled as fridges are used to dispatch your rivals. Each day of any ‘Game’ sees cold, calculated murder, ruthless strategy and a hell of a lot of fun! Events and, in more recent years, lore and storytelling, bring Assassins together during the game - over the past year, they’ve battled rogue A.I.s, shadowy villains and many different apocalypses.
+            </p>
+            <p>
+                That’s just a few weeks in a term, mind. Outside of that, Assassins are very nice people - the Guild holds social events, as well as one-off events from time-to-time. Just to keep the blood pumping, and prepare you for the next time someone knocks at your door…  
+            </p>
+        </div>
+            
+        <div class="content">
+            <p>
+                The Games are the main feature of the Guild’s activities, they are typically a week-long, themed murder-fest in which several teams of Assassins compete for dominance over the city by carrying out assassinations on other players, using a wide variety of (mock) weaponry, pens and nerf guns being the most likely, but we’ve also seen foam swords, poisoned wet wipes, rainbow sock puppets, and a sentient football named Timothy.
+            </p>
+            <h3 id="about_golden">The Golden Rules</h3>
+            <ul id="about_list">
+                <li>Don’t do anything stupid. You are responsible for your own actions.</li>
+                <li>Don’t do anything that could damage anyone or anything (preferably including yourself).</li>
+                <li>Avoid annoying, killing, or otherwise inconveniencing non-players.</li>
+                <li>Weapons should be balanced (defensible) and safe. Please query anything unusual.</li>
+                <li>The spirit of the rules is more important than the letter! If the Umpire feels you are unfairly exploiting a loophole, then the rules may be changed during the game to fix this.</li>
+            </ul>
+        </div>
+    </div>
+
+    <div id="about_disclaimer"> 
+        <p>
+            Ultimately, it’s good to make clear that the Oxford Guild of Assassins neither commits nor encourages the inhuming of people in reality! Our assassination games are for amusement only and are good-willed events. Participants must take great care not to harm themselves or others, and furthermore not to damage property or disrupt public, University, or college business. The Guild is about having fun and meeting people in an interesting and unique way, not terrorising the population of Oxford.  
+        </p>
+    </div>
+
+    <div class="scroll">
+        <a class="scroll_down" href="#termcard">
+            {% include "chevron_down.html" %}
+            <p>
+                termcard
+            </p>
+        </a>
+    </div>
+</section>
+
+<section id="termcard">
+    <div id="termcard_head">
+        <h2>Termcard</h2>
+        <div class="scroll">
+            <a class="scroll_up" href="#about">
+                {% include "chevron_up.html" %}
+                <p>
+                    about
+                </p>
+            </a>
+        </div>
+    </div>
+
+    <div class="termcard_cards">
+        <div class="termcard_card">
+            <h3>07 October - Fresher's Taster</h4>
+            <p>An evening introduction to the fun and games to be had in Assassins for the freshers.</p>
+        </div>
+
+        <div class="termcard_card">
+            <h3>17 October - Michaelmas Week 2 Game</h4>
+            <p>Week-long assassins game run by Ileyra. Details TBC.</p>
+        </div>
+
+        <div class="termcard_card">
+            <h3>22 November - Michaelmas Week 7 Game</h4>
+            <p>Week-long assassins game run by Hop. Details TBC.</p>
+        </div>
+
+        <div class="termcard_card">
+            <h3>07 October - Fresher's Taster</h4>
+            <p>An evening introduction to the fun and games to be had in Assassins for the freshers.</p>
+        </div>
+
+        <div class="termcard_card">
+            <h3>17 October - Michaelmas Week 2 Game</h4>
+            <p>Week-long assassins game run by Ileyra. Details TBC.</p>
+        </div>
+
+        <div class="termcard_card">
+            <h3>22 November - Michaelmas Week 7 Game</h4>
+            <p>Week-long assassins game run by Hop. Details TBC.</p>
+        </div>
+
+        <div class="termcard_card">
+            <h3>17 October - Michaelmas Week 2 Game</h4>
+            <p>Week-long assassins game run by Ileyra. Details TBC.</p>
+        </div>
+
+        <div class="termcard_card">
+            <h3>22 November - Michaelmas Week 7 Game</h4>
+            <p>Week-long assassins game run by Hop. Details TBC.</p>
+        </div>
+    </div>
+
+    <a href="">
+        Archive
+    </a>
+    <div class="scroll">
+        <a class="scroll_down" href="#cabal">
+            {% include "chevron_down.html" %}
+            <p>
+                cabal
+            </p>
+        </a>
+    </div>
+</section>
+
+<section id="cabal">
+    <div class="scroll">
+        <a class="scroll_up" href="#termcard">
+            {% include "chevron_up.html" %}
+            <p>
+                termcard
+            </p>
+        </a>
+    </div>
+    <h2>Meet the Cabal</h2>
+
+    <p class="textBox">
+        The Cabal is {% lorem 1 b random %}
+    </p>
+
+    <div class="cabalProfile">
+        <img src='guildmasterProfile.jpg'/>
+        <div>
+            <h4>Guildmaster</h4>
+            <p>{% lorem 1 b random %}</p>
+        </div>
+    </div>
+
+    <div class="cabalProfile">
+        <img src='treasurerProfile.jpg'/>
+        <div>
+            <h4>Treasurer</h4>
+            <p>{% lorem 1 b random %}</p>
+        </div>
+    </div>
+
+    <div class="cabalProfile">
+        <img src='archivistProfile.jpg'/>
+        <div>
+            <h4>Archivist</h4>
+            <p>{% lorem 1 b random %}</p>
+        </div>
+    </div>
+
+    <div class="cabalProfile">
+        <img src='socialsecProfile.jpg'/>
+        <div>
+            <h4>Social Secretary</h4>
+            <p>{% lorem 1 b random %}</p>
+        </div>
+    </div>
+
+    <div class="cabalProfile">
+        <img src='mwp1Profile.jpg'/>
+        <div>
+            <h4>MWP</h4>
+            <p>{% lorem 1 b random %}</p>
+        </div>
+    </div>
+
+    <div class="cabalProfile">
+        <img src='mwp2Profile.jpg'/>
+        <div>
+            <h4>MWP</h4>
+            <p>{% lorem 1 b random %}</p>
+        </div>
+    </div>
+</section>
+
+{% endblock content %}
