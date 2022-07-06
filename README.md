@@ -24,7 +24,6 @@ Written in:
 | static          | The static directory contains styles (.css), scripts (.js), and resources (image, audio, etc) for the website. |
 | templates       | The templates directory contains generic html templates for the pages that are built upon. |
 | Website-Design  | Directory for non-functional mockups of the website. |
-| Website-Text    | Directory for website text. |
 <br>
 <br>
 
@@ -34,9 +33,10 @@ Written in:
 | URL                | Page                    |
 |--------------------|-------------------------|
 |   /                | Home Page               |
-|   /about/          | About the Guild         |
-|   /cabal/          | Profiles of the Cabal   |
-|   /discord/        | Invite to the Discord   |
+|   /#home           | Landing Page            |
+|   /#about          | About the Guild         |
+|   /#termcard       | Termcard of events      |
+|   /#cabal          | Profiles of the Cabal   |
 ### /account/   
 | URL                | Page                    |
 |--------------------|-------------------------|
@@ -53,11 +53,6 @@ Written in:
 |   ../cabal/        | Edit Cabal Profiles DB  |
 |   ../users/        | Edit Users DB           |
 |   ../games/        | Manage Games/Events     |
-### /games/   
-| URL                | Page                    |
-|--------------------|-------------------------|
-|   ../              | List of Games/Events    |
-|   ../*id*/         | View Game (or signup)   |
 ### /play/   
 | URL                | Page                    |
 |--------------------|-------------------------|
@@ -73,43 +68,31 @@ Written in:
 
 ## Todo List:
 ### Website Text:
-- [ ] About the Guild Text
-- [ ] About the Cabal Text
-- [ ] About the Games Text
-- [ ] About the Discord Small Paragraph
+- [X] About the Guild Text
+- [X] About the Cabal Text
+- [X] About the Games Text
+- [X] About the Discord Small Paragraph
 <br>
 
-- [ ] Guildmaster Role Paragraph
-- [ ] Treasurer Role Paragraph
-- [ ] Archivist Role Paragraph
-- [ ] Social Sec Role Paragraph
-- [ ] MWP Role Paragraph
+- [X] Guildmaster Role Paragraph
+- [X] Treasurer Role Paragraph
+- [X] Archivist Role Paragraph
+- [X] Social Sec Role Paragraph
+- [X] MWP Role Paragraph
 <br>
-
-- [ ] Freshers Game Summary Paragraph
-- [ ] Freshers Game Blog Post Text
-- [ ] Data Breach Game Summary Paragraph
-- [ ] Data Breach Game Blog Post Text
-- [ ] Infection Game Summary Paragraph
-- [ ] Infection Game Blog Post Text
-- [ ] Varsity Match Summary Paragraph
-- [ ] Varsity Match Blog Post Text
-- [ ] Lightbringers Game Summary Paragraph
-- [ ] Lightbringers Game Blog Post Text
 
 ### Website Design and Non-Functional Mockups:
-- [ ] Colour Palette
-- [ ] Assets
-- [ ] Logo with Transparency
-- [ ] Logo as 32x32 icon
-- [ ] General Styling
+- [X] Colour Palette
+- [X] Assets
+- [X] Logo with Transparency
+- [X] Logo as 32x32 icon
+- [X] General Styling
 <br>
 
-- [ ] Home Page
-- [ ] About the Guild Page
-- [ ] Blog Page
-- [ ] Cabal Page
-- [ ] Discord Page
+- [X] Home Page
+- [X] About the Guild Page
+- [X] Termcard Page
+- [X] Cabal Page
 <br>
 
 - [ ] Account Settings Page
@@ -137,15 +120,14 @@ Written in:
 - [ ] Database Setup
 <br>
 
-- [ ] Navigation Bar
+- [X] Navigation Bar
 - [X] Main Template
 <br>
 
-- [ ] Home Page
-- [ ] About the Guild Page
-- [ ] Blog Page
-- [ ] Cabal Page
-- [ ] Discord Page
+- [X] Home Page
+- [X] About the Guild Page
+- [X] Termcard Page
+- [X] Cabal Page
 <br>
 
 - [ ] Account Settings Page
