@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="icon" href="assets/favicon.ico" type="image/x-icon" />
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=EB+Garamond&family=Orbitron&family=Titillium+Web:wght@300">
+        <link rel="stylesheet" href="styles/main.css" />
+        <title>Oxford Guild of Assassins</title>
+    </head>
+
+    <body>
+        <!-- Navigation Bar at top of every page -->
+        <header>
+            <nav id="navbar">
+                <!-- OGA Logo -->
+                <a href="index.html/#home" id="navbar_logo">
+                    <img src="assets/logo128.png" />
+                    <h1>Oxford Guild of Assassins</h1>
+                </a>
+
+                <!-- Menu bar-->
+                <ul id="navbar_menu">
+                    <!-- Home Link -->
+                    <a href="index.html/#home" class="navbar_button">
+                        <li> Home </li>
+                    </a>
+
+                    <!-- About Link -->
+                    <a href="index.html/#about" class="navbar_button">
+                        <li> About </li>
+                    </a>
+                    
+                    <!-- Termcard Link -->
+                    <a href="index.html/#termcard" class="navbar_button">
+                        <li> Termcard </li>
+                    </a>
+
+                    <!-- Cabal Link -->
+                    <a href="index.html/#cabal" class="navbar_button">
+                        <li> Cabal </li>
+                    </a>
+
+                    <!-- Play Link -->
+                    <a href="play.html" class="navbar_button">
+                        <li> Play </li>
+                    </a>
+                
+                    <!-- Login or Account/Logout -->
+                    <a href="login.html" class="navbar_button">
+                        <li> Login </li>
+                    </a>
+                </ul>
+            </nav>
+        </header>
+
+        <div class="wrapper">
+            <div class="center_h center_v">
+                <h1>Games Coming Soon!</h1>
+            </div>
+        </div>
+    
+        <!-- Load Javascript for page -->
+        <script src="{% static 'scripts/main.js' %}"></script>
+    </body>
+</html>

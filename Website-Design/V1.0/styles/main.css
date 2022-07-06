@@ -1,0 +1,396 @@
+/* ############################################################################################################################ */
+/* ######################################################## constants ######################################################### */
+/* ############################################################################################################################ */
+:root {
+    --oga-black:     #000000;
+    --oga-dark:      #171717;
+    --oga-mid:       #222222;
+    --oga-light:     #444444;
+    --oga-text-white:#DDDDDD;
+    --oga-white:     #FFFFFF;
+    --oga-red:       #C70F0F;
+
+    --oga-title: "Orbitron", sans-serif;
+    --oga-text: 'Titillium Web', sans-serif;
+    --oga-serif: "EB Garamond", serif;
+}
+
+/* ############################################################################################################################ */
+/* ######################################################## everywhere ######################################################## */
+/* ############################################################################################################################ */
+
+html{
+    scroll-behavior: smooth; /* scrolling snaps to pages */
+    scroll-snap-type: y proximity;
+/** scroll-padding-top: responsive; */
+}
+
+body {
+    background-color: var(--oga-dark); /* dark background */
+
+    font-family: var(--oga-text); /* default font */
+    color: var(--oga-text-white);
+
+    display: grid; /* navbar above body */
+    grid-template-rows: auto auto;
+
+    margin: 0px; /* no margins */
+}
+
+a {
+    color: var(--oga-white); /* no link decoration */
+    text-decoration: none;
+}
+
+h1, h2, h3 {
+    font-family: var(--oga-title); /* heading font */
+    color: var(--oga-white);
+}
+
+/* Desktop */
+@media (min-width: 900px) {
+    html {
+        scroll-padding-top: 75px; /* respond to navbar sizing */
+    }
+}
+/* Mobile */
+@media (max-width: 900px) {
+    html {
+        scroll-padding-top: 115px; /* respond to navbar sizing */
+    }
+}
+
+/* ############################################################################################################################ */
+/* ######################################################### reusable ######################################################### */
+/* ############################################################################################################################ */
+
+/* wraps page body */
+.wrapper {
+    margin: 0.5em; /* margin around page - expects content to have 0.5em margin */
+/** margin-top: responsive; */
+}
+
+/* scrollable page */
+section {
+    width: 100%; /* fill at least the window */
+/** min-height: responsive; */
+    scroll-snap-align: start;
+}
+
+/* wraps content */
+.content {
+    padding: 1em; /* coloured box with padding and margin */
+    margin: 1em 0.5em 0 0.5em;
+    background-color: var(--oga-mid);
+}
+.content h2, h3 {
+    margin: 0;
+}
+.content p {
+    margin-top: 0.5em;
+    margin-bottom: 0;
+}
+.content ul {
+    margin: 0;
+    padding-left: 1.3em;
+}
+
+/* centers content horizontally */
+.center_h {
+    display: grid;
+    justify-content: center;
+}
+
+/* centers content vertically */
+.center_v {
+    display: grid;
+    grid-template-rows: 1fr auto 1fr;
+}
+.center_v::before { content: ""; }
+.center_v::after { content: ""; }
+
+/* Desktop */
+@media (min-width: 900px) {
+    .wrapper {
+        margin-top: calc(75px + 0.5em); /* respond to navbar sizing */
+    }
+    section {
+        min-height: calc(100vh - 75px); /* respond to navbar sizing */
+    }
+}
+/* Mobile */
+@media (max-width: 900px) {
+    .wrapper {
+        margin-top: calc(115px + 0.5em); /* respond to navbar sizing */
+    }
+    section {
+        min-height: calc(100vh - 115px); /* respond to navbar sizing */
+    }
+}
+
+/* ############################################################################################################################ */
+/* ########################################################## navbar ########################################################## */
+/* ############################################################################################################################ */
+
+#navbar {    
+    position: fixed; /* fixed to top of screen */
+    width: 100%;
+
+    background-color: var(--oga-black); /* black background */
+
+    z-index: 999; /* display on top */
+
+    display: grid; 
+/** grid-template-columns: responsive; */
+/** grid-template-areas: responsive; */
+}
+    
+#navbar_logo {
+    grid-area: "ga_logo";
+
+    display: grid; /* logo then title */
+    grid-template-columns: auto 1fr;
+}
+
+#navbar_logo img {
+    width: 72px; /* fix logo size */
+}
+
+#navbar_menu {
+    grid-area: "ga_menu";
+    
+    padding: 0; /* surround buttons */
+/** margin: responsive; */
+/** gap: responsive; */
+
+    display: grid; /* buttons in a row */
+    grid-template-columns: repeat(6, auto);
+    
+}
+
+.navbar_button {
+    border-bottom-width: 2px; /* white bottom border */
+    border-bottom-style: solid;
+    border-color: var(--oga-white);
+    
+    padding: 0; /* no padding */
+
+    list-style-type: none; /* no bullet points */
+}
+.navbar_button:hover  { background-color: var(--oga-light); }
+.navbar_button:active { background-color: var(--oga-red); }
+
+.navbar_button li {
+    text-align: center;
+/** padding: responsive; */
+}
+
+/* Desktop */
+@media (min-width: 900px) {
+    #navbar {
+        grid-template-columns: 1fr auto; /* logo left, navigation right */
+        grid-template-areas: "ga_logo ga_menu";
+    }
+    #navbar_menu {
+        margin: 1em; /* spread out buttons */
+        gap: 1em;
+    }
+    .navbar_button li {
+        padding: 0.5em; /* pad out text */
+    }
+}
+/* Mobile */
+@media (max-width: 900px) {
+    #navbar {
+        grid-template-areas: "ga_logo" "ga_menu"; /* logo left, navigation underneath */
+    }
+    #navbar_menu {
+        margin: 0 1em 0 1em; /* remove top and bottom margins */
+        gap: 0.25em; /* buttons closer together */
+    }
+    .navbar_button li {
+        padding: 0.5em 0 0.5em 0; /* remove left and right padding */
+    }
+}
+/* very thin window correction */
+@media (max-width: 440px) { .navbar_logo img { margin-top: 1em; } }
+
+/* ############################################################################################################################ */
+/* ########################################################### home ########################################################### */
+/* ############################################################################################################################ */
+
+#home {
+    display: grid; /* spacer, logo, tagline, buttons, spacer */
+    grid-template-rows: 1fr auto auto auto 1fr;
+}
+
+#home_background {
+    position: absolute; /* stick to page and cover */
+    object-fit: cover;
+    object-position: top;
+
+    margin-left: -0.5em; /* negate margin from wrapper */
+
+    width: 100%; /* fit image to page */
+/** height: responsive; */
+
+    z-index: -999; /* render behind everything else */
+}
+
+#home_logo {
+    display: flex; /* center logo */
+    align-self: center;
+
+    width: 50vh; /* logo half page height */
+}
+
+#home_tagline {
+    margin-top: 0; /* no margin between tagline and logo */
+
+    text-align: center; /* center text */
+}
+
+#home_buttons {
+    display: grid; /* buttons side by side */
+    grid-template-columns: 1fr 1fr;
+
+/** margin-left: responsive; */
+/** margin-right: responsive; */
+}
+
+#home_buttons a {
+    display: grid; /* center align text */
+    justify-content: center;
+
+    padding: 1em; /* buttons have no top, and large bottom margins */
+    margin: 0 0.75em 2em 0.75em; 
+
+    border-bottom-width: 2px; /* white bottom border */
+    border-bottom-style: solid;
+    border-color: var(--oga-white);
+
+    background-color: var(--oga-mid); /* grey background */
+}
+#home_buttons a:hover { background-color: var(--oga-light); }
+#home_buttons a:active { background-color: var(--oga-red); }
+
+#home_buttons h3 {
+    margin: 0; /* text has no margin */
+}
+
+/* Desktop */
+@media (min-width: 900px) {
+    #home_background {
+        height: calc(100vh - 76px);
+    }
+    #home_buttons {
+        margin-left: 6em;
+        margin-right: 6em;
+    }
+}
+/* Mobile */
+@media (max-width: 900px) {
+    #home_background {
+        height: calc(100vh - 116px);
+    }
+    #home_buttons {
+        margin-left: 3em;
+        margin-right: 3em;
+    }
+}
+
+/* ############################################################################################################################ */
+/* ########################################################## about ########################################################### */
+/* ############################################################################################################################ */
+
+#about {
+    display: grid;
+/** grid-template-columns: responsive; */
+/** grid-template-rows: responsive; */
+/** grid-template-areas: responsive; */
+}
+#about_guild {
+    grid-area: guild;
+}
+#about_games {
+    grid-area: games;
+}
+#about_games h3 {
+    margin-top: 0.5em;
+}
+#about_disclaimer {
+    grid-area: disclaimer;
+    margin-bottom: 1em;
+}
+
+/* Desktop */
+@media (min-width: 900px) {
+    #about {
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: auto auto 1fr;
+        grid-template-areas: "guild games" "disclaimer disclaimer" "spacer spacer";
+    }
+}
+/* Mobile */
+@media (max-width: 900px) {
+    #about {
+        grid-template-rows: auto auto auto 1fr;
+        grid-template-areas: "guild" "games" "disclaimer" "spacer";
+    }
+}
+
+/* ############################################################################################################################ */
+/* ######################################################### termcard ######################################################### */
+/* ############################################################################################################################ */
+
+#termcard {
+    display: grid;
+/** grid-template-columns: responsive; */
+/** grid-template-rows: responsive; */
+/** grid-template-areas: responsive; */
+}
+
+/* Desktop */
+@media (min-width: 900px) {
+    #termcard {
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: auto 1fr;
+        grid-template-areas: "brief details" "spacer spacer";
+    }
+}
+/* Mobile */
+@media (max-width: 900px) {
+    #termcard {
+        grid-template-rows: auto auto 1fr;
+        grid-template-areas: "brief" "details" "spacer";
+    }
+}
+
+/* ############################################################################################################################ */
+/* ########################################################### cabal ########################################################## */
+/* ############################################################################################################################ */
+
+#cabal {
+    display: grid;
+    grid-template-rows: auto auto 1fr;
+
+    margin-bottom: 0.5em;
+}
+
+#cabal_cards {
+    display: grid;
+/** grid-template-columns: responsive; */
+}
+
+/* Desktop */
+@media (min-width: 900px) {
+    #cabal_cards {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+/* Mobile */
+@media (max-width: 900px) {
+    #cabal_cards {
+        grid-template-columns: 1fr;
+    }
+}
