@@ -40,10 +40,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'account.apps.AccountConfig',
-    #Todo Switch to Custom Admin
-    #'admin.apps.AdminConfig',
-    'games.apps.GamesConfig',
-    'play.apps.PlayConfig',
     'base.apps.BaseConfig',
 ]
 
