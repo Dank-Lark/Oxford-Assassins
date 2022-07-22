@@ -132,7 +132,7 @@ section {
 /* ########################################################## navbar ########################################################## */
 /* ############################################################################################################################ */
 
-#navbar {    
+nav {    
     position: fixed; /* fixed to top of screen */
     width: 100%;
 
@@ -145,18 +145,18 @@ section {
 /** grid-template-areas: responsive; */
 }
     
-#navbar_logo {
+.navbar_logo {
     grid-area: "ga_logo";
 
     display: grid; /* logo then title */
     grid-template-columns: auto 1fr;
 }
 
-#navbar_logo img {
+.navbar_logo img {
     width: 72px; /* fix logo size */
 }
 
-#navbar_menu {
+nav > ul {
     grid-area: "ga_menu";
     
     padding: 0; /* surround buttons */
@@ -250,7 +250,7 @@ section {
     text-align: center; /* center text */
 }
 
-#home_buttons {
+.home_buttons {
     display: grid; /* buttons side by side */
     grid-template-columns: 1fr 1fr;
 
@@ -258,7 +258,7 @@ section {
 /** margin-right: responsive; */
 }
 
-#home_buttons a {
+.home_buttons a {
     display: grid; /* center align text */
     justify-content: center;
 
@@ -271,10 +271,10 @@ section {
 
     background-color: var(--oga-mid); /* grey background */
 }
-#home_buttons a:hover { background-color: var(--oga-light); }
-#home_buttons a:active { background-color: var(--oga-red); }
+.home_buttons a:hover { background-color: var(--oga-light); }
+.home_buttons a:active { background-color: var(--oga-red); }
 
-#home_buttons h3 {
+.home_buttons h3 {
     margin: 0; /* text has no margin */
 }
 
@@ -300,97 +300,25 @@ section {
 }
 
 /* ############################################################################################################################ */
-/* ########################################################## about ########################################################### */
+/* ######################################################## sections ########################################################## */
 /* ############################################################################################################################ */
 
-#about {
-    display: grid;
-/** grid-template-columns: responsive; */
-/** grid-template-rows: responsive; */
-/** grid-template-areas: responsive; */
-}
-#about_guild {
-    grid-area: guild;
-}
-#about_games {
-    grid-area: games;
-}
-#about_games h3 {
-    margin-top: 0.5em;
-}
-#about_disclaimer {
-    grid-area: disclaimer;
-    margin-bottom: 1em;
+section:not(:first-of-type) {
+    display: flex;
+    flex-direction: column;
 }
 
-/* Desktop */
-@media (min-width: 900px) {
-    #about {
-        grid-template-columns: 1fr 1fr;
-        grid-template-rows: auto auto 1fr;
-        grid-template-areas: "guild games" "disclaimer disclaimer" "spacer spacer";
-    }
-}
-/* Mobile */
-@media (max-width: 900px) {
-    #about {
-        grid-template-rows: auto auto auto 1fr;
-        grid-template-areas: "guild" "games" "disclaimer" "spacer";
-    }
+section:not(:first-of-type) > div {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
 }
 
-/* ############################################################################################################################ */
-/* ######################################################### termcard ######################################################### */
-/* ############################################################################################################################ */
-
-#termcard {
-    display: grid;
-/** grid-template-columns: responsive; */
-/** grid-template-rows: responsive; */
-/** grid-template-areas: responsive; */
+section:not(:first-of-type) > div > .content {
+    width: 45%;
+    flex-grow: 1;
 }
 
-/* Desktop */
-@media (min-width: 900px) {
-    #termcard {
-        grid-template-columns: 1fr 1fr;
-        grid-template-rows: auto 1fr;
-        grid-template-areas: "brief details" "spacer spacer";
-    }
-}
-/* Mobile */
-@media (max-width: 900px) {
-    #termcard {
-        grid-template-rows: auto auto 1fr;
-        grid-template-areas: "brief" "details" "spacer";
-    }
-}
-
-/* ############################################################################################################################ */
-/* ########################################################### cabal ########################################################## */
-/* ############################################################################################################################ */
-
-#cabal {
-    display: grid;
-    grid-template-rows: auto auto 1fr;
-
-    margin-bottom: 0.5em;
-}
-
-#cabal_cards {
-    display: grid;
-/** grid-template-columns: responsive; */
-}
-
-/* Desktop */
-@media (min-width: 900px) {
-    #cabal_cards {
-        grid-template-columns: 1fr 1fr;
-    }
-}
-/* Mobile */
-@media (max-width: 900px) {
-    #cabal_cards {
-        grid-template-columns: 1fr;
-    }
+section:not(:first-of-type) > .content {
+    flex-direction: column; /* fix text arrangement if subclass is text */
 }
