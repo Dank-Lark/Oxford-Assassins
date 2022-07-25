@@ -1,6 +1,6 @@
 from django.shortcuts import redirect, render
 from django.contrib.auth.decorators import login_required
-from account.forms import PayMembershipForm, RegisterUserForm, UpdateUserForm, CreateAssassinForm, UpdateAssassinForm
+from account.forms import PayMembershipForm, RegisterUserForm, UpdateUserForm, CreateAssassinForm, UpdateAssassinForm, ChangePasswordForm
 from account.models import Assassin, User
 from django.contrib.auth import authenticate, login, logout
 
@@ -17,6 +17,7 @@ from django.contrib.auth import authenticate, login, logout
 @login_required(login_url='login')
 def account(request):
     form_user = UpdateUserForm(instance=request.user)
+    form_password = ChangePasswordForm(request.user)
 
     assassin = request.user.assassin
     if not request.user.paid: 
@@ -34,6 +35,7 @@ def account(request):
    
     context = {
         'form_user': form_user, 
+        'form_password': form_password,
         'form_assassin': form_assassin,
         'action_assassin': action_assassin,
         'value_assassin': value_assassin,
@@ -61,6 +63,22 @@ def updateUser(request):
 
 
     
+####################################################################################################
+
+
+@login_required(login_url='login')
+def changePassword(request):
+    if request.method != 'POST':
+        return redirect('account')
+
+    form = ChangePasswordForm(request.user, request.POST)
+
+    if form.is_valid():
+        form.save()
+
+    return redirect('account')
+
+
 ####################################################################################################
 
 

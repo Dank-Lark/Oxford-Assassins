@@ -14,6 +14,8 @@ urlpatterns = [
 
     # Update User Form Submission
     path('update_user/', views.updateUser, name="updateUser"),
+    # Change Password
+    path('change_password/', views.changePassword, name="changePassword"),
     # Register Assassin Form Submission
     path('create_assassin/', views.createAssassin, name="createAssassin"),
     # Update Assassin Form Submission

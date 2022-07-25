@@ -1,5 +1,4 @@
-from logging import PlaceHolder
-from django.contrib.auth.forms import UserCreationForm, UserChangeForm
+from django.contrib.auth.forms import UserCreationForm, UserChangeForm, PasswordChangeForm
 from .models import Assassin, User, SUBJECT_CHOICES, COLLEGE_CHOICES
 from django import forms
 
@@ -36,6 +35,15 @@ class UpdateUserForm(UserChangeForm):
             'username': None,
         }
 
+class ChangePasswordForm(PasswordChangeForm):
+    # password1 = forms.CharField(required=True, label="new password", widget=forms.PasswordInput(attrs={'class': 'form-control'}),
+    #                   error_messages={ 'required': ''})
+    # password2 = forms.PasswordInput()
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['new_password1'].help_text = None
+        self.fields['new_password2'].help_text = None
 
 class CreateAssassinForm(forms.ModelForm):
     class Meta:
