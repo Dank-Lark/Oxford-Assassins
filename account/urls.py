@@ -12,12 +12,21 @@ urlpatterns = [
     # Account Settings Page
     path('', views.account, name="account"),
 
+    # Update User Form Submission
+    path('update_user/', views.updateUser, name="updateUser"),
+    # Register Assassin Form Submission
+    path('create_assassin/', views.createAssassin, name="createAssassin"),
+    # Update Assassin Form Submission
+    path('update_assassin/', views.updateAssassin, name="updateAssassin"),
+    # Pay for Membership
+    path('pay_membership/', views.payMembership, name="payMembership"),
+
     # Login
-    path('login/', views.login, name="login"),
+    path('login/', views.loginForm, name="login"),
     # Logout
-    path('logout/', views.logout, name="logout"),
+    path('logout/', views.logoutForm, name="logout"),
     # Register
-    path('register/', views.register, name="register"),
+    path('register/', views.registerForm, name="register"),
 
     # Profile
     path('profile/<str:pk>/', views.profile, name="profile"),

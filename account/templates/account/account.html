@@ -1,9 +1,34 @@
 {% extends 'main.html' %}
 
-<!-- account/account.html -->
-
 {% block content %}
+<div id="account">
+    <!-- edit account data -->
+    <div class="content">
+        <form method="POST" action="update_user/">
+            {% csrf_token %}
+            
+            {{ form_user.as_p }}
 
-account/account.html
+            <input type="submit" value="Update User"/>
+        </form>
+    </div>
+
+    <div class="content">
+        <form method="POST" action="{{ action_assassin }}">
+            {% csrf_token %}
+
+            {{ form_assassin.as_p }}
+
+            <input type="submit" value="{{ value_assassin }}"/>
+        </form>
+    </div>
+
+    <!-- stats tab -->
+    <div class="content">
+        stats
+    </div>
+
+    <a href="{% url 'logout' %}">Logout</a>
+</div>
 
 {% endblock content %}

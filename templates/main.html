@@ -23,16 +23,7 @@
         <div class="wrapper">
             {% block content %}
             {% endblock content %}
-        </div>
-        
-        <!-- Debug messages will be output here, Todo Remove -->
-        {% if messages %}
-        <ul class="debug-messages">
-            {% for message in messages %}
-            <li {% if message.tags %} class="{{ message.tags }}" {% endif %}> {{ message }} </li>
-            {% endfor %}
-        </ul>
-        {% endif %}        
+        </div>     
 
         <!-- Load Javascript for page -->
         <script src="{% static 'scripts/main.js' %}"></script>
