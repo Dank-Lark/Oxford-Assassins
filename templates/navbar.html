@@ -39,7 +39,7 @@
             <!-- Login or Account/Logout -->
             {% if request.user.is_authenticated %}
                 <a href="{% url 'account' %}" class="navbar_button">
-                    <li> {{request.user.username}} </li>
+                    <li> Account </li>
                 </a>
             {% else %}
                 <a href="{% url 'login' %}" class="navbar_button">

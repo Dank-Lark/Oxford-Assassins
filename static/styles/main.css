@@ -142,12 +142,9 @@ section {
 
     display: grid; 
 /** grid-template-columns: responsive; */
-/** grid-template-areas: responsive; */
 }
     
 #navbar_logo {
-    grid-area: "ga_logo";
-
     display: grid; /* logo then title */
     grid-template-columns: auto 1fr;
 }
@@ -156,9 +153,7 @@ section {
     width: 72px; /* fix logo size */
 }
 
-#navbar_menu {
-    grid-area: "ga_menu";
-    
+#navbar_menu {   
     padding: 0; /* surround buttons */
 /** margin: responsive; */
 /** gap: responsive; */
@@ -189,7 +184,6 @@ section {
 @media (min-width: 900px) {
     #navbar {
         grid-template-columns: 1fr auto; /* logo left, navigation right */
-        grid-template-areas: "ga_logo ga_menu";
     }
     #navbar_menu {
         margin: 1em; /* spread out buttons */
@@ -201,9 +195,6 @@ section {
 }
 /* Mobile */
 @media (max-width: 900px) {
-    #navbar {
-        grid-template-areas: "ga_logo" "ga_menu"; /* logo left, navigation underneath */
-    }
     #navbar_menu {
         margin: 0 1em 0 1em; /* remove top and bottom margins */
         gap: 0.25em; /* buttons closer together */
@@ -393,4 +384,75 @@ section {
     #cabal_cards {
         grid-template-columns: 1fr;
     }
+}
+
+/* ############################################################################################################################ */
+/* ########################################################### forms ########################################################## */
+/* ############################################################################################################################ */
+
+form {
+    min-width: 40vw; 
+    margin-top: -0.5em;
+}
+form p {
+    display: grid; /* label left, input right, text below */
+    grid-template-columns: auto 1fr;
+    grid-template-areas: "label input" "text text";
+}
+form label {
+    grid-area: label; 
+
+    min-width: 75px;
+    margin-right: 0.5em;
+}
+form input, select {
+    grid-area: input;
+
+    margin: 0;
+    padding-left: 0.4em;
+    border: 0;
+
+    background-color: var(--oga-dark);
+    color: var(--oga-text-white);
+    font-family: var(--oga-text);
+}
+form span {
+    grid-area: text;
+}
+form input[type="submit"] {
+    margin-top: 0.5em; /* login/sign-up button */
+    width: 100%;
+
+    padding-top: 0.35em;
+    padding-bottom: 0.35em;
+
+    font-size: large;
+
+    border-bottom-width: 2px; /* white bottom border */
+    border-bottom-style: solid;
+    border-color: var(--oga-white);
+}
+form input[type="submit"]:hover { background-color: var(--oga-light); }
+form input[type="submit"]:active { background-color: var(--oga-red); }
+
+/* ############################################################################################################################ */
+/* ########################################################## account ######################################################### */
+/* ############################################################################################################################ */
+
+#account {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas: "user assassin" "stats stats";
+}
+
+#account .content:nth-of-type(1) {
+    grid-area: user;
+}
+
+#account .content:nth-of-type(2) {
+    grid-area: assassin;
+}
+
+#account .content:nth-of-type(3) {
+    grid-area: stats;
 }
