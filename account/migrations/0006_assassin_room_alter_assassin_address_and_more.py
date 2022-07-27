@@ -13,13 +13,13 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='assassin',
             name='room',
-            field=models.CharField(default='1', max_length=256, verbose_name='accomodation room'),
+            field=models.CharField(default='1', max_length=256, verbose_name='accommodation room'),
             preserve_default=False,
         ),
         migrations.AlterField(
             model_name='assassin',
             name='address',
-            field=models.CharField(max_length=256, verbose_name='accomodation address'),
+            field=models.CharField(max_length=256, verbose_name='accommodation address'),
         ),
         migrations.AlterField(
             model_name='assassin',

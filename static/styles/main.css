@@ -95,6 +95,22 @@ section {
     padding-left: 1.3em;
 }
 
+.button {
+    display: grid; /* center align text */
+    justify-content: center;
+
+    padding: 1em; /* buttons have no top, and large bottom margins */
+    margin: 0 0.75em 2em 0.75em; 
+
+    border-bottom-width: 2px; /* white bottom border */
+    border-bottom-style: solid;
+    border-color: var(--oga-white);
+
+    background-color: var(--oga-mid); /* grey background */
+}
+.button:hover  { background-color: var(--oga-light); }
+.button:active { background-color: var(--oga-red); }
+
 /* centers content horizontally */
 .center_h {
     display: grid;
@@ -249,22 +265,6 @@ section {
 /** margin-right: responsive; */
 }
 
-#home_buttons a {
-    display: grid; /* center align text */
-    justify-content: center;
-
-    padding: 1em; /* buttons have no top, and large bottom margins */
-    margin: 0 0.75em 2em 0.75em; 
-
-    border-bottom-width: 2px; /* white bottom border */
-    border-bottom-style: solid;
-    border-color: var(--oga-white);
-
-    background-color: var(--oga-mid); /* grey background */
-}
-#home_buttons a:hover { background-color: var(--oga-light); }
-#home_buttons a:active { background-color: var(--oga-red); }
-
 #home_buttons h3 {
     margin: 0; /* text has no margin */
 }
@@ -369,8 +369,8 @@ form input[type="submit"]:active { background-color: var(--oga-red); }
 
 #account {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-template-areas: "user assassin" "stats stats";
+/** grid-template-columns: responsive; /*
+/** grid-template-areas: responsive; */
 }
 
 #account .content:nth-of-type(1) {
@@ -378,9 +378,32 @@ form input[type="submit"]:active { background-color: var(--oga-red); }
 }
 
 #account .content:nth-of-type(2) {
-    grid-area: assassin;
+    grid-area: password;
 }
 
 #account .content:nth-of-type(3) {
+    grid-area: assassin;
+}
+
+#account .content:nth-of-type(4) {
     grid-area: stats;
+}
+
+.logout_span {
+    margin-top: 1em;
+    grid-area: logout;
+}
+
+/* Desktop */
+@media (min-width: 900px) {
+    #account {
+        grid-template-columns: 1fr 1fr;
+        grid-template-areas: "user assassin" "password assassin" "stats stats" "logout logout";
+    }
+}
+/* Mobile */
+@media (max-width: 900px) {
+    #account {
+        grid-template-areas: "user" "password" "assassin" "stats" "logout";
+    }
 }

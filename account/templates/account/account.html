@@ -11,9 +11,9 @@
 
             <input type="submit" value="Update User"/>
         </form>
+    </div>
 
-        <br>
-
+    <div class="content">
         <form method="POST" action="change_password/">
             {% csrf_token %}
             
@@ -34,11 +34,15 @@
     </div>
 
     <!-- stats tab -->
-    <div class="content">
-        stats
+    <div class="content center_h">
+        <h3>Player Statistics Coming Soon...</h3>
     </div>
 
-    <a href="{% url 'logout' %}">Logout</a>
+    <div class="logout_span center_h">
+        <a href="{% url 'logout' %}" class="button">
+            <h3>Logout</h3>
+        </a>
+    </div>
 </div>
 
 {% endblock content %}

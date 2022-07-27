@@ -3,6 +3,7 @@ from django.contrib.auth.decorators import login_required
 from account.forms import PayMembershipForm, RegisterUserForm, UpdateUserForm, CreateAssassinForm, UpdateAssassinForm, ChangePasswordForm
 from account.models import Assassin, User
 from django.contrib.auth import authenticate, login, logout
+from django.contrib import messages
 
 # Account Views:
 #   account
@@ -10,6 +11,20 @@ from django.contrib.auth import authenticate, login, logout
 #   logoutForm
 #   registerForm
 #   profile
+
+def alertErrors(request, form_errors):
+    errors = str(
+        " ".join(
+            map(
+                lambda s: s[4:], 
+                filter(
+                    lambda s: s.startswith("  * "), 
+                    form_errors.as_text().split("\n")
+                )
+            )
+        )
+    )
+    messages.error(request, errors)
 
 ####################################################################################################
 
@@ -58,6 +73,8 @@ def updateUser(request):
         user.username = user.username.lower()
         user.email = user.email.lower()
         user.save()
+    else:
+        alertErrors(request, form.errors)
 
     return redirect('account')
 
@@ -75,6 +92,8 @@ def changePassword(request):
 
     if form.is_valid():
         form.save()
+    else:
+        alertErrors(request, form.errors)
 
     return redirect('account')
 
@@ -93,6 +112,8 @@ def createAssassin(request):
         user = request.user
         user.assassin = form.instance
         user.save()
+    else:
+        alertErrors(request, form.errors)
         
     return redirect('account')
     
@@ -109,6 +130,8 @@ def updateAssassin(request):
     form = UpdateAssassinForm(request.POST, instance=request.user.assassin)
     if form.is_valid():
         form.save()
+    else:
+        alertErrors(request, form.errors)
 
     return redirect('account')
 
@@ -126,6 +149,8 @@ def payMembership(request):
         user = request.user
         user.request_pay = True
         user.save()
+    else:
+        alertErrors(request, form.errors)
 
     return redirect('account')
 
@@ -172,6 +197,8 @@ def registerForm(request):
             user.save()
             login(request, user)
             return redirect('home')
+        else:
+            alertErrors(request, form.errors)
 
     context = { 
         'page': 'register', 

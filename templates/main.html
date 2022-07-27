@@ -25,6 +25,13 @@
             {% endblock content %}
         </div>     
 
+        {% if messages %}
+            {% for message in messages %}
+                <script>
+                    alert("{{ message }}")
+                </script>
+            {% endfor %}
+        {% endif %}
         <!-- Load Javascript for page -->
         <script src="{% static 'scripts/main.js' %}"></script>
     </body>
