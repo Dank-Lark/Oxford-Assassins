@@ -17,3 +17,8 @@ ENV/
 env.bak/ 
 venv.bak/
 .python-version
+
+# Security
+protokey
+makelive.sh
+makedebug.sh
