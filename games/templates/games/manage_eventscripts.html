@@ -1,0 +1,27 @@
+{% extends 'main.html' %}
+
+{% block content %}
+
+<h2>Manage Events</h2>
+<a href="{% url 'manage' %}">
+    <p>back to management</p>
+</a>
+<a href="{% url 'new_event' %}">
+    <p>create a new event</p>
+</a>
+
+{% for event in events %}
+    <div class="content">
+        <h3>{{ event }}</h3>
+        <p>
+            Config - [{{ event.event_config }}]
+        </p>
+        <p>
+            Timing - [Start offset: {{ event.event_start }}, Duration: {{ event.event_duration }} ]
+        </p>
+    </div>
+{% empty %}
+    <h3>No events found</h3>
+{% endfor %}
+
+{% endblock content %}

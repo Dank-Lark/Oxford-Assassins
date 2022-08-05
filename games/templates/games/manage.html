@@ -1,0 +1,95 @@
+{% extends 'main.html' %}
+
+{% block content %}
+
+<!-- games -->
+<div class="content rrc_l">
+    <div>
+        <h2>Games</h2>
+        <p>
+            Game models contain information about a game (title and description), a script that dictates the rules of the game, and timing information (start date and duration).
+        </p>
+    </div>
+    <div class="rcr_c">
+        <a href="{% url 'manage_games' %}">
+            <h3>View {{ count_games }} Games</h3>
+        </a>
+        <a href="{% url 'new_game' %}">
+            <h3>Create New Game</h3>
+        </a>
+    </div>
+</div>
+
+<!-- flags -->
+<div class="content rrc_l">
+    <div>
+        <h2>Flags</h2>
+        <p>
+            Flag models represent teams, status effects, etc. They contain information about a flag (name, visibility, and friendly status), weapon, context, and indirect specific permissions, multipliers, and bonuses, and information about the flag's behaviour on the event of a kill or death.
+        </p>
+    </div>
+    <div class="rcr_c">
+        <a href="{% url 'manage_flags' %}">
+            <h3>View {{ count_flags }} Flags</h3>
+        </a>
+        <a href="{% url 'new_flag' %}">
+            <h3>Create New Flag</h3>
+        </a>
+    </div>
+</div>
+
+<!-- scripts -->
+<div class="content rrc_l">
+    <div>
+        <h2>Scripts</h2>
+        <p>
+            Game script models contain a primary configuration which runs throughout the game, and a selection of event scripts that temporarily override the primary configuration for the duration of an event.
+        </p>
+    </div>
+    <div class="rcr_c">
+        <a href="{% url 'manage_scripts' %}">
+            <h3>View {{ count_scripts }} Scripts</h3>
+        </a>
+        <a href="{% url 'new_script' %}">
+            <h3>Create New Script</h3>
+        </a>
+    </div>
+</div>
+
+<!-- events -->
+<div class="content rrc_l">
+    <div>
+        <h2>Events</h2>
+        <p>
+            Event script models contain a configuration that dictates the rules of the event, and timing information (start offset and duration).
+        </p>
+    </div>
+    <div class="rcr_c">
+        <a href="{% url 'manage_events' %}">
+            <h3>View {{ count_events }} Events</h3>
+        </a>
+        <a href="{% url 'new_event' %}">
+            <h3>Create New Event</h3>
+        </a>
+    </div>
+</div>
+
+<!-- configs -->
+<div class="content rrc_l">
+    <div>
+        <h2>Configs</h2>
+        <p>
+            Config script models dictate the rules of a game or event. They list weapon, context, and indirect specific permissions and points, information about respawn behaviour on event of a death, and whether to protect flags from transfering on the event of a kill or death.
+        </p>
+    </div>
+    <div class="rcr_c">
+        <a href="{% url 'manage_configs' %}">
+            <h3>View {{ count_configs }} Configs</h3>
+        </a>
+        <a href="{% url 'new_config' %}">
+            <h3>Create New Config</h3>
+        </a>
+    </div>
+</div>
+
+{% endblock content %}

@@ -28,7 +28,6 @@ def alertErrors(request, form_errors):
 
 ####################################################################################################
 
-
 @login_required(login_url='login')
 def account(request):
     form_user = UpdateUserForm(instance=request.user)
@@ -57,9 +56,7 @@ def account(request):
     }
     return render(request, 'account/account.html', context)
 
-
 ####################################################################################################
-
 
 @login_required(login_url='login')
 def updateUser(request):
@@ -78,10 +75,7 @@ def updateUser(request):
 
     return redirect('account')
 
-
-    
 ####################################################################################################
-
 
 @login_required(login_url='login')
 def changePassword(request):
@@ -97,9 +91,7 @@ def changePassword(request):
 
     return redirect('account')
 
-
 ####################################################################################################
-
 
 @login_required(login_url='login')
 def createAssassin(request):
@@ -116,11 +108,8 @@ def createAssassin(request):
         alertErrors(request, form.errors)
         
     return redirect('account')
-    
-
 
 ####################################################################################################
-
 
 @login_required(login_url='login')
 def updateAssassin(request):
@@ -135,9 +124,7 @@ def updateAssassin(request):
 
     return redirect('account')
 
-
 ####################################################################################################
-
 
 @login_required(login_url='login')
 def payMembership(request):
@@ -154,9 +141,7 @@ def payMembership(request):
 
     return redirect('account')
 
-
 ####################################################################################################
-
 
 def loginForm(request):
     if request.user.is_authenticated:
@@ -179,9 +164,7 @@ def loginForm(request):
     context = { 'page': 'login' }
     return render(request, 'account/loginregister.html', context)
 
-
 ####################################################################################################
-
 
 def registerForm(request):
     if request.user.is_authenticated:
@@ -206,17 +189,13 @@ def registerForm(request):
     }
     return render(request, 'account/loginregister.html', context)
 
-
 ####################################################################################################
-
 
 def logoutForm(request):
     logout(request)
     return redirect('home')
 
-
 ####################################################################################################
-
 
 @login_required(login_url='login')
 def profile(request):

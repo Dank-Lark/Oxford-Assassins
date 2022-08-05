@@ -121,6 +121,8 @@ COLLEGE_CHOICES = [
     ("WYC", "Wycliffe Hall"),#
 ]
 
+####################################################################################################
+
 class Assassin(models.Model):
     pseudonym = models.CharField(max_length=100)
     
@@ -136,6 +138,8 @@ class Assassin(models.Model):
     
     def __str__(self):
         return self.pseudonym
+
+####################################################################################################
 
 class User(AbstractUser):
     first_name = models.CharField("first name", max_length=150, blank=False)

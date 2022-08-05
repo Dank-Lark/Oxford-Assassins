@@ -1,0 +1,30 @@
+{% extends 'main.html' %}
+
+{% block content %}
+
+<h2>Manage Games</h2>
+<a href="{% url 'manage' %}">
+    <p>back to management</p>
+</a>
+<a href="{% url 'new_game' %}">
+    <p>create a new game</p>
+</a>
+
+{% for game in games %}
+    <div class="content">
+        <h3>{{ game }}</h3>
+        <p>
+            {{ game.description }}
+        </p>
+        <p>
+            Script - [ {{ game.game_script }} ]
+        </p>
+        <p>
+            Timing - [ Start date: {{ event.event_start }}, Duration: {{ event.event_duration }} ]
+        </p>
+    </div>
+{% empty %}
+    <h3>No games found</h3>
+{% endfor %}
+
+{% endblock content %}

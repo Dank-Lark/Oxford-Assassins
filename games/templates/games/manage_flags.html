@@ -1,0 +1,128 @@
+{% extends 'main.html' %}
+
+{% block content %}
+
+<h2>Manage Flags</h2>
+<a href="{% url 'manage' %}">
+    <p>back to management</p>
+</a>
+<a href="{% url 'new_flag' %}">
+    <p>create a new flag</p>
+</a>
+
+{% for flag in flags %}
+    <div class="content">
+        <h3>{{ flag }}</h3>
+        <p>
+            Config - [ Visibility: 
+            {% if flag.visibility == "EVR" %}
+                All players, 
+            {% elif flag.visibility == "SHR" %}
+                Flagged players,
+            {% else %}
+                Hidden, 
+            {% endif %}
+            Friendly: 
+            {% if flag.friendly %}
+                True, 
+            {% else %}
+                False, 
+            {% endif %}
+            ]
+        </p>
+        <p>
+            Weaponry - [
+            melee: 
+            {% if flag.allowed_melee %}
+                ×{{ flag.multiplier_melee }} +{{ flag.bonus_melee }}, 
+            {% else %}
+                banned, 
+            {% endif %}
+            thrown: 
+            {% if flag.allowed_thrown %}
+                ×{{ flag.multiplier_thrown }} +{{ flag.bonus_thrown }}, 
+            {% else %}
+                banned, 
+            {% endif %}
+            ranged: 
+            {% if flag.allowed_ranged %}
+                ×{{ flag.multiplier_ranged }} +{{ flag.bonus_ranged }}, 
+            {% else %}
+                banned, 
+            {% endif %}
+            animal: 
+            {% if flag.allowed_melee %}
+                ×{{ flag.multiplier_animal }} +{{ flag.bonus_animal }}, 
+            {% else %}
+                banned, 
+            {% endif %}
+            costume: 
+            {% if flag.allowed_melee %}
+                ×{{ flag.multiplier_costume }} +{{ flag.bonus_costume }} 
+            {% else %}
+                banned 
+            {% endif %}
+            ]
+        </p>
+        <p>
+            Contexts - [
+            normal: 
+            {% if flag.allowed_normal %}
+                ×{{ flag.multiplier_normal }} +{{ flag.bonus_normal }}, 
+            {% else %}
+                banned, 
+            {% endif %}
+            raid: 
+            {% if flag.allowed_raid %}
+                ×{{ flag.multiplier_raid }} +{{ flag.bonus_raid }}, 
+            {% else %}
+                banned, 
+            {% endif %}
+            duel: 
+            {% if flag.allowed_duel %}
+                ×{{ flag.multiplier_duel }} +{{ flag.bonus_duel }} 
+            {% else %}
+                banned 
+            {% endif %}
+            ]
+        </p>
+        <p>
+            Indirects - [
+            indirect: 
+            {% if flag.allowed_indirect %}
+                ×{{ flag.multiplier_indirect }} +{{ flag.bonus_indirect }} 
+            {% else %}
+                banned 
+            {% endif %}
+            ]
+        </p>
+        <p>
+            Flags - [
+            On Kill: 
+            {% if flag.on_kill == "KNP" %}
+                Keep, 
+            {% elif flag.on_kill == "LNP" %}
+                Lose, 
+            {% elif flag.on_kill == "KAP" %}
+                Keep and Pass, 
+            {% else %}
+                Lose and Pass, 
+            {% endif %}
+            On Death: 
+            {% if flag.on_kill == "KNP" %}
+                Keep, 
+            {% elif flag.on_kill == "LNP" %}
+                Lose, 
+            {% elif flag.on_kill == "KAP" %}
+                Keep and Pass, 
+            {% else %}
+                Lose and Pass, 
+            {% endif %}
+            ]
+        </p>
+    </div>
+{% empty %}
+    <h3>No flags found</h3>
+{% endfor %}
+
+{% endblock content %}

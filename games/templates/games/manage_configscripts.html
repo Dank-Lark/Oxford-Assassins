@@ -1,0 +1,89 @@
+{% extends 'main.html' %}
+
+{% block content %}
+
+<h2>Manage Configs</h2>
+<a href="{% url 'manage' %}">
+    <p>back to management</p>
+</a>
+<a href="{% url 'new_config' %}">
+    <p>create a new config</p>
+</a>
+
+{% for config in configs %}
+    <div class="content">
+        <h3>{{ config }}</h3>
+        <p>
+            Weaponry - [
+            {% if config.allowed_melee %}
+                melee: {{ config.points_melee }}, 
+            {% endif %}
+            {% if config.allowed_thrown %}
+                thrown: {{ config.points_thrown }}, 
+            {% endif %}
+            {% if config.allowed_ranged %}
+                ranged: {{ config.points_ranged }}, 
+            {% endif %}
+            {% if config.allowed_melee %}
+                animal: {{ config.points_animal }}, 
+            {% endif %}
+            {% if config.allowed_melee %}
+                costume: {{ config.points_costume }}
+            {% endif %}
+            ]
+        </p>
+        <p>
+            Contexts - [
+            {% if config.allowed_normal %}
+                normal: {{ config.points_normal }}, 
+            {% endif %}
+            {% if config.allowed_raid %}
+                raid: {{ config.points_raid }}, 
+            {% endif %}
+            {% if config.allowed_duel %}
+                duel: {{ config.points_duel }}
+            {% endif %}
+            ]
+        </p>
+        <p>
+            Indirects - [
+            {% if config.allowed_indirect %}
+                indirect: {{ config.points_indirect }}
+            {% endif %}
+            ]
+        </p>
+        <p>
+            Respawns - [ 
+            {% if config.respawn_start %}
+                Global respawn on start, 
+            {% endif %}
+            {% if config.respawn_count == 0 %}
+                No in-config respawns,
+            {% else %}
+                {% if config.respawn_count == 32767 %}
+                    Infinite in-config respawns 
+                {% else %}
+                    {{ config.respawn_count }} in-config respawns 
+                {% endif %}
+                with {{ config.respawn_time }} cooldown, 
+            {% endif %}
+            {% if config.respawn_end %}
+                Global respawn on end with {{ config.respawn_delay }} cooldown
+            {% endif %}
+            ]
+        </p>
+        <p>
+            Flags - [
+            {% if config.protect_flags %}
+                prevent flag transfers
+            {% else %}
+                allow flag transfers
+            {% endif %}
+            ]
+        </p>
+    </div>
+{% empty %}
+    <h3>No configs found</h3>
+{% endfor %}
+
+{% endblock content %}

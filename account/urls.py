@@ -3,6 +3,11 @@ from . import views
 
 # Account URLs:
 #   account
+#   updateUser
+#   changePassword
+#   createAssassin
+#   updateAssassin
+#   payMembership
 #   login
 #   logout
 #   register
