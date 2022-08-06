@@ -166,9 +166,6 @@ nav {
     background-color: var(--oga-black); /* black background */
 
     z-index: 999; /* display on top */
-
-    display: grid; 
-/** grid-template-columns: responsive; */
 }
     
 #navbar_logo {
@@ -209,9 +206,6 @@ nav {
 
 /* Desktop */
 @media (min-width: 900px) {
-    #navbar {
-        grid-template-columns: 1fr auto; /* logo left, navigation right */
-    }
     #navbar_menu {
         margin: 1em; /* spread out buttons */
         gap: 1em;
