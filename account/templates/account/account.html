@@ -3,34 +3,38 @@
 {% block content %}
 <div id="account">
     <!-- edit account data -->
-    <div class="content">
-        <form method="POST" action="update_user/">
-            {% csrf_token %}
-            
-            {{ form_user.as_p }}
+    <div class="rrc_c">
+        <div>
+            <div class="content">
+                <form method="POST" action="update_user/">
+                    {% csrf_token %}
+                    
+                    {{ form_user.as_p }}
 
-            <input type="submit" value="Update User"/>
-        </form>
-    </div>
+                    <input type="submit" value="Update User"/>
+                </form>
+            </div>
 
-    <div class="content">
-        <form method="POST" action="change_password/">
-            {% csrf_token %}
-            
-            {{ form_password.as_p }}
+            <div class="content">
+                <form method="POST" action="change_password/">
+                    {% csrf_token %}
+                    
+                    {{ form_password.as_p }}
 
-            <input type="submit" value="Change Password"/>
-        </form>
-    </div>
+                    <input type="submit" value="Change Password"/>
+                </form>
+            </div>
+        </div>
 
-    <div class="content">
-        <form method="POST" action="{{ action_assassin }}">
-            {% csrf_token %}
+        <div class="content">
+            <form method="POST" action="{{ action_assassin }}">
+                {% csrf_token %}
 
-            {{ form_assassin.as_p }}
+                {{ form_assassin.as_p }}
 
-            <input type="submit" value="{{ value_assassin }}"/>
-        </form>
+                <input type="submit" value="{{ value_assassin }}"/>
+            </form>
+        </div>
     </div>
 
     <!-- stats tab -->

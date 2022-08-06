@@ -131,10 +131,10 @@ class Assassin(models.Model):
     
     subject = models.CharField("subject", max_length=3, choices=SUBJECT_CHOICES)
     college = models.CharField("college", max_length=3, choices=COLLEGE_CHOICES)
-    startYear = models.PositiveSmallIntegerField("year matriculated")
-    address = models.CharField("accommodation address", max_length=256)
-    room = models.CharField("accommodation room", max_length=256)
-    postal = models.CharField("(optional) postal address", max_length=256, blank=True)
+    startYear = models.PositiveSmallIntegerField("matriculated")
+    address = models.CharField("address", max_length=256)
+    room = models.CharField("room number", max_length=256)
+    postal = models.CharField("postal address", max_length=256, blank=True)
     
     def __str__(self):
         return self.pseudonym

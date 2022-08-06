@@ -96,7 +96,7 @@ section {
 }
 
 .button {
-    display: grid; /* center align text */
+    display: flex; /* center align text */
     justify-content: center;
 
     padding: 1em; /* buttons have no top, and large bottom margins */
@@ -113,19 +113,17 @@ section {
 
 /* centers content horizontally */
 .center_h {
-    display: grid;
+    display: flex;
     justify-content: center;
 }
 
 /* centers content vertically */
 .center_v {
-    display: grid;
-    grid-template-rows: 1fr auto 1fr;
+    display: flex;
+    justify-content: center;
 }
-.center_v::before { content: ""; }
-.center_v::after { content: ""; }
 
-.rrc_a, .rrc_l, .rrc_c, .rrc_r, .rcr_a, .rcr_l, .rcr_c, .rcr_r {
+.rrc_a, .rrc_l, .rrc_r, .rrc_c, .rcr_a, .rcr_l, .rcr_r, .rcr_c {
     display: grid;
 /** grid-template-columns: responsive; */
 }
@@ -140,8 +138,8 @@ section {
     }
     .rrc_a { grid-template-columns: auto auto; }
     .rrc_l { grid-template-columns: 1fr  auto; }
-    .rrc_c { grid-template-columns: auto 1fr; }
-    .rrc_r { grid-template-columns: 1fr  1fr; }
+    .rrc_r { grid-template-columns: auto 1fr; }
+    .rrc_c { grid-template-columns: 1fr  1fr; }
 }
 /* Mobile */
 @media (max-width: 900px) {
@@ -153,15 +151,15 @@ section {
     }
     .rcr_a { grid-template-columns: auto auto; }
     .rcr_l { grid-template-columns: 1fr  auto; }
-    .rcr_c { grid-template-columns: auto 1fr; }
-    .rcr_r { grid-template-columns: 1fr  1fr; }
+    .rcr_r { grid-template-columns: auto 1fr; }
+    .rcr_c { grid-template-columns: 1fr  1fr; }
 }
 
 /* ############################################################################################################################ */
 /* ########################################################## navbar ########################################################## */
 /* ############################################################################################################################ */
 
-#navbar {    
+nav {    
     position: fixed; /* fixed to top of screen */
     width: 100%;
 
@@ -307,7 +305,8 @@ section {
 /* ######################################################## sections ########################################################## */
 /* ############################################################################################################################ */
 
-section:not(:first-of-type) {
+/* Sections not including "home" */
+section:not(:first-of-type) { 
     display: flex;
     flex-direction: column;
 }
@@ -343,7 +342,7 @@ form p {
 form label {
     grid-area: label; 
 
-    min-width: 75px;
+    min-width: 102px;
     margin-right: 0.5em;
 }
 form input, select {
@@ -380,43 +379,6 @@ form input[type="submit"]:active { background-color: var(--oga-red); }
 /* ########################################################## account ######################################################### */
 /* ############################################################################################################################ */
 
-#account {
-    display: grid;
-/** grid-template-columns: responsive; /*
-/** grid-template-areas: responsive; */
-}
-
-#account .content:nth-of-type(1) {
-    grid-area: user;
-}
-
-#account .content:nth-of-type(2) {
-    grid-area: password;
-}
-
-#account .content:nth-of-type(3) {
-    grid-area: assassin;
-}
-
-#account .content:nth-of-type(4) {
-    grid-area: stats;
-}
-
 .logout_span {
     margin-top: 1em;
-    grid-area: logout;
-}
-
-/* Desktop */
-@media (min-width: 900px) {
-    #account {
-        grid-template-columns: 1fr 1fr;
-        grid-template-areas: "user assassin" "password assassin" "stats stats" "logout logout";
-    }
-}
-/* Mobile */
-@media (max-width: 900px) {
-    #account {
-        grid-template-areas: "user" "password" "assassin" "stats" "logout";
-    }
 }

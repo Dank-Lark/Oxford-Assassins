@@ -17,7 +17,6 @@
     </head>
 
     <body>
-        <!-- Navigation Bar at top of every page -->
         {% include 'navbar.html' %}
 
         <div class="wrapper">
@@ -32,7 +31,7 @@
                 </script>
             {% endfor %}
         {% endif %}
-        <!-- Load Javascript for page -->
-        <script src="{% static 'scripts/main.js' %}"></script>
+
+        {% comment %} <script src="{% static 'scripts/main.js' %}"></script> {% endcomment %}
     </body>
 </html>

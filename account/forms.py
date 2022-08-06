@@ -36,14 +36,11 @@ class UpdateUserForm(UserChangeForm):
         }
 
 class ChangePasswordForm(PasswordChangeForm):
-    # password1 = forms.CharField(required=True, label="new password", widget=forms.PasswordInput(attrs={'class': 'form-control'}),
-    #                   error_messages={ 'required': ''})
-    # password2 = forms.PasswordInput()
-
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['new_password1'].help_text = None
         self.fields['new_password2'].help_text = None
+        self.fields['new_password2'].label = "New password"
 
 class CreateAssassinForm(forms.ModelForm):
     class Meta:
