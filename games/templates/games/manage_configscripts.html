@@ -2,88 +2,99 @@
 
 {% block content %}
 
-<h2>Manage Configs</h2>
-<a href="{% url 'manage' %}">
-    <p>back to management</p>
-</a>
-<a href="{% url 'new_config' %}">
-    <p>create a new config</p>
-</a>
+<div class="rrc_l">
+    <div class="content">
+        <h2>Manage Configs</h2>
+        <p>Config script models dictate the rules of a game or event. They list weapon, context, and indirect specific permissions and points, information about respawn behaviour on event of a death, and whether to protect flags from transfering on the event of a kill or death.</p>
+    </div>
+    <div class="rcr_c manage_buttons">
+        <a href="{% url 'manage' %}" class="button">
+            <h3>Back to Management</h3>
+        </a>
+        <a href="{% url 'new_config' %}" class="button">
+            <h3>Create New Config</h3>
+        </a>
+    </div>
+</div>
 
 {% for config in configs %}
-    <div class="content">
-        <h3>{{ config }}</h3>
-        <p>
-            Weaponry - [
-            {% if config.allowed_melee %}
-                melee: {{ config.points_melee }}, 
-            {% endif %}
-            {% if config.allowed_thrown %}
-                thrown: {{ config.points_thrown }}, 
-            {% endif %}
-            {% if config.allowed_ranged %}
-                ranged: {{ config.points_ranged }}, 
-            {% endif %}
-            {% if config.allowed_melee %}
-                animal: {{ config.points_animal }}, 
-            {% endif %}
-            {% if config.allowed_melee %}
-                costume: {{ config.points_costume }}
-            {% endif %}
-            ]
-        </p>
-        <p>
-            Contexts - [
-            {% if config.allowed_normal %}
-                normal: {{ config.points_normal }}, 
-            {% endif %}
-            {% if config.allowed_raid %}
-                raid: {{ config.points_raid }}, 
-            {% endif %}
-            {% if config.allowed_duel %}
-                duel: {{ config.points_duel }}
-            {% endif %}
-            ]
-        </p>
-        <p>
-            Indirects - [
-            {% if config.allowed_indirect %}
-                indirect: {{ config.points_indirect }}
-            {% endif %}
-            ]
-        </p>
-        <p>
-            Respawns - [ 
-            {% if config.respawn_start %}
-                Global respawn on start, 
-            {% endif %}
-            {% if config.respawn_count == 0 %}
-                No in-config respawns,
-            {% else %}
-                {% if config.respawn_count == 32767 %}
-                    Infinite in-config respawns 
-                {% else %}
-                    {{ config.respawn_count }} in-config respawns 
+    <a href="{{ config.id }}">
+        <div class="content">
+            <h3>{{ config }}</h3>
+            <p>
+                Weaponry - [
+                {% if config.allowed_melee %}
+                    melee: {{ config.points_melee }}, 
                 {% endif %}
-                with {{ config.respawn_time }} cooldown, 
-            {% endif %}
-            {% if config.respawn_end %}
-                Global respawn on end with {{ config.respawn_delay }} cooldown
-            {% endif %}
-            ]
-        </p>
-        <p>
-            Flags - [
-            {% if config.protect_flags %}
-                prevent flag transfers
-            {% else %}
-                allow flag transfers
-            {% endif %}
-            ]
-        </p>
-    </div>
+                {% if config.allowed_thrown %}
+                    thrown: {{ config.points_thrown }}, 
+                {% endif %}
+                {% if config.allowed_ranged %}
+                    ranged: {{ config.points_ranged }}, 
+                {% endif %}
+                {% if config.allowed_melee %}
+                    animal: {{ config.points_animal }}, 
+                {% endif %}
+                {% if config.allowed_melee %}
+                    costume: {{ config.points_costume }}
+                {% endif %}
+                ]
+            </p>
+            <p>
+                Contexts - [
+                {% if config.allowed_normal %}
+                    normal: {{ config.points_normal }}, 
+                {% endif %}
+                {% if config.allowed_raid %}
+                    raid: {{ config.points_raid }}, 
+                {% endif %}
+                {% if config.allowed_duel %}
+                    duel: {{ config.points_duel }}
+                {% endif %}
+                ]
+            </p>
+            <p>
+                Indirects - [
+                {% if config.allowed_indirect %}
+                    indirect: {{ config.points_indirect }}
+                {% endif %}
+                ]
+            </p>
+            <p>
+                Respawns - [ 
+                {% if config.respawn_start %}
+                    Global respawn on start, 
+                {% endif %}
+                {% if config.respawn_count == 0 %}
+                    No in-config respawns,
+                {% else %}
+                    {% if config.respawn_count == 32767 %}
+                        Infinite in-config respawns 
+                    {% else %}
+                        {{ config.respawn_count }} in-config respawns 
+                    {% endif %}
+                    with {{ config.respawn_time }} cooldown, 
+                {% endif %}
+                {% if config.respawn_end %}
+                    Global respawn on end with {{ config.respawn_delay }} cooldown
+                {% endif %}
+                ]
+            </p>
+            <p>
+                Flags - [
+                {% if config.protect_flags %}
+                    prevent flag transfers
+                {% else %}
+                    allow flag transfers
+                {% endif %}
+                ]
+            </p>
+        </div>
+    </a>
 {% empty %}
-    <h3>No configs found</h3>
+    <div class="content">
+        <h3>No Configs Found</h3>
+    </div>
 {% endfor %}
 
 {% endblock content %}

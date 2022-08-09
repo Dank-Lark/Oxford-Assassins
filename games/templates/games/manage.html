@@ -2,91 +2,128 @@
 
 {% block content %}
 
-<!-- games -->
 <div class="content rrc_l">
     <div>
+        <h2>Management</h2>
+        <p>
+            As an umpire you will be able to configure your game from this page, as well as viewing the games of previous umpires. MORE INFORMATION COMING SOON!
+        </p>
+    </div>
+    <ol>
+        <li>Start by creating a group to contain all the elements used for the game.</li>
+        <li>Create a game for the group, give it a title, description, and timing.</li>
+        <li>Create the Primary Config for the default rules used throughout your game.</li>
+        <li>Create the Flags used in your game to represent teams, status effects, etc.</li>
+        <li>Create the Configs for the special rules in your events.</li>
+        <li>Package these Configs into Events with offset timings and durations.</li>
+        <li>Package the Primary Config and Events to a Script, and attatch this to your game.</li>
+        <li>Congratulations, you're ready to publish your game for sign-ups!</li>
+    </ol>
+</div>
+
+<!-- groups -->
+<div class="rrc_l">
+    <div class="content">
+        <h2>Groups</h2>
+        <p>
+            Group models contain administrative information about a collection of objects
+        </p>
+    </div>
+    <div class="rcr_c manage_buttons">
+        <a href="{% url 'manage_group' %}" class="button">
+            <h3>View {{ count_groups }} Groups</h3>
+        </a>
+        <a href="{% url 'new_group' %}" class="button">
+            <h3>Create New Group</h3>
+        </a>
+    </div>
+</div>
+
+<!-- games -->
+<div class="rrc_l">
+    <div class="content">
         <h2>Games</h2>
         <p>
             Game models contain information about a game (title and description), a script that dictates the rules of the game, and timing information (start date and duration).
         </p>
     </div>
-    <div class="rcr_c">
-        <a href="{% url 'manage_games' %}">
+    <div class="rcr_c manage_buttons">
+        <a href="{% url 'manage_games' %}" class="button">
             <h3>View {{ count_games }} Games</h3>
         </a>
-        <a href="{% url 'new_game' %}">
+        <a href="{% url 'new_game' %}" class="button">
             <h3>Create New Game</h3>
         </a>
     </div>
 </div>
 
 <!-- flags -->
-<div class="content rrc_l">
-    <div>
+<div class="rrc_l">
+    <div class="content">
         <h2>Flags</h2>
         <p>
             Flag models represent teams, status effects, etc. They contain information about a flag (name, visibility, and friendly status), weapon, context, and indirect specific permissions, multipliers, and bonuses, and information about the flag's behaviour on the event of a kill or death.
         </p>
     </div>
-    <div class="rcr_c">
-        <a href="{% url 'manage_flags' %}">
+    <div class="rcr_c manage_buttons">
+        <a href="{% url 'manage_flags' %}" class="button">
             <h3>View {{ count_flags }} Flags</h3>
         </a>
-        <a href="{% url 'new_flag' %}">
+        <a href="{% url 'new_flag' %}" class="button">
             <h3>Create New Flag</h3>
         </a>
     </div>
 </div>
 
 <!-- scripts -->
-<div class="content rrc_l">
-    <div>
+<div class="rrc_l">
+    <div class="content">
         <h2>Scripts</h2>
         <p>
             Game script models contain a primary configuration which runs throughout the game, and a selection of event scripts that temporarily override the primary configuration for the duration of an event.
         </p>
     </div>
-    <div class="rcr_c">
-        <a href="{% url 'manage_scripts' %}">
+    <div class="rcr_c manage_buttons">
+        <a href="{% url 'manage_scripts' %}" class="button">
             <h3>View {{ count_scripts }} Scripts</h3>
         </a>
-        <a href="{% url 'new_script' %}">
+        <a href="{% url 'new_script' %}" class="button">
             <h3>Create New Script</h3>
         </a>
     </div>
 </div>
 
 <!-- events -->
-<div class="content rrc_l">
-    <div>
+<div class="rrc_l">
+    <div class="content">
         <h2>Events</h2>
         <p>
             Event script models contain a configuration that dictates the rules of the event, and timing information (start offset and duration).
         </p>
     </div>
-    <div class="rcr_c">
-        <a href="{% url 'manage_events' %}">
+    <div class="rcr_c manage_buttons">
+        <a href="{% url 'manage_events' %}" class="button">
             <h3>View {{ count_events }} Events</h3>
         </a>
-        <a href="{% url 'new_event' %}">
+        <a href="{% url 'new_event' %}" class="button">
             <h3>Create New Event</h3>
         </a>
     </div>
 </div>
 
 <!-- configs -->
-<div class="content rrc_l">
-    <div>
+<div class="rrc_l">
+    <div class="content">
         <h2>Configs</h2>
         <p>
             Config script models dictate the rules of a game or event. They list weapon, context, and indirect specific permissions and points, information about respawn behaviour on event of a death, and whether to protect flags from transfering on the event of a kill or death.
         </p>
     </div>
-    <div class="rcr_c">
-        <a href="{% url 'manage_configs' %}">
+    <div class="rcr_c manage_buttons">
+        <a href="{% url 'manage_configs' %}" class="button">
             <h3>View {{ count_configs }} Configs</h3>
         </a>
-        <a href="{% url 'new_config' %}">
+        <a href="{% url 'new_config' %}" class="button">
             <h3>Create New Config</h3>
         </a>
     </div>

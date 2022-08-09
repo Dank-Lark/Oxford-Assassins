@@ -2,6 +2,40 @@
 
 {% block content %}
 
+<div class="rrc_l">
+    <div class="content">
+        <h2>{% if new_object %}Create{% else %}Edit{% endif %} {{ object_type }}</h2>
+    </div>
+    <div class="manage_buttons">
+        <a href="{% url 'manage' %}" class="button">
+            <h3>Back to Management</h3>
+        </a>
+    </div>
+</div>
 
+<div class="center_h">
+    <div class="content">
+        <form method="POST" action="">
+            {% csrf_token %}
+            
+            {{ form.as_p }}
+
+            <input type="submit" value="{% if new_object %}Create{% else %}Edit{% endif %} {{ object_type }}"/>
+        </form>
+    </div>
+</div>
+
+{% if not new_object %}
+    <div class="rrc_l">
+        <div class="content">
+            <h2>Delete {{ object_type }}</h2>
+        </div>
+        <div class="manage_buttons">
+            <a href="{% url 'manage_delete' %}" class="button">
+                <h3>Delete</h3>
+            </a>
+        </div>
+    </div>
+{% endif %}
 
 {% endblock content %}

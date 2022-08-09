@@ -67,6 +67,7 @@ h1, h2, h3 {
 /* wraps page body */
 .wrapper {
     margin: 0.5em; /* margin around page - expects content to have 0.5em margin */
+    margin-bottom: 1em;
 /** margin-top: responsive; */
 }
 
@@ -80,7 +81,7 @@ section {
 /* wraps content */
 .content {
     padding: 1em; /* coloured box with padding and margin */
-    margin: 1em 0.5em 0 0.5em;
+    margin: 0.5em;
     background-color: var(--oga-mid);
 }
 .content h2, h3 {
@@ -100,7 +101,7 @@ section {
     justify-content: center;
 
     padding: 1em; /* buttons have no top, and large bottom margins */
-    margin: 0 0.75em 2em 0.75em; 
+    margin: 0 0.5em 1em 0.5em; 
 
     border-bottom-width: 2px; /* white bottom border */
     border-bottom-style: solid;
@@ -257,7 +258,7 @@ nav {
 }
 
 #home_tagline {
-    margin-top: 0; /* no margin between tagline and logo */
+    margin: 0 0 0.5em 0; /* no margin between tagline and logo */
 
     text-align: center; /* center text */
 }
@@ -375,4 +376,14 @@ form input[type="submit"]:active { background-color: var(--oga-red); }
 
 .logout_span {
     margin-top: 1em;
+}
+.logout_span h3 {
+    display: grid;
+    justify-content: center;
+    width: 140px;
+}
+
+.manage_buttons {
+    margin: 0.5em 0 -0.5em 0;
+    min-width: 258px;
 }

@@ -43,6 +43,11 @@
     </div>
 
     <div class="logout_span center_h">
+        {% if request.user.is_staff %}
+        <a href="{% url 'manage' %}" class="button">
+            <h3>Management</h3>
+        </a>
+        {% endif %}
         <a href="{% url 'logout' %}" class="button">
             <h3>Logout</h3>
         </a>

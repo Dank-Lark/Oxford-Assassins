@@ -1,4 +1,5 @@
 from datetime import datetime, timedelta
+from django.apps import apps
 from django.db import models
 from account.models import Assassin
 
@@ -46,46 +47,57 @@ FLAG_VISIBILITY = [
 
 ####################################################################################################
 
+class XASGroup(models.Model):
+    umpire    = models.ForeignKey(Assassin, on_delete=models.CASCADE)
+    reference = models.CharField("group reference", max_length=100)
+    created   = models.DateTimeField("date created", auto_now_add=True)
+
+    def __str__(self):
+        return self.reference
+
+####################################################################################################
+
 class ConfigScript(models.Model):
     '''Configuration details for an event or game.'''
 
     # General Configuration
-    config_name      = models.CharField("config name", max_length=100)
+    xas_group        = models.ForeignKey(XASGroup,                         on_delete=models.CASCADE)
+    config_name      = models.CharField("config name",                     max_length=100)
 
     # Weaponry Scoring Rules    
-    allowed_melee    = models.BooleanField("allow melee",                      default=True)
-    allowed_thrown   = models.BooleanField("allow thrown",                     default=True)
-    allowed_ranged   = models.BooleanField("allow ranged",                     default=True)
-    allowed_animal   = models.BooleanField("allow attack animal",              default=True)
-    allowed_costume  = models.BooleanField("allow costume",                    default=True)
-    points_melee     = models.PositiveSmallIntegerField("melee points",        default=10)
-    points_thrown    = models.PositiveSmallIntegerField("thrown points",       default=5)
-    points_ranged    = models.PositiveSmallIntegerField("ranged points",       default=5)
-    points_animal    = models.PositiveSmallIntegerField("animal points",       default=10)
-    points_costume   = models.PositiveSmallIntegerField("costume points",      default=10)
+    allowed_melee    = models.BooleanField("allow melee",                  default=True)
+    allowed_thrown   = models.BooleanField("allow thrown",                 default=True)
+    allowed_ranged   = models.BooleanField("allow ranged",                 default=True)
+    allowed_animal   = models.BooleanField("allow animal",                 default=True)
+    allowed_costume  = models.BooleanField("allow costume",                default=True)
+    points_melee     = models.PositiveSmallIntegerField("melee points",    default=10)
+    points_thrown    = models.PositiveSmallIntegerField("thrown points",   default=5)
+    points_ranged    = models.PositiveSmallIntegerField("ranged points",   default=5)
+    points_animal    = models.PositiveSmallIntegerField("animal points",   default=10)
+    points_costume   = models.PositiveSmallIntegerField("costume points",  default=10)
 
     # Context Scoring Rules
-    allowed_normal   = models.BooleanField("allow normal",                     default=True)
-    allowed_raid     = models.BooleanField("allow raids",                      default=True)
-    allowed_duel     = models.BooleanField("allow duels",                      default=True)
-    points_normal    = models.PositiveSmallIntegerField("normal bonus points", default=0)
-    points_raid      = models.PositiveSmallIntegerField("raid bonus points",   default=0)
-    points_duel      = models.PositiveSmallIntegerField("duel bonus points",   default=0)
+    allowed_normal   = models.BooleanField("allow normal",                 default=True)
+    allowed_raid     = models.BooleanField("allow raids",                  default=True)
+    allowed_duel     = models.BooleanField("allow duels",                  default=True)
+    points_normal    = models.PositiveSmallIntegerField("normal bonus",    default=0)
+    points_raid      = models.PositiveSmallIntegerField("raid bonus",      default=0)
+    points_duel      = models.PositiveSmallIntegerField("duel bonus",      default=0)
 
     # Indirect Rules
-    allowed_indirect = models.BooleanField("allow indirect",                   default=True)
-    points_indirect  = models.PositiveSmallIntegerField("indirect points",     default=10)
+    allowed_indirect = models.BooleanField("allow indirect",               default=True)
+    points_indirect  = models.PositiveSmallIntegerField("indirect points", default=10)
 
     # Respawn Rules
-    respawn_count    = models.PositiveSmallIntegerField("respawn count",       default=32767)
-    respawn_time     = models.DurationField("respawn time",                    default=timedelta(hours=6))
+    respawn_count    = models.PositiveSmallIntegerField("respawn count",   default=32767)
+    respawn_time     = models.DurationField("respawn time",                default=timedelta(hours=6))
 
-    respawn_start    = models.BooleanField("global respawn on start",          default=True)
-    respawn_end      = models.BooleanField("global respawn on end",            default=True)
-    respawn_delay    = models.DurationField("end respawn delay",               default=timedelta(minutes=30))
+    respawn_start    = models.BooleanField("global respawn on start",      default=True)
+    respawn_end      = models.BooleanField("global respawn on end",        default=True)
+    respawn_delay    = models.DurationField("end respawn delay",           default=timedelta(minutes=30))
 
     # Flag Rules
-    protect_flags    = models.BooleanField("prevent flag transfers",           default=False)
+    protect_flags    = models.BooleanField("prevent flag transfers",       default=False)
 
     # Functions
     def __str__(self):
@@ -148,6 +160,9 @@ class ConfigScript(models.Model):
 class EventScript(models.Model):
     '''ConfigScript with offset timing for an event in a game.'''
 
+    # General Configuration
+    xas_group      = models.ForeignKey(XASGroup,                on_delete=models.CASCADE)
+
     # Config
     event_config   = models.ForeignKey(ConfigScript,            on_delete=models.CASCADE)
     
@@ -166,6 +181,9 @@ class EventScript(models.Model):
 
 class GameScript(models.Model):
     '''A primary ConfigScript and a selection of EventScripts.'''
+
+    # General Configuration
+    xas_group      = models.ForeignKey(XASGroup, on_delete=models.CASCADE)
 
     # Script Listings
     primary_script = models.ForeignKey(ConfigScript, on_delete=models.CASCADE)
@@ -192,16 +210,17 @@ class GameScript(models.Model):
 class Game(models.Model):
     '''Information about a game, a script, and timing.'''
 
-    # Game Information
+    # General Configuration
+    xas_group     = models.OneToOneField(XASGroup,        on_delete=models.CASCADE)
     title         = models.CharField("game title",        max_length=100)
-    description   = models.TextField("game description")
+    description   = models.TextField("description")
 
     # Game Script
-    game_script   = models.ForeignKey(GameScript,         on_delete=models.SET_NULL, null=True)
+    game_script   = models.ForeignKey(GameScript,         on_delete=models.SET_NULL, null=True, blank=True)
 
     # Game Timing
-    game_start    = models.DateTimeField("game start")
-    game_duration = models.DurationField("game duration", default=timedelta(weeks=1))
+    game_start    = models.DateTimeField("game start",    default=datetime.today, help_text="Format:  yyyy-mm-dd hh:mm:ss")
+    game_duration = models.DurationField("game duration", default=timedelta(weeks=1), help_text="Format:  d hh:mm:ss")
 
     # Functions
     def __str__(self):
@@ -218,53 +237,54 @@ class Game(models.Model):
     def getConfig(self, time) -> ConfigScript:
         '''Which configuration is active at a given time'''
         return self.game_script.getConfig(time - self.game_start)
-        
+
 ####################################################################################################
 
 class Flag(models.Model):
     '''Represents teams, status effects, etc.'''
 
     # General Configuration
+    xas_group           = models.ForeignKey(XASGroup,                     on_delete=models.CASCADE)
     name                = models.CharField("flag name",                   max_length=100)
     visibility          = models.CharField("flag visibility",             max_length=3, choices=FLAG_VISIBILITY, default=EVERYONE)
     friendly            = models.BooleanField("flag friendly",            default=False)
 
     # Weapon Specific Permissions, Multipliers, and Bonuses
-    allowed_melee       = models.BooleanField("melee kills allowed",      default=True)
-    allowed_thrown      = models.BooleanField("thrown kills allowed",     default=True)
-    allowed_ranged      = models.BooleanField("ranged kills allowed",     default=True)
-    allowed_animal      = models.BooleanField("animal kills allowed",     default=True)
-    allowed_costume     = models.BooleanField("costume kills allowed",    default=True)
-    multiplier_melee    = models.FloatField("melee kill multiplier",      default=1)
-    multiplier_thrown   = models.FloatField("thrown kill multiplier",     default=1)
-    multiplier_ranged   = models.FloatField("ranged kill multiplier",     default=1)
-    multiplier_animal   = models.FloatField("animal kill multiplier",     default=1)
-    multiplier_costume  = models.FloatField("costume kill multiplier",    default=1)
-    bonus_melee         = models.FloatField("melee kill bonus",           default=0)
-    bonus_thrown        = models.FloatField("thrown kill bonus",          default=0)
-    bonus_ranged        = models.FloatField("ranged kill bonus",          default=0)
-    bonus_animal        = models.FloatField("animal kill bonus",          default=0)
-    bonus_costume       = models.FloatField("costume kill bonus",         default=0)
+    allowed_melee       = models.BooleanField("allow melee",       default=True)
+    allowed_thrown      = models.BooleanField("allow thrown",      default=True)
+    allowed_ranged      = models.BooleanField("allow ranged",      default=True)
+    allowed_animal      = models.BooleanField("allow animal",      default=True)
+    allowed_costume     = models.BooleanField("allow costume",     default=True)
+    multiplier_melee    = models.FloatField("melee multiplier",    default=1)
+    multiplier_thrown   = models.FloatField("thrown multiplier",   default=1)
+    multiplier_ranged   = models.FloatField("ranged multiplier",   default=1)
+    multiplier_animal   = models.FloatField("animal multiplier",   default=1)
+    multiplier_costume  = models.FloatField("costume multiplier",  default=1)
+    bonus_melee         = models.FloatField("melee bonus",         default=0)
+    bonus_thrown        = models.FloatField("thrown bonus",        default=0)
+    bonus_ranged        = models.FloatField("ranged bonus",        default=0)
+    bonus_animal        = models.FloatField("animal bonus",        default=0)
+    bonus_costume       = models.FloatField("costume bonus",       default=0)
 
     # Context Specific Permissions, Multipliers, and Bonuses
-    allowed_normal      = models.BooleanField("melee kills allowed",      default=True)
-    allowed_raid        = models.BooleanField("thrown kills allowed",     default=True)
-    allowed_duel        = models.BooleanField("ranged kills allowed",     default=True)
-    multiplier_normal   = models.FloatField("normal kill multiplier",     default=1)
-    multiplier_raid     = models.FloatField("raid kill multiplier",       default=1)
-    multiplier_duel     = models.FloatField("duel kill multiplier",       default=1)
-    bonus_raid          = models.FloatField("raid kill bonus",            default=0)
-    bonus_normal        = models.FloatField("normal kill bonus",          default=0)
-    bonus_duel          = models.FloatField("duel kill bonus",            default=0)
+    allowed_normal      = models.BooleanField("allow normal",      default=True)
+    allowed_raid        = models.BooleanField("allow raid",        default=True)
+    allowed_duel        = models.BooleanField("allow duel",        default=True)
+    multiplier_normal   = models.FloatField("normal multiplier",   default=1)
+    multiplier_raid     = models.FloatField("raid multiplier",     default=1)
+    multiplier_duel     = models.FloatField("duel multiplier",     default=1)
+    bonus_raid          = models.FloatField("raid bonus",          default=0)
+    bonus_normal        = models.FloatField("normal bonus",        default=0)
+    bonus_duel          = models.FloatField("duel bonus",          default=0)
 
     # Indirect Specific Permission, Multiplier, and Bonuse
-    allowed_indirect    = models.BooleanField("indirect kills allowed",   default=True)
-    multiplier_indirect = models.FloatField("indirect kill multiplier",   default=1)
-    bonus_indirect      = models.FloatField("indirect kill bonus",        default=0)
+    allowed_indirect    = models.BooleanField("allow indirect",    default=True)
+    multiplier_indirect = models.FloatField("indirect multiplier", default=1)
+    bonus_indirect      = models.FloatField("indirect bonus",      default=0)
 
     # Flag Transfer Behaviours
-    on_kill             = models.CharField("flag action on kill",         max_length=3, choices=FLAG_TRANSFER, default=KEEP)
-    on_death            = models.CharField("flag action on death",        max_length=3, choices=FLAG_TRANSFER, default=KEEP)
+    on_kill             = models.CharField("action on kill",       max_length=3, choices=FLAG_TRANSFER, default=KEEP)
+    on_death            = models.CharField("action on death",      max_length=3, choices=FLAG_TRANSFER, default=KEEP)
 
     # Functions
     def __str__(self):
@@ -348,19 +368,34 @@ class Flag(models.Model):
         '''How many bonus points does this flag award this kill'''
         return self._getWeaponBonus(report) + self._getContextBonus(report)
 
+    def totalPoints(self, time):
+        total = 0
+
+        Player = apps.get_model("games", "Player")
+        for player in Player.objects.filter(flags=self):
+            total += player.totalPoints(time)
+
+        FlagBonus = apps.get_model("games", "FlagBonus")
+        for bonus in FlagBonus.objects.filter(flag=self):
+            if bonus.date < time:
+                total += bonus.points
+
+        return total
+        
 ####################################################################################################
 
 class Player(models.Model):
     '''Connects an Assassin to a Game and holds in-game data about them.'''
     # Link Fields
     assassin       = models.ForeignKey(Assassin,  on_delete=models.SET_NULL, null=True)
-    game           = models.ForeignKey(Game,      on_delete=models.SET_NULL, null=True)
+    game           = models.ForeignKey(Game,      on_delete=models.CASCADE)
 
     # In-Game Data
-    alive          = models.BooleanField("is player alive", default=False)
+    alive          = models.BooleanField("is alive", default=False)
     game_respawns  = models.PositiveSmallIntegerField("game respawns")
     event_respawns = models.PositiveSmallIntegerField("event respawns")
     next_respawn   = models.DateTimeField("next respawn")
+
     flags          = models.ManyToManyField(Flag, verbose_name="player flags")
     
     # Functions
@@ -391,30 +426,51 @@ class Player(models.Model):
             self.save()
             return True # Respawned in game
 
+    def totalPoints(self, time):
+        total = 0
+
+        DirectReport = apps.get_model("games", "DirectReport")
+        for report in DirectReport.objects.filter(killer=self):
+            if report.confirm_date < time:
+                total += report.get_points()
+
+        IndirectReport = apps.get_model("games", "IndirectReport")
+        for report in IndirectReport.objects.filter(trapper=self):
+            if report.date_sprung < time:
+                total += report.get_points()
+
+        PlayerBonus = apps.get_model("games", "PlayerBonus")
+        for bonus in PlayerBonus.objects.filter(player=self):
+            if bonus.date < time:
+                total += bonus.points
+
+        return total
+            
 ####################################################################################################
 
 class DirectReport(models.Model):
     '''A report of a kill or death.'''
 
     # Players
-    killer           = models.ForeignKey(Player,               on_delete=models.SET_NULL, null=True, related_name="kills")
-    victim           = models.ForeignKey(Player,               on_delete=models.SET_NULL, null=True, related_name="deaths")
+    killer           = models.ForeignKey(Player,               on_delete=models.CASCADE, related_name="kills")
+    victim           = models.ForeignKey(Player,               on_delete=models.CASCADE, null=True, related_name="deaths")
     
     # Information
     weapon           = models.CharField("kill weapon",         max_length=3, choices=KILL_METHODS, default=MELEE)
     context          = models.CharField("kill context",        max_length=3, choices=KILL_CONTEXTS, default=NORMAL)
     location         = models.CharField("kill location",       max_length=256)
-    date             = models.DateTimeField("kill date",       auto_now=True)
+    kill_date        = models.DateTimeField("kill date",       default=datetime.now)
 
     # Report Content
-    killer_report    = models.TextField("killer report", null=True, blank=True)
-    victim_report    = models.TextField("victim report", null=True, blank=True)
+    killer_report    = models.TextField("killer report",       null=True, blank=True)
+    victim_report    = models.TextField("victim report",       null=True, blank=True)
     # killer_media     = models.FileField("killer report media", null=True, blank=True)
     # victim_media     = models.FileField("killer report media", null=True, blank=True)
 
     # Validation
     killer_validated = models.BooleanField("killer validated", default=False)
     victim_validated = models.BooleanField("victim validated", default=False)
+    confirm_date     = models.DateTimeField("confirm date",    null=True)
 
     # Functions
     def __str__(self):
@@ -463,12 +519,12 @@ class IndirectReport(models.Model):
     '''A report of a trap being laid or sprung.'''
 
     # Players
-    trapper         = models.ForeignKey(Player,               on_delete=models.SET_NULL, null=True, related_name="traps_set")
-    target          = models.ForeignKey(Player,               on_delete=models.SET_NULL, null=True, related_name="traps_recieved")
+    trapper         = models.ForeignKey(Player,               on_delete=models.CASCADE, null=True, related_name="traps_set")
+    target          = models.ForeignKey(Player,               on_delete=models.CASCADE, null=True, related_name="traps_recieved")
     
     # Information
     location        = models.CharField("trap location",       max_length=256)
-    date_set        = models.DateTimeField("trap laid",       auto_now=True)
+    date_set        = models.DateTimeField("trap laid",       default=datetime.now)
     date_sprung     = models.DateTimeField("trap sprung",     null=True, blank=True)
 
     # Report Content
@@ -478,7 +534,7 @@ class IndirectReport(models.Model):
     # target_media    = models.FileField("target report media", null=True, blank=True)
 
     # Validation
-    trap_sprung     = models.BooleanField("trap successful",  default=False)
+    trap_sprung     = models.BooleanField("trap sprung",      default=False)
     trap_successful = models.BooleanField("trap successful",  default=False)
 
     # Functions
@@ -528,17 +584,36 @@ class IndirectReport(models.Model):
 class GeneralReport(models.Model):
     '''A non-kill/death/indirect report.'''
     # Player
-    player      = models.ForeignKey(Player,         on_delete=models.SET_NULL, null=True)
+    player      = models.ForeignKey(Player,           on_delete=models.CASCADE)
 
     # Information
-    location    = models.CharField("kill location", max_length=256)
-    date        = models.DateTimeField("kill date", auto_now=True)
+    location    = models.CharField("report location", max_length=256)
+    date        = models.DateTimeField("report date", default=datetime.now)
 
     # Report Content
-    report_text = models.TextField("killer report")
+    report_text = models.TextField("report")
     # report_media = models.FileField("killer report media")
 
     # Functions
     def __str__(self):
         return str(self.player) + "_" + str(self.date)
 
+####################################################################################################
+
+class PlayerBonus(models.Model):
+    '''Assign bonus points to players.'''
+
+    # General Configuration
+    player    = models.ForeignKey(Player,                 on_delete=models.CASCADE)
+    date      = models.DateTimeField("date given",        default=datetime.now)
+    points    = models.PositiveSmallIntegerField("bonus", default=0)
+
+####################################################################################################
+
+class FlagBonus(models.Model):
+    '''Assign bonus points to flags.'''
+
+    # General Configuration
+    flag      = models.ForeignKey(Flag,                   on_delete=models.CASCADE)
+    date      = models.DateTimeField("date given",        default=datetime.now)
+    points    = models.PositiveSmallIntegerField("bonus", default=0)

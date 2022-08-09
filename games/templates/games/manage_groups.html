@@ -1,0 +1,38 @@
+{% extends 'main.html' %}
+
+{% block content %}
+
+<div class="rrc_l">
+    <div class="content">
+        <h2>Manage Groups</h2>
+        <p>Group models contain administrative information about a collection of objects.</p>
+    </div>
+    <div class="rcr_c manage_buttons">
+        <a href="{% url 'manage' %}" class="button">
+            <h3>Back to Management</h3>
+        </a>
+        <a href="{% url 'new_group' %}" class="button">
+            <h3>Create New Group</h3>
+        </a>
+    </div>
+</div>
+
+{% for group in groups %}
+    <a href="{{ group.id }}">
+        <div class="content">
+            <h3>{{ group }}</h3>
+            <p>
+                Umpire - [{{ group.umpire }}]
+            </p>
+            <p>
+                Created - [{{ group.created }}]
+            </p>
+        </div>
+    </a>
+{% empty %}
+    <div class="content">
+        <h3>No Groups Found</h3>
+    </div>
+{% endfor %}
+
+{% endblock content %}

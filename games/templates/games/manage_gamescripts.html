@@ -2,27 +2,38 @@
 
 {% block content %}
 
-<h2>Manage Scripts</h2>
-<a href="{% url 'manage' %}">
-    <p>back to management</p>
-</a>
-<a href="{% url 'new_script' %}">
-    <p>create a new script</p>
-</a>
+<div class="rrc_l">
+    <div class="content">
+        <h2>Manage Scripts</h2>
+        <p>Game script models contain a primary configuration which runs throughout the game, and a selection of event scripts that temporarily override the primary configuration for the duration of an event.</p>
+    </div>
+    <div class="rcr_c manage_buttons">
+        <a href="{% url 'manage' %}" class="button">
+            <h3>Back to Management</h3>
+        </a>
+        <a href="{% url 'new_script' %}" class="button">
+            <h3>Create New Script</h3>
+        </a>
+    </div>
+</div>
 
 {% for script in scripts %}
-    <div class="content">
-        <h3>{{ script }}</h3>
-        <p>
-            Scripts - [ Primary: {{ script.primary_script }}
-            {% for event in script.event_scripts %}
-                , Event: {{ event }}
-            {% endfor %}
-            ]
-        </p>
-    </div>
+    <a href="{{ script.id }}">
+        <div class="content">
+            <h3>{{ script }}</h3>
+            <p>
+                Scripts - [ Primary: {{ script.primary_script }}
+                {% for event in script.event_scripts %}
+                    , Event: {{ event }}
+                {% endfor %}
+                ]
+            </p>
+        </div>
+    </a>
 {% empty %}
-    <h3>No scripts found</h3>
+    <div class="content">
+        <h3>No Scripts Found</h3>
+    </div>
 {% endfor %}
 
 {% endblock content %}
