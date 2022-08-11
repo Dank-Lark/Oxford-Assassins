@@ -24,83 +24,83 @@
             <p>
                 Config - [ Visibility: 
                 {% if flag.visibility == "EVR" %}
-                    All players, 
+                    All Players, 
                 {% elif flag.visibility == "SHR" %}
-                    Flagged players,
+                    Flagged Players, 
                 {% else %}
                     Hidden, 
                 {% endif %}
-                Friendly: 
+                Friendly Fire: 
                 {% if flag.friendly %}
-                    True, 
+                    Disabled
                 {% else %}
-                    False, 
+                    Enabled
                 {% endif %}
                 ]
             </p>
             <p>
                 Weaponry - [
-                melee: 
+                Melee: 
                 {% if flag.allowed_melee %}
                     ×{{ flag.multiplier_melee }} +{{ flag.bonus_melee }}, 
                 {% else %}
-                    banned, 
+                    Banned, 
                 {% endif %}
-                thrown: 
+                Thrown: 
                 {% if flag.allowed_thrown %}
                     ×{{ flag.multiplier_thrown }} +{{ flag.bonus_thrown }}, 
                 {% else %}
-                    banned, 
+                    Banned, 
                 {% endif %}
-                ranged: 
+                Ranged: 
                 {% if flag.allowed_ranged %}
                     ×{{ flag.multiplier_ranged }} +{{ flag.bonus_ranged }}, 
                 {% else %}
-                    banned, 
+                    Banned, 
                 {% endif %}
-                animal: 
+                Animal: 
                 {% if flag.allowed_melee %}
                     ×{{ flag.multiplier_animal }} +{{ flag.bonus_animal }}, 
                 {% else %}
-                    banned, 
+                    Banned, 
                 {% endif %}
-                costume: 
+                Costume: 
                 {% if flag.allowed_melee %}
                     ×{{ flag.multiplier_costume }} +{{ flag.bonus_costume }} 
                 {% else %}
-                    banned 
+                    Banned 
                 {% endif %}
                 ]
             </p>
             <p>
                 Contexts - [
-                normal: 
+                Normal: 
                 {% if flag.allowed_normal %}
                     ×{{ flag.multiplier_normal }} +{{ flag.bonus_normal }}, 
                 {% else %}
-                    banned, 
+                    Banned, 
                 {% endif %}
-                raid: 
+                Raid: 
                 {% if flag.allowed_raid %}
                     ×{{ flag.multiplier_raid }} +{{ flag.bonus_raid }}, 
                 {% else %}
-                    banned, 
+                    Banned, 
                 {% endif %}
-                duel: 
+                Duel: 
                 {% if flag.allowed_duel %}
                     ×{{ flag.multiplier_duel }} +{{ flag.bonus_duel }} 
                 {% else %}
-                    banned 
+                    Banned 
                 {% endif %}
                 ]
             </p>
             <p>
                 Indirects - [
-                indirect: 
+                Indirect: 
                 {% if flag.allowed_indirect %}
                     ×{{ flag.multiplier_indirect }} +{{ flag.bonus_indirect }} 
                 {% else %}
-                    banned 
+                    Banned 
                 {% endif %}
                 ]
             </p>
@@ -117,11 +117,11 @@
                     Lose and Pass, 
                 {% endif %}
                 On Death: 
-                {% if flag.on_kill == "KNP" %}
+                {% if flag.on_death == "KNP" %}
                     Keep, 
-                {% elif flag.on_kill == "LNP" %}
+                {% elif flag.on_death == "LNP" %}
                     Lose, 
-                {% elif flag.on_kill == "KAP" %}
+                {% elif flag.on_death == "KAP" %}
                     Keep and Pass, 
                 {% else %}
                     Lose and Pass, 

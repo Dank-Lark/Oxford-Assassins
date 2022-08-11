@@ -81,7 +81,9 @@ def manageXASGroups(request, id=-1):
     context = { 
         'object_type': "Group",
         'new_object': False,
-        'form': form
+        'form': form,
+        'delete_url': "delete_group",
+        'object_id': id
     }
     return render(request, 'games/edit.html', context)
 
@@ -130,6 +132,7 @@ def deleteXASGroup(request, id=-1):
         return redirect('manage_groups')
 
     xas_group.delete()
+    return redirect('manage_groups')
 
 ####################################################################################################
 ####################################################################################################
@@ -160,7 +163,9 @@ def manageConfigScripts(request, id=-1):
     context = { 
         'object_type': "Config",
         'new_object': False,
-        'form': form
+        'form': form,
+        'delete_url': "delete_config",
+        'object_id': id
     }
     return render(request, 'games/edit.html', context)
 
@@ -206,6 +211,7 @@ def deleteConfigScript(request, id=-1):
         return redirect('manage_configs')
 
     config_script.delete()
+    return redirect('manage_configs')
 
 ####################################################################################################
 ####################################################################################################
@@ -236,7 +242,9 @@ def manageEventScripts(request, id=-1):
     context = { 
         'object_type': "Event",
         'new_object': False,
-        'form': form
+        'form': form,
+        'delete_url': "delete_event",
+        'object_id': id
     }
     return render(request, 'games/edit.html', context)
 
@@ -282,6 +290,7 @@ def deleteEventScript(request, id=-1):
         return redirect('manage_events')
 
     event_script.delete()
+    return redirect('manage_events')
 
 ####################################################################################################
 ####################################################################################################
@@ -312,7 +321,9 @@ def manageGameScripts(request, id=-1):
     context = { 
         'object_type': "Script",
         'new_object': False,
-        'form': form
+        'form': form,
+        'delete_url': "delete_script",
+        'object_id': id
     }
     return render(request, 'games/edit.html', context)
 
@@ -358,6 +369,7 @@ def deleteGameScript(request, id=-1):
         return redirect('manage_scripts')
 
     game_script.delete()
+    return redirect('manage_scripts')
 
 ####################################################################################################
 ####################################################################################################
@@ -388,7 +400,9 @@ def manageGames(request, id=-1):
     context = { 
         'object_type': "Game",
         'new_object': False,
-        'form': form
+        'form': form,
+        'delete_url': "delete_game",
+        'object_id': id
     }
     return render(request, 'games/edit.html', context)
 
@@ -434,6 +448,7 @@ def deleteGame(request, id=-1):
         return redirect('manage_games')
 
     game.delete()
+    return redirect('manage_games')
 
 ####################################################################################################
 ####################################################################################################
@@ -464,7 +479,9 @@ def manageFlags(request, id=-1):
     context = { 
         'object_type': "Flag",
         'new_object': False,
-        'form': form
+        'form': form,
+        'delete_url': "delete_flag",
+        'object_id': id
     }
     return render(request, 'games/edit.html', context)
 
@@ -510,6 +527,7 @@ def deleteFlag(request, id=-1):
         return redirect('manage_flags')
 
     flag.delete()
+    return redirect('manage_flags')
 
 ####################################################################################################
 ####################################################################################################

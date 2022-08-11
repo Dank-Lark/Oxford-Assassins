@@ -1,4 +1,5 @@
 # from django.contrib.auth.forms import 
+from attr import fields
 from django import forms
 from games.models import *
 
@@ -34,6 +35,11 @@ class EventScriptForm(forms.ModelForm):
         model = EventScript
         fields = "__all__" 
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['event_start'].widget.attrs['placeholder'] = 'd hh:mm:ss'
+        self.fields['event_duration'].widget.attrs['placeholder'] = 'd hh:mm:ss'
+
 ####################################################################################################
 
 class GameScriptForm(forms.ModelForm):
@@ -42,13 +48,23 @@ class GameScriptForm(forms.ModelForm):
         model = GameScript
         fields = "__all__" 
 
+    event_scripts = forms.ModelMultipleChoiceField(
+        queryset=EventScript.objects.all(),
+        widget=forms.CheckboxSelectMultiple(attrs={'class': "form_multichoice"})
+    )
+
 ####################################################################################################
 
 class GameForm(forms.ModelForm):
     '''For the Umpire to create or edit Games.'''
     class Meta:
         model = Game
-        fields = "__all__" 
+        fields = "__all__"
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['game_start'].widget.attrs['placeholder'] = 'yyyy-mm-dd hh:mm:ss'
+        self.fields['game_duration'].widget.attrs['placeholder'] = 'd hh:mm:ss'
 
 ####################################################################################################
 
@@ -57,6 +73,11 @@ class PlayerForm(forms.ModelForm):
     class Meta:
         model = Player
         fields = "__all__" 
+    
+    flags = forms.ModelMultipleChoiceField(
+        queryset=Flag.objects.all(),
+        widget=forms.CheckboxSelectMultiple(attrs={'class': "form_multichoice"})
+    )
 
 ####################################################################################################
 

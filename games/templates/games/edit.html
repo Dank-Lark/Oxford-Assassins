@@ -31,7 +31,7 @@
             <h2>Delete {{ object_type }}</h2>
         </div>
         <div class="manage_buttons">
-            <a href="{% url 'manage_delete' %}" class="button">
+            <a href="{% url delete_url id=object_id %}" class="button">
                 <h3>Delete</h3>
             </a>
         </div>

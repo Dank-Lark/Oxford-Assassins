@@ -23,7 +23,7 @@
             <h3>{{ script }}</h3>
             <p>
                 Scripts - [ Primary: {{ script.primary_script }}
-                {% for event in script.event_scripts %}
+                {% for event in script.event_scripts.all %}
                     , Event: {{ event }}
                 {% endfor %}
                 ]

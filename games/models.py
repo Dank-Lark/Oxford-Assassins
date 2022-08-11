@@ -101,7 +101,7 @@ class ConfigScript(models.Model):
 
     # Functions
     def __str__(self):
-        return str(self.config_name)
+        return str(self.xas_group) + ' > ' + str(self.config_name)
 
     def _isWeaponAllowed(self, report):
         '''Does this config allow this weapon'''
@@ -167,8 +167,8 @@ class EventScript(models.Model):
     event_config   = models.ForeignKey(ConfigScript,            on_delete=models.CASCADE)
     
     # Timing
-    event_start    = models.DurationField("event start offset", default=timedelta(days=0))
-    event_duration = models.DurationField("event duration",     default=timedelta(hours=1))
+    event_start    = models.DurationField("event start offset")
+    event_duration = models.DurationField("event duration")
 
     # Functions
     def __str__(self):
@@ -191,7 +191,7 @@ class GameScript(models.Model):
 
     # Functions
     def __str__(self):
-        return str(self.primary_script)
+        return str(self.xas_group) + ' > ' + str(self.primary_script)
 
     def isDuringEvent(self, game_time) -> bool:
         for script in self.event_scripts:
@@ -219,12 +219,12 @@ class Game(models.Model):
     game_script   = models.ForeignKey(GameScript,         on_delete=models.SET_NULL, null=True, blank=True)
 
     # Game Timing
-    game_start    = models.DateTimeField("game start",    default=datetime.today, help_text="Format:  yyyy-mm-dd hh:mm:ss")
-    game_duration = models.DurationField("game duration", default=timedelta(weeks=1), help_text="Format:  d hh:mm:ss")
+    game_start    = models.DateTimeField("game start")
+    game_duration = models.DurationField("game duration")
 
     # Functions
     def __str__(self):
-        return str(self.title)
+        return str(self.xas_group) + ' > ' + str(self.title)
 
     def isDuringGame(self, time) -> bool:
         '''Is this game active at the given time?'''
@@ -244,10 +244,10 @@ class Flag(models.Model):
     '''Represents teams, status effects, etc.'''
 
     # General Configuration
-    xas_group           = models.ForeignKey(XASGroup,                     on_delete=models.CASCADE)
-    name                = models.CharField("flag name",                   max_length=100)
-    visibility          = models.CharField("flag visibility",             max_length=3, choices=FLAG_VISIBILITY, default=EVERYONE)
-    friendly            = models.BooleanField("flag friendly",            default=False)
+    xas_group           = models.ForeignKey(XASGroup,              on_delete=models.CASCADE)
+    name                = models.CharField("flag name",            max_length=100)
+    visibility          = models.CharField("flag visibility",      max_length=3, choices=FLAG_VISIBILITY, default=EVERYONE)
+    friendly            = models.BooleanField("friendly",          default=False)
 
     # Weapon Specific Permissions, Multipliers, and Bonuses
     allowed_melee       = models.BooleanField("allow melee",       default=True)
@@ -288,7 +288,7 @@ class Flag(models.Model):
 
     # Functions
     def __str__(self):
-        return str(self.name)
+        return str(self.xas_group) + ' > ' + str(self.name)
 
     def _isWeaponAllowed(self, report):
         '''Does this flag allow this weapon'''

@@ -24,68 +24,68 @@
             <p>
                 Weaponry - [
                 {% if config.allowed_melee %}
-                    melee: {{ config.points_melee }}, 
+                    Melee: {{ config.points_melee }}, 
                 {% endif %}
                 {% if config.allowed_thrown %}
-                    thrown: {{ config.points_thrown }}, 
+                    Thrown: {{ config.points_thrown }}, 
                 {% endif %}
                 {% if config.allowed_ranged %}
-                    ranged: {{ config.points_ranged }}, 
+                    Ranged: {{ config.points_ranged }}, 
                 {% endif %}
                 {% if config.allowed_melee %}
-                    animal: {{ config.points_animal }}, 
+                    Animal: {{ config.points_animal }}, 
                 {% endif %}
                 {% if config.allowed_melee %}
-                    costume: {{ config.points_costume }}
+                    Costume: {{ config.points_costume }}
                 {% endif %}
                 ]
             </p>
             <p>
                 Contexts - [
                 {% if config.allowed_normal %}
-                    normal: {{ config.points_normal }}, 
+                    Normal: {{ config.points_normal }}, 
                 {% endif %}
                 {% if config.allowed_raid %}
-                    raid: {{ config.points_raid }}, 
+                    Raid: {{ config.points_raid }}, 
                 {% endif %}
                 {% if config.allowed_duel %}
-                    duel: {{ config.points_duel }}
+                    Duel: {{ config.points_duel }}
                 {% endif %}
                 ]
             </p>
             <p>
                 Indirects - [
                 {% if config.allowed_indirect %}
-                    indirect: {{ config.points_indirect }}
+                    Indirect: {{ config.points_indirect }}
                 {% endif %}
                 ]
             </p>
             <p>
                 Respawns - [ 
                 {% if config.respawn_start %}
-                    Global respawn on start, 
+                    Global Respawn on Start, 
                 {% endif %}
                 {% if config.respawn_count == 0 %}
-                    No in-config respawns,
+                    No Respawns
                 {% else %}
                     {% if config.respawn_count == 32767 %}
-                        Infinite in-config respawns 
+                        Infinite Respawns 
                     {% else %}
-                        {{ config.respawn_count }} in-config respawns 
+                        {{ config.respawn_count }} Respawns 
                     {% endif %}
-                    with {{ config.respawn_time }} cooldown, 
+                    with {{ config.respawn_time }} Cooldown
                 {% endif %}
                 {% if config.respawn_end %}
-                    Global respawn on end with {{ config.respawn_delay }} cooldown
+                    , Global Respawn on End With {{ config.respawn_delay }} Cooldown
                 {% endif %}
                 ]
             </p>
             <p>
                 Flags - [
                 {% if config.protect_flags %}
-                    prevent flag transfers
+                    Prevent Flag Transfers
                 {% else %}
-                    allow flag transfers
+                    Allow Flag Transfers
                 {% endif %}
                 ]
             </p>

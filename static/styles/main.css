@@ -334,13 +334,17 @@ form p {
     grid-template-columns: auto 1fr;
     grid-template-areas: "label input" "text text";
 }
-form label {
+form span {
+    grid-area: text;
+}
+
+label {
     grid-area: label; 
 
     min-width: 102px;
     margin-right: 0.5em;
 }
-form input, select {
+input, select {
     grid-area: input;
 
     margin: 0;
@@ -351,10 +355,7 @@ form input, select {
     color: var(--oga-text-white);
     font-family: var(--oga-text);
 }
-form span {
-    grid-area: text;
-}
-form input[type="submit"] {
+input[type="submit"] {
     margin-top: 0.5em; /* login/sign-up button */
     width: 100%;
 
@@ -367,8 +368,29 @@ form input[type="submit"] {
     border-bottom-style: solid;
     border-color: var(--oga-white);
 }
-form input[type="submit"]:hover { background-color: var(--oga-light); }
-form input[type="submit"]:active { background-color: var(--oga-red); }
+input[type="submit"]:hover { background-color: var(--oga-light); }
+input[type="submit"]:active { background-color: var(--oga-red); }
+
+textarea {
+    margin: 0;
+    padding-left: 0.4em;
+    border: 0;
+    resize: none;
+
+    background-color: var(--oga-dark);
+    color: var(--oga-text-white);
+    font-family: var(--oga-text);
+    font-size: smaller;
+}
+
+.form_multichoice {
+    background-color: var(--oga-dark);
+    padding: 0.5em 1em 0.5em 1em;
+}
+
+.helptext {
+    margin-left: calc(102px + 0.9em);
+}
 
 /* ############################################################################################################################ */
 /* ########################################################## account ######################################################### */

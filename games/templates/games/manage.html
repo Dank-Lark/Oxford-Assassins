@@ -30,7 +30,7 @@
         </p>
     </div>
     <div class="rcr_c manage_buttons">
-        <a href="{% url 'manage_group' %}" class="button">
+        <a href="{% url 'manage_groups' %}" class="button">
             <h3>View {{ count_groups }} Groups</h3>
         </a>
         <a href="{% url 'new_group' %}" class="button">
@@ -75,20 +75,20 @@
     </div>
 </div>
 
-<!-- scripts -->
+<!-- configs -->
 <div class="rrc_l">
     <div class="content">
-        <h2>Scripts</h2>
+        <h2>Configs</h2>
         <p>
-            Game script models contain a primary configuration which runs throughout the game, and a selection of event scripts that temporarily override the primary configuration for the duration of an event.
+            Config script models dictate the rules of a game or event. They list weapon, context, and indirect specific permissions and points, information about respawn behaviour on event of a death, and whether to protect flags from transfering on the event of a kill or death.
         </p>
     </div>
     <div class="rcr_c manage_buttons">
-        <a href="{% url 'manage_scripts' %}" class="button">
-            <h3>View {{ count_scripts }} Scripts</h3>
+        <a href="{% url 'manage_configs' %}" class="button">
+            <h3>View {{ count_configs }} Configs</h3>
         </a>
-        <a href="{% url 'new_script' %}" class="button">
-            <h3>Create New Script</h3>
+        <a href="{% url 'new_config' %}" class="button">
+            <h3>Create New Config</h3>
         </a>
     </div>
 </div>
@@ -111,20 +111,20 @@
     </div>
 </div>
 
-<!-- configs -->
+<!-- scripts -->
 <div class="rrc_l">
     <div class="content">
-        <h2>Configs</h2>
+        <h2>Scripts</h2>
         <p>
-            Config script models dictate the rules of a game or event. They list weapon, context, and indirect specific permissions and points, information about respawn behaviour on event of a death, and whether to protect flags from transfering on the event of a kill or death.
+            Game script models contain a primary configuration which runs throughout the game, and a selection of event scripts that temporarily override the primary configuration for the duration of an event.
         </p>
     </div>
     <div class="rcr_c manage_buttons">
-        <a href="{% url 'manage_configs' %}" class="button">
-            <h3>View {{ count_configs }} Configs</h3>
+        <a href="{% url 'manage_scripts' %}" class="button">
+            <h3>View {{ count_scripts }} Scripts</h3>
         </a>
-        <a href="{% url 'new_config' %}" class="button">
-            <h3>Create New Config</h3>
+        <a href="{% url 'new_script' %}" class="button">
+            <h3>Create New Script</h3>
         </a>
     </div>
 </div>

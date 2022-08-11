@@ -9,7 +9,7 @@ urlpatterns = [
     # Manage
     path('',                              views.manage,              name="manage"),
 
-    path('groups/',                       views.manageXASGroups,     name="manage_group"),
+    path('groups/',                       views.manageXASGroups,     name="manage_groups"),
     path('groups/<int:id>/',              views.manageXASGroups),
     path('groups/new/',                   views.newXASGroup,         name="new_group"),
     path('groups/delete/<int:id>',        views.deleteXASGroup,      name="delete_group"),
