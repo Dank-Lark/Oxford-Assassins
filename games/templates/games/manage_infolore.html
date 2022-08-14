@@ -1,0 +1,51 @@
+{% extends 'main.html' %}
+
+{% block content %}
+
+<div class="rrc_l">
+    <div class="content">
+        <h2>Manage Lore</h2>
+        <p>Lore models contain information or lore text to be released to players in-game at a given time, Umpires can customise which players will recieve the releases via the flag system.</p>
+    </div>
+    <div class="rcr_c manage_buttons">
+        <a href="{% url 'manage' %}" class="button">
+            <h3>Back to Management</h3>
+        </a>
+        <a href="{% url 'new_infolore' %}" class="button">
+            <h3>Create New Lore</h3>
+        </a>
+    </div>
+</div>
+
+{% for infolore in infolores %}
+    <a href="{{ game.id }}">
+        <div class="content">
+            <h3>{{ infolore }}</h3>
+            <p>
+                {{ infolore.text }}
+            </p>
+            <p>
+                Timing - [ Release Date: {{ infolore.release_start }}, Release End: {{ infolore.release_end }} ]
+            </p>
+            <p>
+                Visibility - [ Visible to: 
+                {% if infolore.public %}
+                    All Players 
+                {% else %}
+                    {% for flag in infolore.flags %}
+                        {{ flag }}, 
+                    {% empty %}
+                        No one... Please Explain Why?
+                    {% endfor %}
+                {% endif %}
+                ]
+            </p>
+        </div>
+    </a>
+{% empty %}
+    <div class="content">
+        <h3>No Games Found</h3>
+    </div>
+{% endfor %}
+
+{% endblock content %}

@@ -9,7 +9,6 @@
 
 <div>
     <div class="content">
-        <!--<img src="{% static 'assets/cabal_guildmaster.jpg' %}">-->
         <h3>Guildmaster</h3>
         <p>
             Hi, my name is Lily, I'm a Fourth Year studying Computer Science at Balliol, and in game I go by the pseudonym Ileyra.
@@ -20,7 +19,6 @@
     </div>
 
     <div class="content">
-        <!--<img src="{% static 'assets/cabal_treasurer.jpg' %}">-->
         <h3>Treasurer</h3>
         <p>
             Hi, my name is Dan, I'm a Second Year studying Maths and Computer Science at Christ Church, and in game I go by the pseudonym Elysium.
@@ -31,7 +29,6 @@
     </div>
 
     <div class="content">
-        <!--<img src="{% static 'assets/cabal_archivist.jpg' %}">-->
         <h3>Archivist</h3>
         <p>
             Hi, my name is Sid, I'm a Fourth Year studying Physics at Lincoln.
@@ -42,7 +39,6 @@
     </div>
 
     <div class="content">
-        <!--<img src="{% static 'assets/cabal_social_secretary.jpg' %}">-->
         <h3>Social Secretary</h3>
         <p>
             Hi, my name is George, I'm a Third Year studying Classics at Somerville, and in game I go by the pseudonym Man-Bat.
@@ -53,7 +49,6 @@
     </div>
 
     <div class="content">
-        <!--<img src="{% static 'assets/cabal_mwp_1.jpg' %}">-->
         <h3>MWP</h3>
         <p>
             Hi, my name is Jack, I'm a Third Year studying Biochemistry at St Hugh's, and in game I go by the pseudonym Hop.
@@ -64,7 +59,6 @@
     </div>
 
     <div class="content">
-        <!--<img src="{% static 'assets/cabal_mwp_2.jpg' %}">-->
         <h3>MWP</h3>
         <p>
             Hi, my name is Sage, I'm a Second Year studying Experimental Psycology at St Hugh's, and in game I go by the pseudonym Mre. Velyrra.
@@ -74,3 +68,74 @@
         </p>
     </div>
 </div>
+
+<!-- TODO Move to dynamic cabal page -->
+{% comment %} 
+<div>
+    <div class="content">
+        <img src="{% static 'assets/cabal_guildmaster.jpg' %}">
+        <h3>Guildmaster</h3>
+        <p>
+            Hi, my name is {{ guildmaster_name }}, I'm a {{ guildmaster_year }} studying {{ guildmaster_subject }} at {{ guildmaster_college }}, and in game I go by the pseudonym {{ guildmaster_pseudonym }}.
+        </p>
+        <p>
+            As the Guildmaster, I oversee the running of the entire guild. I organise when games will run, who will run them, the annual Fresher's fair, stash, and anything else which doesn't fall under a specific role.
+        </p>
+    </div>
+
+    <div class="content">
+        <img src="{% static 'assets/cabal_treasurer.jpg' %}">
+        <h3>Treasurer</h3>
+        <p>
+            Hi, my name is {{ treasurer_name }}, I'm a {{ treasurer_year }} studying {{ treasurer_subject }} at {{ treasurer_college }}, and in game I go by the pseudonym {{ treasurer_pseudonym }}.
+        </p>
+        <p>
+            As the Treasurer of the Guild, I'm in charge of the guild bank account and finances. I'm also responsible for taking in membership fees and managing the membership list.
+        </p>
+    </div>
+
+    <div class="content">
+        <img src="{% static 'assets/cabal_archivist.jpg' %}">
+        <h3>Archivist</h3>
+        <p>
+            Hi, my name is {{ archivist_name }}, I'm a {{ archivist_year }} studying {{ archivist_subject }} at {{ archivist_college }}, and in game I go by the pseudonym {{ archivist_pseudonym }}.
+        </p>
+        <p>
+            As the Archivist, my job is to manage the guild archives. I gather together reports, communications, and anything else interesting or worthy of archival. I'm also responsible for taking minutes at the AGM.
+        </p>
+    </div>
+
+    <div class="content">
+        <img src="{% static 'assets/cabal_social_secretary.jpg' %}">
+        <h3>Secretary</h3>
+        <p>
+            Hi, my name is {{ secretary_name }}, I'm a {{ secretary_year }} studying {{ secretary_subject }} at {{ secretary_college }}, and in game I go by the pseudonym {{ secretary_pseudonym }}.
+        </p>
+        <p>
+            As the Secretary, I organise and run socials and other activities outside of the games. I'm in charge of booking rooms for events and ensuring everything (and everyone) is left in a good state afterwards.
+        </p>
+    </div>
+
+    <div class="content">
+        <img src="{% static 'assets/cabal_mwp_1.jpg' %}">
+        <h3>Webmaster</h3>
+        <p>
+            Hi, my name is {{ webmaster_name }}, I'm a {{ webmaster_year }} studying {{ webmaster_subject }} at {{ webmaster_college }}, and in game I go by the pseudonym {{ webmaster_pseudonym }}.
+        </p>
+        <p>
+            As the Webmaster, I am responsible for managing and maintaining the Website, E-Mail System, and Discord Server. I ensure everything is up-to-date and work with the umpires to keep the games running smoothly.
+        </p>
+    </div>
+
+    <div class="content">
+        <img src="{% static 'assets/cabal_mwp_2.jpg' %}">
+        <h3>Minister</h3>
+        <p>
+            Hi, my name is {{ minister_name }}, I'm a {{ minister_year }} studying {{ minister_subject }} at {{ minister_college }}, and in game I go by the pseudonym {{ minister_pseudonym }}.
+        </p>
+        <p>
+            As the Minister I do not have specific job responsibilities, I instead help the other Cabal members where possible and, will be frequently consulted by the Guildmaster on any assassin-related matters.
+        </p>
+    </div>
+</div>
+{% endcomment %}

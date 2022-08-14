@@ -120,22 +120,32 @@ COLLEGE_CHOICES = [
     ("WOR", "Worcester College"),
     ("WYC", "Wycliffe Hall"),#
 ]
+CABAL_ROLES = [
+    ("MAS", "Guildmaster"),
+    ("TRE", "Treasurer"),
+    ("ARC", "Archivist"),
+    ("SEC", "Secretary"),
+    ("WEB", "Webmaster"),
+    ("MIN", "Minister"),
+]
 
 ####################################################################################################
 
 class Assassin(models.Model):
-    pseudonym = models.CharField(max_length=100)
+    pseudonym = models.CharField(                                max_length=100)
     
-    discordName = models.CharField("discord name", max_length=32)
+    discordName = models.CharField("discord name",               max_length=32)
     discordTag = models.PositiveSmallIntegerField("discord tag")
     
-    subject = models.CharField("subject", max_length=3, choices=SUBJECT_CHOICES)
-    college = models.CharField("college", max_length=3, choices=COLLEGE_CHOICES)
+    subject = models.CharField("subject",                        max_length=3, choices=SUBJECT_CHOICES)
+    college = models.CharField("college",                        max_length=3, choices=COLLEGE_CHOICES)
     startYear = models.PositiveSmallIntegerField("matriculated")
-    address = models.CharField("address", max_length=256)
-    room = models.CharField("room number", max_length=256)
-    postal = models.CharField("postal address", max_length=256, blank=True)
-    
+    address = models.CharField("address",                        max_length=256)
+    room = models.CharField("room number",                       max_length=256)
+    postal = models.CharField("postal address",                  max_length=256, blank=True)
+
+    cabal = models.CharField("cabal role",                       max_length=3, choices=CABAL_ROLES, null=True, blank=True)
+
     def __str__(self):
         return self.pseudonym
 
@@ -143,13 +153,15 @@ class Assassin(models.Model):
 
 class User(AbstractUser):
     first_name = models.CharField("first name", max_length=150, blank=False)
-    last_name = models.CharField("last name", max_length=150, blank=False)
-    email = models.EmailField("email address", blank=False)
+    last_name = models.CharField("last name",   max_length=150, blank=False)
+    email = models.EmailField("email address",  blank=False)
 
-    request_pay = models.BooleanField("reqp", default=False)
-    paid = models.BooleanField("paid", default=False)
+    # TODO Install SSL
+    # TODO Link PayPal to account paid status
+    request_pay = models.BooleanField("reqp",   default=False)
+    paid = models.BooleanField("paid",          default=False)
 
-    assassin = models.OneToOneField(Assassin, unique=True, null=True, blank=True, on_delete=models.CASCADE)
+    assassin = models.OneToOneField(Assassin,   unique=True, null=True, blank=True, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.first_name + " " + self.last_name

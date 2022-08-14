@@ -38,4 +38,9 @@ urlpatterns = [
     path('flags/<int:id>/',               views.manageFlags),
     path('flags/new/',                    views.newFlag,             name="new_flag"),
     path('flags/delete/<int:id>',         views.deleteFlag,          name="delete_flag"),
+
+    path('infolore/',                     views.manageInfoLore,      name="manage_infolore"),
+    path('infolore/<int:id>/',            views.manageInfoLore),
+    path('infolore/new/',                 views.newInfoLore,         name="new_infolore"),
+    path('infolore/delete/<int:id>',      views.deleteInfoLore,      name="delete_infolore"),
 ]

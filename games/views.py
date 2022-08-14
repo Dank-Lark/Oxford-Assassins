@@ -45,6 +45,7 @@ def manage(request):
         'count_groups':    XASGroup.objects.count(), 
         'count_games':     Game.objects.count(),
         'count_flags':     Flag.objects.count(), 
+        'count_infolore':  InfoLore.objects.count(), 
         'count_scripts':   GameScript.objects.count(), 
         'count_events':    EventScript.objects.count(), 
         'count_configs':   ConfigScript.objects.count(), 
@@ -133,6 +134,87 @@ def deleteXASGroup(request, id=-1):
 
     xas_group.delete()
     return redirect('manage_groups')
+
+####################################################################################################
+####################################################################################################
+
+@login_required(login_url='login')
+def manageInfoLore(request, id=-1):
+    if not request.user.is_staff:
+        return redirect('play')
+
+    if id == -1:
+        context = { 'infolores': InfoLore.objects.all() }
+        return render(request, 'games/manage_infolore.html', context)
+
+    infolore = InfoLore.objects.get(id=id)
+    if infolore is None:
+        return redirect('manage_infolore')
+
+    if request.method == "POST":
+        form = InfoLoreForm(request.POST, instance=infolore)
+
+        if form.is_valid():
+            form.save()
+            return redirect('manage_infolore')
+        else:
+            alertErrors(request, form.errors)
+    else:
+        form = InfoLoreForm(instance=infolore)
+
+    context = { 
+        'object_type': "InfoLore",
+        'new_object': False,
+        'form': form,
+        'delete_url': "delete_infolore",
+        'object_id': id
+    }
+    return render(request, 'games/edit.html', context)
+
+####################################################################################################
+
+@login_required(login_url='login')
+def newInfoLore(request):
+    if not request.user.is_staff:
+        return redirect('play')
+
+    if request.method == "POST":
+        form = InfoLoreForm(request.POST)
+
+        if form.is_valid():
+            form.save()
+            return redirect('manage_infolore')
+        else:
+            alertErrors(request, form.errors)
+    else:
+        form = InfoLoreForm()
+
+    context = { 
+        'object_type': "InfoLore",
+        'new_object': True,
+        'form': form
+    }
+    return render(request, 'games/edit.html', context)
+
+####################################################################################################
+
+@login_required(login_url='login')
+def deleteInfoLore(request, id=-1):
+    if not request.user.is_staff:
+        return redirect('play')
+
+    if id == -1:
+        return redirect('manage_infolore')
+
+    infolore = InfoLore.objects.get(id=id)
+    if infolore is None:
+        return redirect('manage_infolore')
+
+    if infolore.xas_group.umpire != request.user.assassin:
+        return redirect('manage_infolore')
+
+    infolore.delete()
+    return redirect('manage_infolore')
 
 ####################################################################################################
 ####################################################################################################

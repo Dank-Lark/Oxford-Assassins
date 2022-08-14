@@ -27,6 +27,12 @@
                     , Event: {{ event }}
                 {% endfor %}
                 ]
+                Lore - [
+                {% for lore in script.info_lore_releases.all %}
+                    {{ lore }}, 
+                {% endfor %}
+                ]
+                Auto Bounties - [ Report Deadline: {{ script.report_deadline }}, Late Report Bounty: {{ script.report_bounty }} ]
             </p>
         </div>
     </a>

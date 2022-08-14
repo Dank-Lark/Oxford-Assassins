@@ -48,195 +48,15 @@ FLAG_VISIBILITY = [
 ####################################################################################################
 
 class XASGroup(models.Model):
+    '''Administrative details for a group of models.'''
+
+    # General Configuration
     umpire    = models.ForeignKey(Assassin, on_delete=models.CASCADE)
     reference = models.CharField("group reference", max_length=100)
     created   = models.DateTimeField("date created", auto_now_add=True)
 
     def __str__(self):
         return self.reference
-
-####################################################################################################
-
-class ConfigScript(models.Model):
-    '''Configuration details for an event or game.'''
-
-    # General Configuration
-    xas_group        = models.ForeignKey(XASGroup,                         on_delete=models.CASCADE)
-    config_name      = models.CharField("config name",                     max_length=100)
-
-    # Weaponry Scoring Rules    
-    allowed_melee    = models.BooleanField("allow melee",                  default=True)
-    allowed_thrown   = models.BooleanField("allow thrown",                 default=True)
-    allowed_ranged   = models.BooleanField("allow ranged",                 default=True)
-    allowed_animal   = models.BooleanField("allow animal",                 default=True)
-    allowed_costume  = models.BooleanField("allow costume",                default=True)
-    points_melee     = models.PositiveSmallIntegerField("melee points",    default=10)
-    points_thrown    = models.PositiveSmallIntegerField("thrown points",   default=5)
-    points_ranged    = models.PositiveSmallIntegerField("ranged points",   default=5)
-    points_animal    = models.PositiveSmallIntegerField("animal points",   default=10)
-    points_costume   = models.PositiveSmallIntegerField("costume points",  default=10)
-
-    # Context Scoring Rules
-    allowed_normal   = models.BooleanField("allow normal",                 default=True)
-    allowed_raid     = models.BooleanField("allow raids",                  default=True)
-    allowed_duel     = models.BooleanField("allow duels",                  default=True)
-    points_normal    = models.PositiveSmallIntegerField("normal bonus",    default=0)
-    points_raid      = models.PositiveSmallIntegerField("raid bonus",      default=0)
-    points_duel      = models.PositiveSmallIntegerField("duel bonus",      default=0)
-
-    # Indirect Rules
-    allowed_indirect = models.BooleanField("allow indirect",               default=True)
-    points_indirect  = models.PositiveSmallIntegerField("indirect points", default=10)
-
-    # Respawn Rules
-    respawn_count    = models.PositiveSmallIntegerField("respawn count",   default=32767)
-    respawn_time     = models.DurationField("respawn time",                default=timedelta(hours=6))
-
-    respawn_start    = models.BooleanField("global respawn on start",      default=True)
-    respawn_end      = models.BooleanField("global respawn on end",        default=True)
-    respawn_delay    = models.DurationField("end respawn delay",           default=timedelta(minutes=30))
-
-    # Flag Rules
-    protect_flags    = models.BooleanField("prevent flag transfers",       default=False)
-
-    # Functions
-    def __str__(self):
-        return str(self.xas_group) + ' > ' + str(self.config_name)
-
-    def _isWeaponAllowed(self, report):
-        '''Does this config allow this weapon'''
-        if   report.weapon == MELEE:
-            return self.allowed_melee
-        elif report.weapon == THROWN:
-            return self.allowed_thrown
-        elif report.weapon == RANGED:
-            return self.allowed_ranged
-        elif report.weapon == ANIMAL:
-            return self.allowed_animal
-        elif report.weapon == COSTUME:
-            return self.allowed_costume
-
-    def _getWeaponScore(self, report):
-        '''How many points does this config award this weapon'''
-        if   report.weapon == MELEE:
-            return self.points_melee
-        elif report.weapon == THROWN:
-            return self.points_thrown
-        elif report.weapon == RANGED:
-            return self.points_ranged
-        elif report.weapon == ANIMAL:
-            return self.points_animal
-        elif report.weapon == COSTUME:
-            return self.points_costume
-
-    def _isContextAllowed(self, report):
-        '''Does this config allow this context'''
-        if   report.context == NORMAL:
-            return self.allowed_normal
-        elif report.context == RAID:
-            return self.allowed_raid
-        elif report.context == DUEL:
-            return self.allowed_duel
-
-    def _getContextScore(self, report):
-        '''How many bonus points does this config award this context'''
-        if   report.context == NORMAL:
-            return self.points_normal
-        elif report.context == RAID:
-            return self.points_raid
-        elif report.context == DUEL:
-            return self.points_duel
-
-    def isKillAllowed(self, report):
-        '''Does this config allow this kill'''
-        return self._isWeaponAllowed(report) and self._isContextAllowed(report)
-
-    def getKillScore(self, report):
-        '''How many points does this config award this kill'''
-        return self._getWeaponScore(report) + self._getContextScore(report)
-
-####################################################################################################
-
-class EventScript(models.Model):
-    '''ConfigScript with offset timing for an event in a game.'''
-
-    # General Configuration
-    xas_group      = models.ForeignKey(XASGroup,                on_delete=models.CASCADE)
-
-    # Config
-    event_config   = models.ForeignKey(ConfigScript,            on_delete=models.CASCADE)
-    
-    # Timing
-    event_start    = models.DurationField("event start offset")
-    event_duration = models.DurationField("event duration")
-
-    # Functions
-    def __str__(self):
-        return str(self.event_config)
-
-    def isDuringEvent(self, game_time):
-        return self.event_start < game_time and game_time < self.event_start + self.event_duration
-
-####################################################################################################
-
-class GameScript(models.Model):
-    '''A primary ConfigScript and a selection of EventScripts.'''
-
-    # General Configuration
-    xas_group      = models.ForeignKey(XASGroup, on_delete=models.CASCADE)
-
-    # Script Listings
-    primary_script = models.ForeignKey(ConfigScript, on_delete=models.CASCADE)
-    event_scripts  = models.ManyToManyField(EventScript)
-
-    # Functions
-    def __str__(self):
-        return str(self.xas_group) + ' > ' + str(self.primary_script)
-
-    def isDuringEvent(self, game_time) -> bool:
-        for script in self.event_scripts:
-            if script.isDuringEvent(game_time):
-                return True
-        return False
-
-    def getConfig(self, game_time) -> ConfigScript:
-        for script in self.event_scripts:
-            if script.isDuringEvent(game_time):
-                return script.event_config
-        return self.primary_script
-
-####################################################################################################
-
-class Game(models.Model):
-    '''Information about a game, a script, and timing.'''
-
-    # General Configuration
-    xas_group     = models.OneToOneField(XASGroup,        on_delete=models.CASCADE)
-    title         = models.CharField("game title",        max_length=100)
-    description   = models.TextField("description")
-
-    # Game Script
-    game_script   = models.ForeignKey(GameScript,         on_delete=models.SET_NULL, null=True, blank=True)
-
-    # Game Timing
-    game_start    = models.DateTimeField("game start")
-    game_duration = models.DurationField("game duration")
-
-    # Functions
-    def __str__(self):
-        return str(self.xas_group) + ' > ' + str(self.title)
-
-    def isDuringGame(self, time) -> bool:
-        '''Is this game active at the given time?'''
-        return self.game_start < time and time < self.game_start + self.game_duration
-
-    def isDuringEvent(self, time) -> bool:
-        '''Is the game currently in an event?'''
-        return self.game_script.isDuringEvent(time - self.game_start)
-
-    def getConfig(self, time) -> ConfigScript:
-        '''Which configuration is active at a given time'''
-        return self.game_script.getConfig(time - self.game_start)
 
 ####################################################################################################
 
@@ -384,6 +204,254 @@ class Flag(models.Model):
         
 ####################################################################################################
 
+class InfoLore(models.Model):
+    '''Information or lore text to be released to players at a given time.'''
+
+    # General Configuration
+    xas_group     = models.ForeignKey(XASGroup,           on_delete=models.CASCADE)
+    title         = models.CharField("title",             max_length=100)
+    text          = models.TextField("info or lore")
+    # media         = models.FileField("media")
+
+    # Timing
+    release_start = models.DurationField("release start")
+    release_end   = models.DurationField("release end")
+
+    # Viewing Permissions
+    public        = models.BooleanField("visible to all", default=True)
+    flags         = models.ManyToManyField(Flag,          verbose_name="visible to")
+
+    def __str__(self):
+        return str(self.xas_group) + ' > ' + str(self.title)
+
+    def isVisible(self, game_time, flags):
+        if game_time < self.release_start or self.release_end < game_time:
+            return False
+
+        for flag in flags:
+            if flag in self.flags:
+                return True
+        
+        return False
+
+####################################################################################################
+
+class ConfigScript(models.Model):
+    '''Configuration details for an event or game.'''
+
+    # General Configuration
+    xas_group        = models.ForeignKey(XASGroup,                         on_delete=models.CASCADE)
+    config_name      = models.CharField("config name",                     max_length=100)
+
+    # Weaponry Scoring Rules    
+    allowed_melee    = models.BooleanField("allow melee",                  default=True)
+    allowed_thrown   = models.BooleanField("allow thrown",                 default=True)
+    allowed_ranged   = models.BooleanField("allow ranged",                 default=True)
+    allowed_animal   = models.BooleanField("allow animal",                 default=True)
+    allowed_costume  = models.BooleanField("allow costume",                default=True)
+    points_melee     = models.PositiveSmallIntegerField("melee points",    default=10)
+    points_thrown    = models.PositiveSmallIntegerField("thrown points",   default=5)
+    points_ranged    = models.PositiveSmallIntegerField("ranged points",   default=5)
+    points_animal    = models.PositiveSmallIntegerField("animal points",   default=10)
+    points_costume   = models.PositiveSmallIntegerField("costume points",  default=10)
+
+    # Context Scoring Rules
+    allowed_normal   = models.BooleanField("allow normal",                 default=True)
+    allowed_raid     = models.BooleanField("allow raids",                  default=True)
+    allowed_duel     = models.BooleanField("allow duels",                  default=True)
+    points_normal    = models.PositiveSmallIntegerField("normal bonus",    default=0)
+    points_raid      = models.PositiveSmallIntegerField("raid bonus",      default=0)
+    points_duel      = models.PositiveSmallIntegerField("duel bonus",      default=0)
+
+    # Indirect Rules
+    allowed_indirect = models.BooleanField("allow indirect",               default=True)
+    points_indirect  = models.PositiveSmallIntegerField("indirect points", default=10)
+
+    # Respawn Rules
+    respawn_count    = models.PositiveSmallIntegerField("respawn count",   default=32767)
+    respawn_time     = models.DurationField("respawn time",                default=timedelta(hours=6))
+
+    respawn_start    = models.BooleanField("global respawn on start",      default=True)
+    respawn_end      = models.BooleanField("global respawn on end",        default=True)
+    respawn_delay    = models.DurationField("end respawn delay",           default=timedelta(minutes=30))
+
+    # Flag Rules
+    protect_flags    = models.BooleanField("prevent flag transfers",       default=False)
+
+    # Functions
+    def __str__(self):
+        return str(self.xas_group) + ' > ' + str(self.config_name)
+
+    def _isWeaponAllowed(self, report):
+        '''Does this config allow this weapon'''
+        if   report.weapon == MELEE:
+            return self.allowed_melee
+        elif report.weapon == THROWN:
+            return self.allowed_thrown
+        elif report.weapon == RANGED:
+            return self.allowed_ranged
+        elif report.weapon == ANIMAL:
+            return self.allowed_animal
+        elif report.weapon == COSTUME:
+            return self.allowed_costume
+
+    def _getWeaponScore(self, report):
+        '''How many points does this config award this weapon'''
+        if   report.weapon == MELEE:
+            return self.points_melee
+        elif report.weapon == THROWN:
+            return self.points_thrown
+        elif report.weapon == RANGED:
+            return self.points_ranged
+        elif report.weapon == ANIMAL:
+            return self.points_animal
+        elif report.weapon == COSTUME:
+            return self.points_costume
+
+    def _isContextAllowed(self, report):
+        '''Does this config allow this context'''
+        if   report.context == NORMAL:
+            return self.allowed_normal
+        elif report.context == RAID:
+            return self.allowed_raid
+        elif report.context == DUEL:
+            return self.allowed_duel
+
+    def _getContextScore(self, report):
+        '''How many bonus points does this config award this context'''
+        if   report.context == NORMAL:
+            return self.points_normal
+        elif report.context == RAID:
+            return self.points_raid
+        elif report.context == DUEL:
+            return self.points_duel
+
+    def isKillAllowed(self, report):
+        '''Does this config allow this kill'''
+        return self._isWeaponAllowed(report) and self._isContextAllowed(report)
+
+    def getKillScore(self, report):
+        '''How many points does this config award this kill'''
+        return self._getWeaponScore(report) + self._getContextScore(report)
+
+####################################################################################################
+
+class EventScript(models.Model):
+    '''ConfigScript with offset timing for an event in a game.'''
+
+    # General Configuration
+    xas_group      = models.ForeignKey(XASGroup,                on_delete=models.CASCADE)
+
+    # Config
+    event_config   = models.ForeignKey(ConfigScript,            on_delete=models.CASCADE)
+    
+    # Timing
+    event_start    = models.DurationField("event start offset")
+    event_duration = models.DurationField("event duration")
+
+    # Functions
+    def __str__(self):
+        return str(self.event_config)
+
+    def isDuringEvent(self, game_time):
+        return self.event_start < game_time and game_time < self.event_start + self.event_duration
+
+####################################################################################################
+
+class GameScript(models.Model):
+    '''A primary ConfigScript and a selection of EventScripts.'''
+
+    # General Configuration
+    xas_group          = models.ForeignKey(XASGroup, on_delete=models.CASCADE)
+
+    # Script Listings
+    primary_script     = models.ForeignKey(ConfigScript, on_delete=models.CASCADE)
+    event_scripts      = models.ManyToManyField(EventScript)
+    info_lore_releases = models.ManyToManyField(InfoLore)
+
+    # Meta Rules
+    report_deadline    = models.DurationField("report confirmation deadline", default=timedelta(hours=12))
+    report_bounty      = models.PositiveSmallIntegerField("bounty for late reports", default=10)
+
+    # Functions
+    def __str__(self):
+        return str(self.xas_group) + ' > ' + str(self.primary_script)
+
+    def isDuringEvent(self, game_time) -> bool:
+        for script in self.event_scripts:
+            if script.isDuringEvent(game_time):
+                return True
+        return False
+
+    def getConfig(self, game_time) -> ConfigScript:
+        for script in self.event_scripts:
+            if script.isDuringEvent(game_time):
+                return script.event_config
+        return self.primary_script
+
+    def getInfoLore(self, game_time, flags):
+        releases = []
+        for infolore in self.info_lore_releases:
+            if infolore.isVisible(game_time, flags):
+                releases.append(infolore)
+
+####################################################################################################
+
+class Game(models.Model):
+    '''Information about a game, a script, and timing.'''
+
+    # General Configuration
+    xas_group     = models.ForeignKey(XASGroup,           on_delete=models.CASCADE)
+    title         = models.CharField("game title",        max_length=100)
+    description   = models.TextField("description")
+
+    # Game Script
+    game_script   = models.ForeignKey(GameScript,         on_delete=models.SET_NULL, null=True, blank=True)
+
+    # Game Timing
+    game_start    = models.DateTimeField("game start")
+    game_duration = models.DurationField("game duration")
+
+    # Functions
+    def __str__(self):
+        return str(self.xas_group) + ' > ' + str(self.title)
+
+    def isDuringGame(self, time) -> bool:
+        '''Is this game active at the given time?'''
+        return self.game_start < time and time < self.game_start + self.game_duration
+
+    def isDuringEvent(self, time) -> bool:
+        '''Is the game currently in an event?'''
+        return self.game_script.isDuringEvent(time - self.game_start)
+
+    def getConfig(self, time) -> ConfigScript:
+        '''Which configuration is active at a given time'''
+        return self.game_script.getConfig(time - self.game_start)
+
+    def getInfoLore(self, time, player):
+        '''Which lore is visible at a given time to a given player.'''
+        return self.game_script.getInfoLore(time - self.game_start, player.flags)
+
+    def autoBounty(self, time):
+        Player       = apps.get_model("games", "Player")
+        DirectReport = apps.get_model("games", "DirectReport")
+        PlayerBounty = apps.get_model("games", "PlayerBounty")
+
+        # TODO Test this!!!
+        for player in Player.objects.filter(game=self):
+            for report in DirectReport.objects.filter(killer=player):
+                if not report.killer_validated and self.game_script.report_deadline < time - report.kill_date:
+                    # Specifically V this V!!!
+                    bounty = PlayerBounty(player=player, points=self.game_script.report_bounty)
+                    bounty.save()
+            for report in DirectReport.objects.filter(victim=player):
+                if not report.victim_validated and self.game_script.report_deadline < time - report.kill_date:
+                    # And V this V!!!
+                    bounty = PlayerBounty(player=player, points=self.game_script.report_bounty)
+                    bounty.save()
+
+####################################################################################################
+
 class Player(models.Model):
     '''Connects an Assassin to a Game and holds in-game data about them.'''
     # Link Fields
@@ -391,7 +459,7 @@ class Player(models.Model):
     game           = models.ForeignKey(Game,      on_delete=models.CASCADE)
 
     # In-Game Data
-    alive          = models.BooleanField("is alive", default=False)
+    alive          = models.BooleanField("is alive", default=False) # TODO replace this with a getter
     game_respawns  = models.PositiveSmallIntegerField("game respawns")
     event_respawns = models.PositiveSmallIntegerField("event respawns")
     next_respawn   = models.DateTimeField("next respawn")
@@ -400,8 +468,9 @@ class Player(models.Model):
     
     # Functions
     def __str__(self):
-        return str(self.assassin)
+        return str(self.game) + ' > ' + str(self.assassin)
 
+    # TODO Make this check db and act as a getter
     def tryRespawn(self, time) -> bool:
         if self.alive:
             return False # Respawn failed: Already alive.
@@ -443,6 +512,11 @@ class Player(models.Model):
         for bonus in PlayerBonus.objects.filter(player=self):
             if bonus.date < time:
                 total += bonus.points
+
+        PlayerBounty = apps.get_model("games", "PlayerBounty")
+        for bounty in PlayerBounty.objects.filter(claimed_by=self):
+            if bounty.date_claimed < time:
+                total += bounty.points
 
         return total
             
@@ -583,10 +657,9 @@ class IndirectReport(models.Model):
 
 class GeneralReport(models.Model):
     '''A non-kill/death/indirect report.'''
-    # Player
-    player      = models.ForeignKey(Player,           on_delete=models.CASCADE)
 
-    # Information
+    # General Configuration
+    player      = models.ForeignKey(Player,           on_delete=models.CASCADE)
     location    = models.CharField("report location", max_length=256)
     date        = models.DateTimeField("report date", default=datetime.now)
 
@@ -617,3 +690,17 @@ class FlagBonus(models.Model):
     flag      = models.ForeignKey(Flag,                   on_delete=models.CASCADE)
     date      = models.DateTimeField("date given",        default=datetime.now)
     points    = models.PositiveSmallIntegerField("bonus", default=0)
+
+####################################################################################################
+
+class PlayerBounty(models.Model):
+    '''Assign bounties to players.'''
+
+    # General Configuration
+    player       = models.ForeignKey(Player,                 related_name="bounties", on_delete=models.CASCADE)
+    points       = models.PositiveSmallIntegerField("bonus", default=0)
+    date_set     = models.DateTimeField("date given",        auto_now_add=True)
+
+    # Claim
+    claimed_by   = models.ForeignKey(Player,                 related_name="claimed_bounties", on_delete=models.CASCADE, null=True, blank=True)
+    date_claimed = models.DateTimeField("date claimed",      null=True, blank=True)

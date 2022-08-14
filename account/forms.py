@@ -65,4 +65,5 @@ class UpdateAssassinForm(forms.ModelForm):
         return data
 
 class PayMembershipForm(forms.Form):
+    # TODO Implement Payment Form (Please research django security before doing this! Contact Elysium if you need help.)
     pass

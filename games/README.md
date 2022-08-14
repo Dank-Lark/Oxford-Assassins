@@ -1,65 +1,29 @@
-# Database Models
+# models.py - database
 | Model | Description |
 | - | - |
+| XASGroup | Administrative details for a group of models. |
+| Flag | Represents teams, status effects, etc. |
+| InfoLore | Information or lore text to be released to players at a given time. |
 | ConfigScript | Configuration details for an event or game. |
 | EventScript | ConfigScript with offset timing for an event in a game. |
-| GameScript | A primary ConfigScript and a selection of EventScripts |
-| Game | Information about a game, a script, and timing |
-| Flag | Represents teams, status effects, etc |
-| Player | Connects an Assassin to a Game and holds in-game data about them|
-| DirectReport | A report of a kill or death |
-| IndirectReport | A report of a trap being laid or sprung |
-| GeneralReport | A non-k/d report |
----
-| ConfigScript | Configuration details for an event or game. |
-| - | - |
-| config_name | The display name for a configuration |
-| allowed_melee | Is a kill with a melee weapon allowed? |
-| allowed_thrown | Is a kill with a thrown weapon allowed? |
-| allowed_ranged | Is a kill with a ranged weapon allowed? |
-| allowed_animal | Is a kill with an attack animal allowed? |
-| allowed_costume | Is a kill with a costume allowed? |
-| points_melee | How many points is a kill with a melee weapon worth? |
-| points_thrown | How many points is a kill with a thrown weapon worth? |
-| points_ranged | How many points is a kill with a ranged weapon worth? |
-| points_animal | How many points is a kill with an attack animal worth? |
-| points_costume | How many points is a kill with a costume worth? |
-| allowed_normal | Is a normal kill valid? |
-| allowed_raid | Is a kill in a raid valid? |
-| allowed_duel | Is a kill in a duel valid? |
-| points_normal | How many points is a normal kill worth? |
-| points_raid | How many points is a kill in a raid worth? |
-| points_duel | How many points is a kill in a duel worth? |
-| allowed_indirect | Is an indirect kill allowed? |          
-| points_indirect | How many points is an indirect kill worth? | 
-| respawn_count | How many respawns are allowed while this config is active? |
-| respawn_time | How long between a death and a respawn? |
-| respawn_start | Should there be a global respawn at the start of this event? |
-| respawn_end | Should there be a global respawn at the end of this event? |
-| respawn_delay | How long after the event ends before global respawn? |
-| protect_flags | Should flag transfers be prohibited in this config? |
-
-| EventScript | ConfigScript with offset timing for an event in a game. |
-| - | - |
-| event_config | The ConfigScript to refer to for rules in this event. |
-| event_start | When to start the event. |
-| event_duration | How long is this event? |
-
 | GameScript | A primary ConfigScript and a selection of EventScripts. |
-| - | - |
-| primary_script | The primary configuration for the game. |
-| event_scripts | Override scripts and timing for events during the game. |
-
 | Game | Information about a game, a script, and timing. |
+| Player | Connects an Assassin to a Game and holds in-game data about them. |
+| DirectReport | A report of a kill or death. |
+| IndirectReport | A report of a trap being laid or sprung. |
+| GeneralReport | A non-kill/death/indirect report. |
+| PlayerBonus | Assign bonus points to players. |
+| FlagBonus | Assign bonus points to flags. |
+---
+| XASGroup | Administrative details for a group of models.|
 | - | - |
-| title | The display name for the game. |         
-| description | The description for the game. |   
-| game_script | The GameScript that defines the rules of the game. |   
-| game_start | The date and time for the game to begin. |     
-| game_duration | The length of time from start to end of the game. |
+| umpire | Which umpire owns this group? |
+| reference | The group reference or display name for the group. |
+| created | The date this group was created. |
 
 | Flag | Represents teams, status effects, etc. |
 | - | - |
+| xas_group | Which group of models does this Flag belong to? |
 | name | The display name for the flag. |
 | visibility | Who can see this flag attatched to a player. |
 | friendly | Players sharing this flag have friendly-fire disabled. |         
@@ -93,12 +57,76 @@
 | on_kill | How should flag transfers be handled when the player kills? |
 | on_death | How should flag transfers be handled when the player dies? |
 
+| InfoLore | Information or lore text to be released to players at a given time. |
+| - | - |
+| xas_group | Which group of models does this InfoLore belong to? |
+| title | The title of the information or lore release. |
+| text | The main text body of the release. |
+| media | Supplimentary media included in the release. |
+| release_start | When is the info or lore released? |
+| release_end | When is the info or lore removed? |
+| public | Is this visible to all players? |
+| flags | If not public, who can see the release? |
+
+| ConfigScript | Configuration details for an event or game. |
+| - | - |
+| xas_group | Which group of models does this ConfigScript belong to? |
+| config_name | The display name for a configuration |
+| allowed_melee | Is a kill with a melee weapon allowed? |
+| allowed_thrown | Is a kill with a thrown weapon allowed? |
+| allowed_ranged | Is a kill with a ranged weapon allowed? |
+| allowed_animal | Is a kill with an attack animal allowed? |
+| allowed_costume | Is a kill with a costume allowed? |
+| points_melee | How many points is a kill with a melee weapon worth? |
+| points_thrown | How many points is a kill with a thrown weapon worth? |
+| points_ranged | How many points is a kill with a ranged weapon worth? |
+| points_animal | How many points is a kill with an attack animal worth? |
+| points_costume | How many points is a kill with a costume worth? |
+| allowed_normal | Is a normal kill valid? |
+| allowed_raid | Is a kill in a raid valid? |
+| allowed_duel | Is a kill in a duel valid? |
+| points_normal | How many points is a normal kill worth? |
+| points_raid | How many points is a kill in a raid worth? |
+| points_duel | How many points is a kill in a duel worth? |
+| allowed_indirect | Is an indirect kill allowed? |          
+| points_indirect | How many points is an indirect kill worth? | 
+| respawn_count | How many respawns are allowed while this config is active? |
+| respawn_time | How long between a death and a respawn? |
+| respawn_start | Should there be a global respawn at the start of this event? |
+| respawn_end | Should there be a global respawn at the end of this event? |
+| respawn_delay | How long after the event ends before global respawn? |
+| protect_flags | Should flag transfers be prohibited in this config? |
+
+| EventScript | ConfigScript with offset timing for an event in a game. |
+| - | - |
+| xas_group | Which group of models does this EventScript belong to? |
+| event_config | The ConfigScript to refer to for rules in this event. |
+| event_start | When to start the event. |
+| event_duration | How long is this event? |
+
+| GameScript | A primary ConfigScript and a selection of EventScripts. |
+| - | - |
+| xas_group | Which group of models does this GameScript belong to? |
+| primary_script | The primary configuration for the game. |
+| event_scripts | Override scripts and timing for events during the game. |
+| info_lore_releases | List of InfoLore releases to be included in the game. |
+
+| Game | Information about a game, a script, and timing. |
+| - | - |
+| xas_group | Which group of models does this Game belong to? |
+| title | The display name for the game. |         
+| description | The description for the game. |   
+| game_script | The GameScript that defines the rules of the game. |   
+| game_start | The date and time for the game to begin. |     
+| game_duration | The length of time from start to end of the game. |
+
 | Player | Connects an Assassin to a Game and holds in-game data about them. |
 | - | - |
 | assassin | The assassin connected to this player. |
 | game | The game connected to this player. |
-| game_respawns | How many respawns this player has left in the game | 
-| event_respawns | How many respawns this player has left in the event |
+| is_alive | Is the player currently alive? |
+| game_respawns | How many respawns this player has left in the game? | 
+| event_respawns | How many respawns this player has left in the event? |
 | next_respawn | When does the player next respawn?
 | flags | The flags the player has. |
 
@@ -114,8 +142,9 @@
 | victim_report | The report text written by the victim. |
 | killer_media | Supplimentary media added by the killer. |
 | victim_media | Supplimentary media added by the victim. |
-| killer_validated | Does the killer agree this kill occured. |
-| victim_validated | Does the victim agree this kill occured. |
+| killer_validated | Does the killer agree this kill occured? |
+| victim_validated | Does the victim agree this kill occured? |
+| confirm_date | When was this report validated? |
 
 | IndirectReport | A report of a trap being laid or sprung. |
 | - | - |
@@ -139,10 +168,22 @@
 | report_text | The report text written by the player. |
 | report_media | Supplimentary media added by the player. |
 
+| PlayerBonus | Assign bonus points to players. |
+| - | - |
+| player | The player being given the bonus. |
+| date | When the bonus was given. |
+| points | How many points to award. |
+
+| TeamBonus | Assign bonus points to flags. |
+| - | - |
+| flags | The flags being given the bonus. |
+| date | When the bonus was given. |
+| points | How many points to award. |
+
 ---
 <br>
 
-# Functions
+# models.py - functions
 | Model | Function | Takes | Returns | Effects |
 | - | - | - | - | - |
 | ConfigScript | _isWeaponAllowed | report | bool: is weapon allowed? | Switches against MELEE, THROWN, RANGED, ANIMAL, or COSTUME. |
