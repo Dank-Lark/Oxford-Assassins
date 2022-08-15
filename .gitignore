@@ -5,7 +5,7 @@ __pycache__
 *.log
 *.pot
 *.pyc
-.sqlite3
+db.sqlite3
 media
 
 # Virtual Environments 
