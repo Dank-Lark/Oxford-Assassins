@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 
 from pathlib import Path
-from os import environ
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -25,9 +25,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 DEBUG = False
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-c%ushexlpp_fxmtk!^83##z=n2*nl$2t19psl5q5xx!hm)y-o&' if DEBUG else environ['SECRET_KEY']
+SECRET_KEY = 'django-insecure-c%ushexlpp_fxmtk!^83##z=n2*nl$2t19psl5q5xx!hm)y-o&' if DEBUG else os.environ['SECRET_KEY']
 
-ALLOWED_HOSTS = ['127.0.0.1'] if DEBUG else ['www.oxfordassassins.co.uk']
+# TODO Correct this!
+#ALLOWED_HOSTS = ['127.0.0.1'] if DEBUG else ['www.oxfordassassins.co.uk', '185.132.40.79']
+ALLOWED_HOSTS = ['*']
 
 # Application definition
 
@@ -126,11 +128,15 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
 STATIC_URL = 'static/'
+if not DEBUG:
+    STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 STATICFILES_DIRS = [
     BASE_DIR / 'static'
 ]
 
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = 'media/'
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
