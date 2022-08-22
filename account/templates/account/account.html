@@ -38,12 +38,12 @@
     </div>
 
     <!-- stats tab -->
-    <div class="content center_h">
+    <div class="content align_hc">
         <!-- TODO Add Player Statistics -->
         <h3>Player Statistics Coming Soon...</h3>
     </div>
 
-    <div class="logout_span center_h">
+    <div class="logout_span align_hc">
         {% if request.user.is_staff %}
         <a href="{% url 'manage' %}" class="button">
             <h3>Management</h3>

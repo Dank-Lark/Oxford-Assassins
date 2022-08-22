@@ -45,7 +45,7 @@ class ChangePasswordForm(PasswordChangeForm):
 class CreateAssassinForm(forms.ModelForm):
     class Meta:
         model = Assassin
-        fields = ['pseudonym', 'discordName', 'discordTag', 'subject', 'college', 'startYear', 'address', 'room', 'postal']
+        fields = ['pseudonym', 'discordName', 'discordTag', 'subject', 'college', 'start_year', 'address', 'room', 'postal']
 
     def clean_discordTag(self):
         data = self.cleaned_data['discordTag']
@@ -56,7 +56,7 @@ class CreateAssassinForm(forms.ModelForm):
 class UpdateAssassinForm(forms.ModelForm):
     class Meta:
         model = Assassin
-        fields = ['pseudonym', 'discordName', 'discordTag', 'subject', 'college', 'startYear', 'address', 'room', 'postal']
+        fields = ['pseudonym', 'discordName', 'discordTag', 'subject', 'college', 'start_year', 'address', 'room', 'postal']
 
     def clean_discordTag(self):
         data = self.cleaned_data['discordTag']

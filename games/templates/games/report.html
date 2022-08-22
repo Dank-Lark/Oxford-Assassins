@@ -1,0 +1,19 @@
+{% extends 'main.html' %}
+
+{% block content %}
+
+<div class="align_hc">
+    <div class="content">
+        <form method="POST" action="">
+            {% csrf_token %}
+            
+            <h2> {{ headline }} </h2>
+            
+            {{ form.as_p }}
+
+            <input type="submit" value="{{ submit }}"/>
+        </form>
+    </div>
+</div>
+
+{% endblock content %}

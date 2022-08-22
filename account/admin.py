@@ -6,5 +6,5 @@ class UserAdmin(admin.ModelAdmin):
 admin.site.register(User, UserAdmin)
 
 class AssassinAdmin(admin.ModelAdmin):
-    list_display = ("pseudonym", "discordName", "discordTag", "subject", "college", "startYear", "address", "room", "cabal")
+    list_display = ("pseudonym", "discordName", "discordTag", "subject", "college", "start_year", "address", "room", "cabal")
 admin.site.register(Assassin, AssassinAdmin)

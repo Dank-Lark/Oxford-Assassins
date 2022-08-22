@@ -1,9 +1,38 @@
 {% extends 'main.html' %}
 
-<!-- account/profile.html -->
-
 {% block content %}
 
-account/profile.html
+<div class="align_hc">
+    <div class="content">
+        {% if has_assassin %}
+            <h2> {{ user }} - aka: {{ assassin }} </h2>
+            <p>
+                Email: <a href="mailto:{{ user.email }}"> {{ user.email }} </a>
+            </p>
+            <p> 
+                Discord: {{ discord }} 
+            </p>
+            <p> 
+                Studies: {{ year }} year {{ assassin.get_subject_display }} at {{ assassin.get_college_display }} 
+            </p>
+            <p> 
+                Role: {% if assassin.cabal %} {{ assassin.get_cabal_display }} {% else %} Member {% endif %}
+            </p>
+            <p> 
+                Address: {{ assassin.address }}, {{ assassin.room }} 
+            </p>
+            {% if assassin.postal %}
+                <p> 
+                    Postal: {{ assassin.postal }}
+                </p>
+            {% endif %}
+        {% else %}
+            <h2> {{ user }} </h2>
+            <a href="mailto:{{ user.email }}">
+                <h3> {{ user.email }} </h3>
+            </a>
+        {% endif %}
+    </div>
+</div>
 
 {% endblock content %}

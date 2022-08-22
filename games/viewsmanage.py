@@ -1,6 +1,5 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
-from django.db import models
 from games.models import Game, Flag, GameScript, EventScript, ConfigScript, XASGroup
 from games.forms import *
 from django.contrib import messages
@@ -64,8 +63,9 @@ def manageXASGroups(request, id=-1):
         context = { 'groups': XASGroup.objects.all() }
         return render(request, 'games/manage_groups.html', context)
 
-    xas_group = XASGroup.objects.get(id=id)
-    if xas_group is None:
+    try:
+        xas_group = XASGroup.objects.get(id=id)
+    except:
         return redirect('manage_groups')
 
     if request.method == "POST":
@@ -125,8 +125,9 @@ def deleteXASGroup(request, id=-1):
     if id == -1:
         return redirect('manage_groups')
 
-    xas_group = XASGroup.objects.get(id=id)
-    if xas_group is None:
+    try:
+        xas_group = XASGroup.objects.get(id=id)
+    except:
         return redirect('manage_groups')
 
     if xas_group.umpire != request.user.assassin:
@@ -147,8 +148,9 @@ def manageInfoLore(request, id=-1):
         context = { 'infolores': InfoLore.objects.all() }
         return render(request, 'games/manage_infolore.html', context)
 
-    infolore = InfoLore.objects.get(id=id)
-    if infolore is None:
+    try:
+        infolore = InfoLore.objects.get(id=id)
+    except:
         return redirect('manage_infolore')
 
     if request.method == "POST":
@@ -206,8 +208,9 @@ def deleteInfoLore(request, id=-1):
     if id == -1:
         return redirect('manage_infolore')
 
-    infolore = InfoLore.objects.get(id=id)
-    if infolore is None:
+    try:
+        infolore = InfoLore.objects.get(id=id)
+    except:
         return redirect('manage_infolore')
 
     if infolore.xas_group.umpire != request.user.assassin:
@@ -228,8 +231,9 @@ def manageConfigScripts(request, id=-1):
         context = { 'configs': ConfigScript.objects.all() }
         return render(request, 'games/manage_configscripts.html', context)
     
-    config_script = ConfigScript.objects.get(id=id)
-    if config_script is None:
+    try:
+        config_script = ConfigScript.objects.get(id=id)
+    except:
         return redirect('manage_configs')
 
     if request.method == "POST":
@@ -285,8 +289,9 @@ def deleteConfigScript(request, id=-1):
     if id == -1:
         return redirect('manage_configs')
 
-    config_script = ConfigScript.objects.get(id=id)
-    if config_script is None:
+    try:
+        config_script = ConfigScript.objects.get(id=id)
+    except:
         return redirect('manage_configs')
 
     if config_script.xas_group.umpire != request.user.assassin:
@@ -307,8 +312,9 @@ def manageEventScripts(request, id=-1):
         context = { 'events': EventScript.objects.all() }
         return render(request, 'games/manage_eventscripts.html', context)
     
-    event_script = EventScript.objects.get(id=id)
-    if event_script is None:
+    try:
+        event_script = EventScript.objects.get(id=id)
+    except:
         return redirect('manage_events')
 
     if request.method == "POST":
@@ -364,8 +370,9 @@ def deleteEventScript(request, id=-1):
     if id == -1:
         return redirect('manage_events')
 
-    event_script = EventScript.objects.get(id=id)
-    if event_script is None:
+    try:
+        event_script = EventScript.objects.get(id=id)
+    except:
         return redirect('manage_events')
 
     if event_script.xas_group.umpire != request.user.assassin:
@@ -386,8 +393,9 @@ def manageGameScripts(request, id=-1):
         context = { 'scripts': GameScript.objects.all() }
         return render(request, 'games/manage_gamescripts.html', context)
     
-    game_script = GameScript.objects.get(id=id)
-    if game_script is None:
+    try:
+        game_script = GameScript.objects.get(id=id)
+    except:
         return redirect('manage_scripts')
 
     if request.method == "POST":
@@ -443,8 +451,9 @@ def deleteGameScript(request, id=-1):
     if id == -1:
         return redirect('manage_scripts')
 
-    game_script = GameScript.objects.get(id=id)
-    if game_script is None:
+    try:
+        game_script = GameScript.objects.get(id=id)
+    except:
         return redirect('manage_scripts')
 
     if game_script.xas_group.umpire != request.user.assassin:
@@ -465,8 +474,9 @@ def manageGames(request, id=-1):
         context = { 'games': Game.objects.all() }
         return render(request, 'games/manage_games.html', context)
     
-    game = Game.objects.get(id=id)
-    if game is None:
+    try:
+        game = Game.objects.get(id=id)
+    except:
         return redirect('manage_games')
 
     if request.method == "POST":
@@ -522,8 +532,9 @@ def deleteGame(request, id=-1):
     if id == -1:
         return redirect('manage_games')
 
-    game = Game.objects.get(id=id)
-    if game is None:
+    try:
+        game = Game.objects.get(id=id)
+    except:
         return redirect('manage_games')
 
     if game.xas_group.umpire != request.user.assassin:
@@ -544,8 +555,9 @@ def manageFlags(request, id=-1):
         context = { 'flags': Flag.objects.all() }
         return render(request, 'games/manage_flags.html', context)
     
-    flag = Flag.objects.get(id=id)
-    if flag is None:
+    try:
+        flag = Flag.objects.get(id=id)
+    except:
         return redirect('manage_flags')
 
     if request.method == "POST":
@@ -601,8 +613,9 @@ def deleteFlag(request, id=-1):
     if id == -1:
         return redirect('manage_flags')
 
-    flag = Flag.objects.get(id=id)
-    if flag is None:
+    try:
+        flag = Flag.objects.get(id=id)
+    except:
         return redirect('manage_flags')
 
     if flag.xas_group.umpire != request.user.assassin:

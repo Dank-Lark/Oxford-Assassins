@@ -1,4 +1,5 @@
 from datetime import datetime, timedelta
+from django.utils import timezone
 from django.apps import apps
 from django.db import models
 from account.models import Assassin
@@ -188,7 +189,7 @@ class Flag(models.Model):
         '''How many bonus points does this flag award this kill'''
         return self._getWeaponBonus(report) + self._getContextBonus(report)
 
-    def totalPoints(self, time):
+    def totalPoints(self, time=timezone.now()):
         total = 0
 
         Player = apps.get_model("games", "Player")
@@ -219,7 +220,7 @@ class InfoLore(models.Model):
 
     # Viewing Permissions
     public        = models.BooleanField("visible to all", default=True)
-    flags         = models.ManyToManyField(Flag,          verbose_name="visible to")
+    flags         = models.ManyToManyField(Flag,          verbose_name="visible to", blank=True)
 
     def __str__(self):
         return str(self.xas_group) + ' > ' + str(self.title)
@@ -227,6 +228,9 @@ class InfoLore(models.Model):
     def isVisible(self, game_time, flags):
         if game_time < self.release_start or self.release_end < game_time:
             return False
+
+        if self.public:
+            return True
 
         for flag in flags:
             if flag in self.flags:
@@ -366,8 +370,9 @@ class GameScript(models.Model):
 
     # Script Listings
     primary_script     = models.ForeignKey(ConfigScript, on_delete=models.CASCADE)
-    event_scripts      = models.ManyToManyField(EventScript)
-    info_lore_releases = models.ManyToManyField(InfoLore)
+    event_scripts      = models.ManyToManyField(EventScript, blank=True)
+    flags_used         = models.ManyToManyField(Flag, blank=True)
+    info_lore_releases = models.ManyToManyField(InfoLore, blank=True)
 
     # Meta Rules
     report_deadline    = models.DurationField("report confirmation deadline", default=timedelta(hours=12))
@@ -375,25 +380,26 @@ class GameScript(models.Model):
 
     # Functions
     def __str__(self):
-        return str(self.xas_group) + ' > ' + str(self.primary_script)
+        return str(self.primary_script)
 
     def isDuringEvent(self, game_time) -> bool:
-        for script in self.event_scripts:
+        for script in self.event_scripts.all():
             if script.isDuringEvent(game_time):
                 return True
         return False
 
     def getConfig(self, game_time) -> ConfigScript:
-        for script in self.event_scripts:
+        for script in self.event_scripts.all():
             if script.isDuringEvent(game_time):
                 return script.event_config
         return self.primary_script
 
     def getInfoLore(self, game_time, flags):
         releases = []
-        for infolore in self.info_lore_releases:
+        for infolore in self.info_lore_releases.all():
             if infolore.isVisible(game_time, flags):
                 releases.append(infolore)
+        return releases
 
 ####################################################################################################
 
@@ -402,6 +408,7 @@ class Game(models.Model):
 
     # General Configuration
     xas_group     = models.ForeignKey(XASGroup,           on_delete=models.CASCADE)
+    published     = models.BooleanField("published",      default=False)
     title         = models.CharField("game title",        max_length=100)
     description   = models.TextField("description")
 
@@ -416,21 +423,25 @@ class Game(models.Model):
     def __str__(self):
         return str(self.xas_group) + ' > ' + str(self.title)
 
-    def isDuringGame(self, time) -> bool:
+    def isAllowedSignups(self, time=timezone.now()) -> bool:
+        '''Is this open for signups at the given time?'''
+        return time < self.game_start
+
+    def isDuringGame(self, time=timezone.now()) -> bool:
         '''Is this game active at the given time?'''
         return self.game_start < time and time < self.game_start + self.game_duration
 
-    def isDuringEvent(self, time) -> bool:
+    def isDuringEvent(self, time=timezone.now()) -> bool:
         '''Is the game currently in an event?'''
         return self.game_script.isDuringEvent(time - self.game_start)
 
-    def getConfig(self, time) -> ConfigScript:
+    def getConfig(self, time=timezone.now()) -> ConfigScript:
         '''Which configuration is active at a given time'''
         return self.game_script.getConfig(time - self.game_start)
 
-    def getInfoLore(self, time, player):
+    def getInfoLore(self, player, time=timezone.now()):
         '''Which lore is visible at a given time to a given player.'''
-        return self.game_script.getInfoLore(time - self.game_start, player.flags)
+        return self.game_script.getInfoLore(time - self.game_start, player.flags.all())
 
     def autoBounty(self, time):
         Player       = apps.get_model("games", "Player")
@@ -464,14 +475,14 @@ class Player(models.Model):
     event_respawns = models.PositiveSmallIntegerField("event respawns")
     next_respawn   = models.DateTimeField("next respawn")
 
-    flags          = models.ManyToManyField(Flag, verbose_name="player flags")
+    flags          = models.ManyToManyField(Flag, verbose_name="player flags", blank=True)
     
     # Functions
     def __str__(self):
         return str(self.game) + ' > ' + str(self.assassin)
 
     # TODO Make this check db and act as a getter
-    def tryRespawn(self, time) -> bool:
+    def tryRespawn(self, time=timezone.now()) -> bool:
         if self.alive:
             return False # Respawn failed: Already alive.
 
@@ -495,13 +506,13 @@ class Player(models.Model):
             self.save()
             return True # Respawned in game
 
-    def totalPoints(self, time):
+    def totalPoints(self, time=timezone.now()):
         total = 0
 
         DirectReport = apps.get_model("games", "DirectReport")
         for report in DirectReport.objects.filter(killer=self):
-            if report.confirm_date < time:
-                total += report.get_points()
+            if report.confirm_date and report.confirm_date < time:
+                total += report.getPoints(self.game)
 
         IndirectReport = apps.get_model("games", "IndirectReport")
         for report in IndirectReport.objects.filter(trapper=self):
@@ -533,7 +544,7 @@ class DirectReport(models.Model):
     weapon           = models.CharField("kill weapon",         max_length=3, choices=KILL_METHODS, default=MELEE)
     context          = models.CharField("kill context",        max_length=3, choices=KILL_CONTEXTS, default=NORMAL)
     location         = models.CharField("kill location",       max_length=256)
-    kill_date        = models.DateTimeField("kill date",       default=datetime.now)
+    kill_date        = models.DateTimeField("kill date",       default=timezone.now)
 
     # Report Content
     killer_report    = models.TextField("killer report",       null=True, blank=True)
@@ -548,23 +559,23 @@ class DirectReport(models.Model):
 
     # Functions
     def __str__(self):
-        return str(self.killer) + " --" + str(self.weapon.label) + "-> " + str(self.victim)
+        return str(self.killer) + " --" + str(self.weapon) + "-> " + str(self.victim)
 
     def _isValid(self, game) -> bool:
         '''Does the kill occur between valid players at a valid time for a given game?'''
         v_killer = self.killer.game == game
         v_victim = self.victim.game == game
-        v_date   = game.isDuringGame(self.date)
+        v_date   = game.isDuringGame(self.kill_date)
         return v_killer and v_victim and v_date
 
     def _isAllowed(self) -> bool:
         '''Does the script and flags agree to the weapon and context?'''
-        for flag in self.killer.flags:
+        for flag in self.killer.flags.all():
             if not flag.isKillAllowed(self):
                 return False # Flag disallows this kill
-            if flag.friendly and flag in self.victim.flags:
+            if flag.friendly and flag in self.victim.flags.all():
                 return False # Killer and victim share a friendly flag
-        return self.killer.game.getConfig(self.date).isKillAllowed(self)
+        return self.killer.game.getConfig(self.kill_date).isKillAllowed(self)
 
     def _isAgreed(self) -> bool:
         '''Do both players agree to the kill?'''
@@ -572,17 +583,17 @@ class DirectReport(models.Model):
 
     def didKill(self, game) -> bool:
         '''Does the report constitute a kill?'''
-        return self._isValid(game) and self._isAllowed(game)
+        return self._isValid(game) and self._isAllowed()
 
     def getPoints(self, game) -> int:
         '''How many points to give the killer?'''
-        if not self.didKill() or not self._isAgreed():
+        if not self.didKill(game) or not self._isAgreed():
             return 0
 
-        points     = game.getConfig(self.date).getKillScore(self)
+        points     = game.getConfig(self.kill_date).getKillScore(self)
         multiplier = 1
         bonus      = 0
-        for flag in self.killer.flags:
+        for flag in self.killer.flags.all():
             multiplier *= flag.getKillMultiplier(self)
             bonus      += flag.getKillBonus(self)
         return points * multiplier + bonus
@@ -598,7 +609,7 @@ class IndirectReport(models.Model):
     
     # Information
     location        = models.CharField("trap location",       max_length=256)
-    date_set        = models.DateTimeField("trap laid",       default=datetime.now)
+    date_set        = models.DateTimeField("trap laid",       default=timezone.now)
     date_sprung     = models.DateTimeField("trap sprung",     null=True, blank=True)
 
     # Report Content
@@ -661,7 +672,7 @@ class GeneralReport(models.Model):
     # General Configuration
     player      = models.ForeignKey(Player,           on_delete=models.CASCADE)
     location    = models.CharField("report location", max_length=256)
-    date        = models.DateTimeField("report date", default=datetime.now)
+    date        = models.DateTimeField("report date", default=timezone.now)
 
     # Report Content
     report_text = models.TextField("report")
@@ -678,7 +689,7 @@ class PlayerBonus(models.Model):
 
     # General Configuration
     player    = models.ForeignKey(Player,                 on_delete=models.CASCADE)
-    date      = models.DateTimeField("date given",        default=datetime.now)
+    date      = models.DateTimeField("date given",        default=timezone.now)
     points    = models.PositiveSmallIntegerField("bonus", default=0)
 
 ####################################################################################################
@@ -688,7 +699,7 @@ class FlagBonus(models.Model):
 
     # General Configuration
     flag      = models.ForeignKey(Flag,                   on_delete=models.CASCADE)
-    date      = models.DateTimeField("date given",        default=datetime.now)
+    date      = models.DateTimeField("date given",        default=timezone.now)
     points    = models.PositiveSmallIntegerField("bonus", default=0)
 
 ####################################################################################################

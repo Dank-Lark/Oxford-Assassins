@@ -7,7 +7,7 @@
         <h2>Manage Games</h2>
         <p>Game models contain information about a game (title and description), a script that dictates the rules of the game, and timing information (start date and duration).</p>
     </div>
-    <div class="rcr_c manage_buttons">
+    <div class="rcr_c container_buttons">
         <a href="{% url 'manage' %}" class="button">
             <h3>Back to Management</h3>
         </a>
@@ -21,9 +21,6 @@
     <a href="{{ game.id }}">
         <div class="content">
             <h3>{{ game }}</h3>
-            <p>
-                {{ game.description }}
-            </p>
             <p>
                 Script - [ {{ game.game_script }} ]
             </p>

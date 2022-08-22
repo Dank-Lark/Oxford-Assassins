@@ -1,9 +1,13 @@
+import math
 from django.shortcuts import redirect, render
 from django.contrib.auth.decorators import login_required
 from account.forms import PayMembershipForm, RegisterUserForm, UpdateUserForm, CreateAssassinForm, UpdateAssassinForm, ChangePasswordForm
 from account.models import Assassin, User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
+from datetime import date, datetime
+
+from games.models import Player
 
 # Account Views:
 #   account
@@ -198,6 +202,39 @@ def logoutForm(request):
 ####################################################################################################
 
 @login_required(login_url='login')
-def profile(request):
-    context = {}
+def profile(request, id):
+    # TODO Docstring
+
+    try:
+        user = User.objects.get(id=id)
+    except:
+        return redirect('home')
+
+    assassin = user.assassin
+    if assassin is None:
+        context = {
+            'has_assassin': False,
+            'user': user,
+        }
+    else: 
+        delta = math.ceil((timezone.now() - datetime(year=assassin.start_year, month=8, day=1)).days / 365.25)
+        if delta == 1:
+            year = "1st"
+        elif delta == 2:
+            year = "2nd"
+        elif delta == 3:
+            year = "3rd"
+        else:
+            year = str(delta) + "th"
+
+        context = {
+            'has_assassin': True,
+            'user': user,
+            'assassin': assassin,
+            'discord': assassin.discordName + "#" + str(assassin.discordTag).rjust(4, '0'),
+            'year': year
+        }
+    
     return render(request, 'account/profile.html', context)
+
+####################################################################################################

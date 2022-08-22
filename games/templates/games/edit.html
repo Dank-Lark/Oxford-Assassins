@@ -6,14 +6,14 @@
     <div class="content">
         <h2>{% if new_object %}Create{% else %}Edit{% endif %} {{ object_type }}</h2>
     </div>
-    <div class="manage_buttons">
+    <div class="container_buttons">
         <a href="{% url 'manage' %}" class="button">
             <h3>Back to Management</h3>
         </a>
     </div>
 </div>
 
-<div class="center_h">
+<div class="align_hc">
     <div class="content">
         <form method="POST" action="">
             {% csrf_token %}
@@ -30,7 +30,7 @@
         <div class="content">
             <h2>Delete {{ object_type }}</h2>
         </div>
-        <div class="manage_buttons">
+        <div class="container_buttons">
             <a href="{% url delete_url id=object_id %}" class="button">
                 <h3>Delete</h3>
             </a>

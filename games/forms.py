@@ -29,7 +29,8 @@ class InfoLoreForm(forms.ModelForm):
 
     flags = forms.ModelMultipleChoiceField(
         queryset=Flag.objects.all(),
-        widget=forms.CheckboxSelectMultiple(attrs={'class': "form_multichoice"})
+        widget=forms.CheckboxSelectMultiple(attrs={'class': "form_multichoice"}),
+        required=False
     )
 
     def __init__(self, *args, **kwargs):
@@ -73,11 +74,18 @@ class GameScriptForm(forms.ModelForm):
 
     event_scripts = forms.ModelMultipleChoiceField(
         queryset=EventScript.objects.all(),
-        widget=forms.CheckboxSelectMultiple(attrs={'class': "form_multichoice"})
+        widget=forms.CheckboxSelectMultiple(attrs={'class': "form_multichoice"}),
+        required=False
+    )
+    flags_used = forms.ModelMultipleChoiceField(
+        queryset=Flag.objects.all(),
+        widget=forms.CheckboxSelectMultiple(attrs={'class': "form_multichoice"}),
+        required=False
     )
     info_lore_releases = forms.ModelMultipleChoiceField(
         queryset=InfoLore.objects.all(),
-        widget=forms.CheckboxSelectMultiple(attrs={'class': "form_multichoice"})
+        widget=forms.CheckboxSelectMultiple(attrs={'class': "form_multichoice"}),
+        required=False
     )
 
     def __init__(self, *args, **kwargs):
@@ -110,7 +118,8 @@ class PlayerForm(forms.ModelForm):
     
     flags = forms.ModelMultipleChoiceField(
         queryset=Flag.objects.all(),
-        widget=forms.CheckboxSelectMultiple(attrs={'class': "form_multichoice"})
+        widget=forms.CheckboxSelectMultiple(attrs={'class': "form_multichoice"}),
+        required=False
     )
 
     def __init__(self, *args, **kwargs):
@@ -204,18 +213,10 @@ class PlayerBountyForm(forms.ModelForm):
 ####################################################################################################
 
 # TODO Implement PlayerSignupForm in a view
-# TODO Create PlayerSignupForm
-
-# TODO Implement DirectReportKillForm in a view
-class DirectReportKillForm(forms.ModelForm):
-    '''For a Player to submit or edit a kill report in-game.'''
+class PlayerSignupForm(forms.ModelForm):
     class Meta:
-        model = DirectReport
-        fields = ['victim', 'weapon', 'context', 'location', 'kill_date', 'killer_report'] 
-
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.fields['kill_date'].widget.attrs['placeholder'] = 'yyyy-mm-dd hh:mm:ss'
+        model = Player
+        fields = []
 
 ####################################################################################################
 
@@ -250,8 +251,16 @@ class DirectReportConfirmKillForm(forms.ModelForm):
     '''For a Player to confirm a kill report in-game.'''
     class Meta:
         model = DirectReport
-        read_only_fields = ['killer', 'weapon', 'context', 'location', 'kill_date', 'killer_report'] 
-        fields = ['victim_report'] 
+        fields = ['victim', 'weapon', 'context', 'location', 'kill_date', 'victim_report', 'killer_report'] 
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['victim'].widget.attrs['diasbled'] = True
+        self.fields['weapon'].widget.attrs['diasbled'] = True
+        self.fields['context'].widget.attrs['diasbled'] = True
+        self.fields['location'].widget.attrs['diasbled'] = True
+        self.fields['kill_date'].widget.attrs['diasbled'] = True
+        self.fields['victim_report'].widget.attrs['diasbled'] = True
 
 ####################################################################################################
 
@@ -260,8 +269,16 @@ class DirectReportConfirmDeathForm(forms.ModelForm):
     '''For a Player to confirm a death report in-game.'''
     class Meta:
         model = DirectReport
-        read_only_fields = ['victim', 'weapon', 'context', 'location', 'kill_date', 'victim_report'] 
-        fields = ['killer_report'] 
+        fields = ['killer', 'weapon', 'context', 'location', 'kill_date', 'killer_report', 'victim_report'] 
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['killer'].widget.attrs['diasbled'] = True
+        self.fields['weapon'].widget.attrs['diasbled'] = True
+        self.fields['context'].widget.attrs['diasbled'] = True
+        self.fields['location'].widget.attrs['diasbled'] = True
+        self.fields['kill_date'].widget.attrs['diasbled'] = True
+        self.fields['killer_report'].widget.attrs['diasbled'] = True
 
 ####################################################################################################
 
@@ -283,12 +300,15 @@ class IndirectReportSpringForm(forms.ModelForm):
     '''For a Player to submit or edit a Indirect-Springing report in-game.'''
     class Meta:
         model = IndirectReport
-        read_only_fields = fields = ['trapper', 'location', 'date_set', 'trapper_report']
-        fields = ['date_sprung', 'target_report', 'trap_successful']
+        fields = ['trapper', 'location', 'date_set', 'trapper_report', 'date_sprung', 'target_report', 'trap_successful']
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['date_sprung'].widget.attrs['placeholder'] = 'yyyy-mm-dd hh:mm:ss'
+        self.fields['trapper'].widget.attrs['diasbled'] = True
+        self.fields['location'].widget.attrs['diasbled'] = True
+        self.fields['date_set'].widget.attrs['diasbled'] = True
+        self.fields['trapper_report'].widget.attrs['diasbled'] = True
 
 ####################################################################################################
 

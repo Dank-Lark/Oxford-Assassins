@@ -30,7 +30,7 @@
             Group models contain administrative information about a collection of objects
         </p>
     </div>
-    <div class="rcr_c manage_buttons">
+    <div class="rcr_c container_buttons">
         <a href="{% url 'manage_groups' %}" class="button">
             <h3>View {{ count_groups }} Groups</h3>
         </a>
@@ -48,7 +48,7 @@
             Game models contain information about a game (title and description), a script that dictates the rules of the game, and timing information (start date and duration).
         </p>
     </div>
-    <div class="rcr_c manage_buttons">
+    <div class="rcr_c container_buttons">
         <a href="{% url 'manage_games' %}" class="button">
             <h3>View {{ count_games }} Games</h3>
         </a>
@@ -66,7 +66,7 @@
             Flag models represent teams, status effects, etc. They contain information about a flag (name, visibility, and friendly status), weapon, context, and indirect specific permissions, multipliers, and bonuses, and information about the flag's behaviour on the event of a kill or death.
         </p>
     </div>
-    <div class="rcr_c manage_buttons">
+    <div class="rcr_c container_buttons">
         <a href="{% url 'manage_flags' %}" class="button">
             <h3>View {{ count_flags }} Flags</h3>
         </a>
@@ -84,7 +84,7 @@
             Lore models contain information or lore text to be released to players in-game at a given time, Umpires can customise which players will recieve the releases via the flag system.
         </p>
     </div>
-    <div class="rcr_c manage_buttons">
+    <div class="rcr_c container_buttons">
         <a href="{% url 'manage_infolore' %}" class="button">
             <h3>View {{ count_infolore }} Lore</h3>
         </a>
@@ -102,7 +102,7 @@
             Config script models dictate the rules of a game or event. They list weapon, context, and indirect specific permissions and points, information about respawn behaviour on event of a death, and whether to protect flags from transfering on the event of a kill or death.
         </p>
     </div>
-    <div class="rcr_c manage_buttons">
+    <div class="rcr_c container_buttons">
         <a href="{% url 'manage_configs' %}" class="button">
             <h3>View {{ count_configs }} Configs</h3>
         </a>
@@ -120,7 +120,7 @@
             Event script models contain a configuration that dictates the rules of the event, and timing information (start offset and duration).
         </p>
     </div>
-    <div class="rcr_c manage_buttons">
+    <div class="rcr_c container_buttons">
         <a href="{% url 'manage_events' %}" class="button">
             <h3>View {{ count_events }} Events</h3>
         </a>
@@ -138,7 +138,7 @@
             Game script models contain a primary configuration which runs throughout the game, and a selection of event scripts that temporarily override the primary configuration for the duration of an event.
         </p>
     </div>
-    <div class="rcr_c manage_buttons">
+    <div class="rcr_c container_buttons">
         <a href="{% url 'manage_scripts' %}" class="button">
             <h3>View {{ count_scripts }} Scripts</h3>
         </a>

@@ -117,16 +117,42 @@ section {
 .button:hover  { background-color: var(--oga-light); }
 .button:active { background-color: var(--oga-red); }
 
-/* centers content horizontally */
-.center_h {
+.no_bullet {
+    list-style-type: none; /* no bullet points */
+}
+
+/* TODO Rewrite HTML using these tags */
+
+.align_hl { /* horizontal left */
+    display: flex;
+    justify-content: left;
+}
+.align_hc { /* horizontal center */
     display: flex;
     justify-content: center;
 }
-
-/* centers content vertically */
-.center_v {
+.align_hr { /* horizontal right */
     display: flex;
+    justify-content: right;
+}
+.align_hl > *, .align_hc > *, .align_hr > * {
+    margin: 0, 1em, 0, 1em;
+}
+
+.align_vt { /* vertical top */
+    display: flex; 
+    flex-direction: column;
+    justify-content: left;
+}
+.align_vm { /* vertical middle */
+    display: flex;
+    flex-direction: column;
     justify-content: center;
+}
+.align_vb { /* vertical bottom */
+    display: flex; 
+    flex-direction: column;
+    justify-content: right;
 }
 
 .rrc_a, .rrc_l, .rrc_r, .rrc_c, .rcr_a, .rcr_l, .rcr_r, .rcr_c {
@@ -199,8 +225,6 @@ nav {
     border-color: var(--oga-white);
     
     padding: 0; /* no padding */
-
-    list-style-type: none; /* no bullet points */
 }
 .navbar_button:hover  { background-color: var(--oga-light); }
 .navbar_button:active { background-color: var(--oga-red); }
@@ -406,7 +430,7 @@ textarea {
     width: 140px;
 }
 
-.manage_buttons {
+.container_buttons {
     margin: 0.5em 0 -0.5em 0;
     min-width: 258px;
 }

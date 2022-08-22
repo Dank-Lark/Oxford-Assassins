@@ -7,7 +7,7 @@
         <h2>Manage Scripts</h2>
         <p>Game script models contain a primary configuration which runs throughout the game, and a selection of event scripts that temporarily override the primary configuration for the duration of an event.</p>
     </div>
-    <div class="rcr_c manage_buttons">
+    <div class="rcr_c container_buttons">
         <a href="{% url 'manage' %}" class="button">
             <h3>Back to Management</h3>
         </a>
@@ -27,11 +27,22 @@
                     , Event: {{ event }}
                 {% endfor %}
                 ]
+            </p>
+            <p>
+                Flags - [
+                {% for flag in script.flags_used.all %}
+                    {{ flag }}, 
+                {% endfor %}
+                ]
+            </p>
+            <p>
                 Lore - [
                 {% for lore in script.info_lore_releases.all %}
                     {{ lore }}, 
                 {% endfor %}
                 ]
+            </p>
+            <p>
                 Auto Bounties - [ Report Deadline: {{ script.report_deadline }}, Late Report Bounty: {{ script.report_bounty }} ]
             </p>
         </div>

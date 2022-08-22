@@ -7,7 +7,7 @@
         <h2>Manage Flags</h2>
         <p>Flag models represent teams, status effects, etc. They contain information about a flag (name, visibility, and friendly status), weapon, context, and indirect specific permissions, multipliers, and bonuses, and information about the flag's behaviour on the event of a kill or death.</p>
     </div>
-    <div class="rcr_c manage_buttons">
+    <div class="rcr_c container_buttons">
         <a href="{% url 'manage' %}" class="button">
             <h3>Back to Management</h3>
         </a>
@@ -59,14 +59,20 @@
                     Banned, 
                 {% endif %}
                 Animal: 
-                {% if flag.allowed_melee %}
+                {% if flag.allowed_animal %}
                     ×{{ flag.multiplier_animal }} +{{ flag.bonus_animal }}, 
                 {% else %}
                     Banned, 
                 {% endif %}
                 Costume: 
-                {% if flag.allowed_melee %}
+                {% if flag.allowed_costume %}
                     ×{{ flag.multiplier_costume }} +{{ flag.bonus_costume }} 
+                {% else %}
+                    Banned, 
+                {% endif %}
+                Indirect: 
+                {% if flag.allowed_indirect %}
+                    ×{{ flag.multiplier_indirect }} +{{ flag.bonus_indirect }} 
                 {% else %}
                     Banned 
                 {% endif %}
@@ -89,16 +95,6 @@
                 Duel: 
                 {% if flag.allowed_duel %}
                     ×{{ flag.multiplier_duel }} +{{ flag.bonus_duel }} 
-                {% else %}
-                    Banned 
-                {% endif %}
-                ]
-            </p>
-            <p>
-                Indirects - [
-                Indirect: 
-                {% if flag.allowed_indirect %}
-                    ×{{ flag.multiplier_indirect }} +{{ flag.bonus_indirect }} 
                 {% else %}
                     Banned 
                 {% endif %}

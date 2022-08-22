@@ -2,6 +2,135 @@
 
 {% block content %}
 
+<div class="content">
+    <div class="rrc_r">
+        <h2> {{ game_title }} > {{ name }} </h2>
+        <h2 class="align_hr"> 
+            {% if game_started %}
+                {% if alive %}
+                Alive
+                {% elif respawns %}
+                Respawn at {{ respawn_time }}, {{ respawns }} Remaining 
+                {% else %}    
+                No Respawns Remaining
+                {% endif %}
+            {% else %}
+                Game Starting {{ game_start }}
+            {% endif %}
+        </h2>
+    </div>
+    <div style="margin-top: 1em;">
+        <h3>My Flags</h3>
+        <div class="align_hl">
+            {% if game_started %}
+                {% for flag in player_flags.all %}
+                    <a href="{% url 'flags' %}{{ flag_id }}">
+                        <p style="margin-right: 1em;"> {{ flag.name }} </p>
+                    </a>
+                {% empty %}
+                    <p style="margin-right: 1em;"> None </p>
+                {% endfor %}
+            {% else %}
+                <p style="margin-right: 1em;"> ??? </p>
+                <p style="margin-right: 1em;"> ??? </p>
+                <p style="margin-right: 1em;"> ??? </p>
+            {% endif %}
+        </div>
+    </div>
+</div>
 
+<div class="rrc_r">
+    <div>
+        <div class="container_buttons">
+            {% if game_started %}
+                {% for confirmation in confirmations_dk %}
+                    <a href={% url 'confirm_kill' id=confirmation.id %} class="button">
+                        <h3> You --({{ confirmation.weapon }})-> {{ confirmation.victim }} </h4>
+                    </a>
+                {% endfor %}
+                {% for confirmation in confirmations_dv %}
+                    <a href={% url 'confirm_death' id=confirmation.id %} class="button">
+                        <h3> {{ confirmation.killer }} --({{ confirmation.weapon }})-> You </h4>
+                    </a>
+                {% endfor %}
+                {% if not confirmations_dk and not confirmations_dv %}
+                    <a href={% url 'report_kill' %} class="button">
+                        <h3> Report Kill </h3>
+                    </a>
+                    <a href={% url 'report_death' %} class="button">
+                        <h3> Report Death </h3>
+                    </a>
+                    <a href={% url 'report_set' %} class="button">
+                        <h3> Set a Trap </h3>
+                    </a>
+                    <a href={% url 'confirm_indirect' %} class="button">
+                        <h3> Spring a Trap </h3>
+                    </a>
+                {% endif %}
+            {% else %}
+                <a class="button">
+                    <h3> Report Kill </h3>
+                </a>
+                <a class="button">
+                    <h3> Report Death </h3>
+                </a>
+                <a class="button">
+                    <h3> Set a Trap </h3>
+                </a>
+                <a class="button">
+                    <h3> Spring a Trap </h3>
+                </a>
+            {% endif %}
+        </div>
+        <div class="rrc_c">
+            <div class="content">
+                <h3> Top Scoring Players </h3>
+                {% for player in top_players %}
+                    <a href="{% url 'players' %}{{ player.id }}">
+                        <p> {{ player.assassin }} - {{ player.totalPoints }} </p>
+                    </a>
+                {% endfor %}
+            </div>
+            <div class="content">
+                <h3> Top Scoring Flags </h3>
+                {% for flag in top_flags %}
+                    <a href="{% url 'flags' %}{{ flag_id }}">
+                        <p> {{ flag.name }} - {{ flag.totalPoints }} </p>
+                    </a>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    <div>
+        {% for lore in lores %}
+            <div class="content">
+                <h3>{{ lore.title }}</h3>
+                <p>
+                    {{ lore.text }}
+                </p>
+                <p>
+                    Visible to 
+                    {% if lore.public %}
+                        All Players
+                    {% else %}
+                        {% for flag in lore.flags %}
+                            {{ flag.name }}, 
+                        {% endfor %}
+                    {% endif %}
+                </p>
+            </div>
+        {% empty %}
+            <div class="content">
+                <h3>{{ game_title }}</h3>
+                <p>
+                    {{ game_description }}
+                </p>
+                <p>
+                    Visible to All Players
+                </p>
+            </div>
+        {% endfor %}
+    </div>
+</div>
 
 {% endblock content %}

@@ -36,5 +36,5 @@ urlpatterns = [
     path('register/', views.registerForm, name="register"),
 
     # Profile
-    path('profile/<str:pk>/', views.profile, name="profile"),
+    path('profile/<int:id>/', views.profile, name="profile"),
 ]

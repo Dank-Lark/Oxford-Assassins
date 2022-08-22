@@ -1,5 +1,5 @@
 from django.urls import path
-from . import views
+from games import viewsmanage
 
 # Games URLs:
 #   Games
@@ -7,40 +7,40 @@ from . import views
 
 urlpatterns = [
     # Manage
-    path('',                              views.manage,              name="manage"),
+    path('',                              viewsmanage.manage,              name="manage"),
 
-    path('groups/',                       views.manageXASGroups,     name="manage_groups"),
-    path('groups/<int:id>/',              views.manageXASGroups),
-    path('groups/new/',                   views.newXASGroup,         name="new_group"),
-    path('groups/delete/<int:id>',        views.deleteXASGroup,      name="delete_group"),
+    path('groups/',                       viewsmanage.manageXASGroups,     name="manage_groups"),
+    path('groups/<int:id>/',              viewsmanage.manageXASGroups),
+    path('groups/new/',                   viewsmanage.newXASGroup,         name="new_group"),
+    path('groups/delete/<int:id>',        viewsmanage.deleteXASGroup,      name="delete_group"),
 
-    path('configscripts/',                views.manageConfigScripts, name="manage_configs"),
-    path('configscripts/<int:id>/',       views.manageConfigScripts),
-    path('configscripts/new/',            views.newConfigScript,     name="new_config"),
-    path('configscripts/delete/<int:id>', views.deleteConfigScript,  name="delete_config"),
+    path('configscripts/',                viewsmanage.manageConfigScripts, name="manage_configs"),
+    path('configscripts/<int:id>/',       viewsmanage.manageConfigScripts),
+    path('configscripts/new/',            viewsmanage.newConfigScript,     name="new_config"),
+    path('configscripts/delete/<int:id>', viewsmanage.deleteConfigScript,  name="delete_config"),
 
-    path('eventscripts/',                 views.manageEventScripts,  name="manage_events"),
-    path('eventscripts/<int:id>/',        views.manageEventScripts),
-    path('eventscripts/new/',             views.newEventScript,      name="new_event"),
-    path('eventscripts/delete/<int:id>',  views.deleteEventScript,   name="delete_event"),
+    path('eventscripts/',                 viewsmanage.manageEventScripts,  name="manage_events"),
+    path('eventscripts/<int:id>/',        viewsmanage.manageEventScripts),
+    path('eventscripts/new/',             viewsmanage.newEventScript,      name="new_event"),
+    path('eventscripts/delete/<int:id>',  viewsmanage.deleteEventScript,   name="delete_event"),
 
-    path('gamescripts/',                  views.manageGameScripts,   name="manage_scripts"),
-    path('gamescripts/<int:id>/',         views.manageGameScripts),
-    path('gamescripts/new/',              views.newGameScript,       name="new_script"),
-    path('gamescripts/delete/<int:id>',   views.deleteGameScript,    name="delete_script"),
+    path('gamescripts/',                  viewsmanage.manageGameScripts,   name="manage_scripts"),
+    path('gamescripts/<int:id>/',         viewsmanage.manageGameScripts),
+    path('gamescripts/new/',              viewsmanage.newGameScript,       name="new_script"),
+    path('gamescripts/delete/<int:id>',   viewsmanage.deleteGameScript,    name="delete_script"),
 
-    path('games/',                        views.manageGames,         name="manage_games"),
-    path('games/<int:id>/',               views.manageGames),
-    path('games/new/',                    views.newGame,             name="new_game"),
-    path('games/delete/<int:id>',         views.deleteGame,          name="delete_game"),
+    path('games/',                        viewsmanage.manageGames,         name="manage_games"),
+    path('games/<int:id>/',               viewsmanage.manageGames),
+    path('games/new/',                    viewsmanage.newGame,             name="new_game"),
+    path('games/delete/<int:id>',         viewsmanage.deleteGame,          name="delete_game"),
 
-    path('flags/',                        views.manageFlags,         name="manage_flags"),
-    path('flags/<int:id>/',               views.manageFlags),
-    path('flags/new/',                    views.newFlag,             name="new_flag"),
-    path('flags/delete/<int:id>',         views.deleteFlag,          name="delete_flag"),
+    path('flags/',                        viewsmanage.manageFlags,         name="manage_flags"),
+    path('flags/<int:id>/',               viewsmanage.manageFlags),
+    path('flags/new/',                    viewsmanage.newFlag,             name="new_flag"),
+    path('flags/delete/<int:id>',         viewsmanage.deleteFlag,          name="delete_flag"),
 
-    path('infolore/',                     views.manageInfoLore,      name="manage_infolore"),
-    path('infolore/<int:id>/',            views.manageInfoLore),
-    path('infolore/new/',                 views.newInfoLore,         name="new_infolore"),
-    path('infolore/delete/<int:id>',      views.deleteInfoLore,      name="delete_infolore"),
+    path('infolore/',                     viewsmanage.manageInfoLore,      name="manage_infolore"),
+    path('infolore/<int:id>/',            viewsmanage.manageInfoLore),
+    path('infolore/new/',                 viewsmanage.newInfoLore,         name="new_infolore"),
+    path('infolore/delete/<int:id>',      viewsmanage.deleteInfoLore,      name="delete_infolore"),
 ]
