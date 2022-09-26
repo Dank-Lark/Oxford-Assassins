@@ -1,4 +1,5 @@
 from datetime import MAXYEAR
+from wsgiref.util import request_uri
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.utils import timezone
@@ -476,3 +477,496 @@ def flags(request, id=-1):
     pass
 
 ####################################################################################################
+####################################################################################################
+####################################################################################################
+
+def getUmpireGame():
+    upcoming_games = []
+    for game in Game.objects.filter(published=True):
+        if game.isDuringGame(timezone.now()):
+            return game
+        if timezone.now() < game.game_start:
+            upcoming_games.append(game)
+
+    if not upcoming_games:
+        return None
+
+    return sorted(upcoming_games, key=lambda g: g.game_start)[0]
+
+####################################################################################################
+
+@login_required(login_url='login')
+def umpire(request):
+    game = getUmpireGame()
+    if game is None:
+        return redirect('play')
+
+    if request.user.assassin != game.xas_group.umpire:
+        return redirect('play')
+
+    for player in Player.objects.filter(game=game):
+        player.tryRespawn(timezone.now())
+
+    context = {
+        # TODO context
+    }
+    # TODO umpire.html
+    return render(request, 'games/umpire.html', context)
+
+####################################################################################################
+
+@login_required(login_url='login')
+def umpireReports(request):
+    game = getUmpireGame()
+    if game is None:
+        return redirect('play')
+
+    if request.user.assassin != game.xas_group.umpire:
+        return redirect('play')
+
+    context = {
+        # TODO context
+    }
+    # TODO umpire_reports.html
+    return render(request, 'games/umpire_reports.html', context)
+
+####################################################################################################
+         
+@login_required(login_url='login')
+def umpireDirectReports(request, id=-1):
+    game = getUmpireGame()
+    if game is None:
+        return redirect('play')
+
+    if request.user.assassin != game.xas_group.umpire:
+        return redirect('play')
+
+    if id == -1:
+        context = {
+            # TODO context
+        }
+        # TODO umpire_direct_reports.html
+        return render(request, 'games/umpire_direct_reports.html', context)
+
+    try:
+        report = DirectReport.objects.get(id=id)
+    except:
+        return redirect('umpire_direct_reports')
+
+    if request.method == "POST":
+        form = DirectReportForm(request.POST, instance=report)
+        if form.is_valid():
+            form.save()
+        else:
+            alertErrors(request, form.errors)
+        return redirect('umpire_direct_reports')
+    else:
+        form = DirectReportForm(instance=report)
+        context = {
+            # TODO context
+        }
+        # TODO umpire_form.html
+        return render(request, 'games/umpire_form.html', context)
+
+####################################################################################################
+         
+@login_required(login_url='login')
+def umpireIndirectReports(request, id=-1):
+    game = getUmpireGame()
+    if game is None:
+        return redirect('play')
+
+    if request.user.assassin != game.xas_group.umpire:
+        return redirect('play')
+
+    if id == -1:
+        context = {
+            # TODO context
+        }
+        # TODO umpire_indirect_reports.html
+        return render(request, 'games/umpire_indirect_reports.html', context)
+
+    try:
+        report = IndirectReport.objects.get(id=id)
+    except:
+        return redirect('umpire_indirect_reports')
+        
+    if request.method == "POST":
+        form = IndirectReportForm(request.POST, instance=report)
+        if form.is_valid():
+            form.save()
+        else:
+            alertErrors(request, form.errors)
+        return redirect('umpire_indirect_reports')
+    else:
+        form = IndirectReportForm(instance=report)
+        context = {
+            # TODO context
+        }
+        # TODO umpire_form.html
+        return render(request, 'games/umpire_form.html', context)
+
+####################################################################################################
+         
+@login_required(login_url='login')
+def umpireGeneralReports(request, id=-1):
+    game = getUmpireGame()
+    if game is None:
+        return redirect('play')
+
+    if request.user.assassin != game.xas_group.umpire:
+        return redirect('play')
+
+    if id == -1:
+        context = {
+            # TODO context
+        }
+        # TODO umpire_general_reports.html
+        return render(request, 'games/umpire_general_reports.html', context)
+
+    try:
+        report = GeneralReport.objects.get(id=id)
+    except:
+        return redirect('umpire_general_reports')
+        
+    if request.method == "POST":
+        form = GeneralReportForm(request.POST, instance=report)
+        if form.is_valid():
+            form.save()
+        else:
+            alertErrors(request, form.errors)
+        return redirect('umpire_general_reports')
+    else:
+        form = GeneralReportForm(instance=report)
+        context = {
+            # TODO context
+        }
+        # TODO umpire_form.html
+        return render(request, 'games/umpire_form.html', context)
+
+####################################################################################################
+         
+@login_required(login_url='login')
+def umpirePlayerBonus(request, id=-1):
+    game = getUmpireGame()
+    if game is None:
+        return redirect('play')
+
+    if request.user.assassin != game.xas_group.umpire:
+        return redirect('play')
+
+    if id == -1:
+        context = {
+            # TODO context
+        }
+        # TODO umpire_player_bonus.html
+        return render(request, 'games/umpire_player_bonus.html', context)
+
+    try:
+        bonus = PlayerBonus.objects.get(id=id)
+    except:
+        return redirect('umpire_player_bonus')
+        
+    if request.method == "POST":
+        form = PlayerBonusForm(request.POST, instance=bonus)
+        if form.is_valid():
+            form.save()
+        else:
+            alertErrors(request, form.errors)
+        return redirect('umpire_player_bonus')
+    else:
+        form = PlayerBonusForm(instance=bonus)
+        context = {
+            # TODO context
+        }
+        # TODO umpire_form.html
+        return render(request, 'games/umpire_form.html', context)
+
+####################################################################################################
+         
+@login_required(login_url='login')
+def umpirePlayerBonusNew(request):
+    game = getUmpireGame()
+    if game is None:
+        return redirect('play')
+
+    if request.user.assassin != game.xas_group.umpire:
+        return redirect('play')
+
+    if request.method == "POST":
+        form = PlayerBonusForm(request.POST)
+        if form.is_valid():
+            form.save()
+        else:
+            alertErrors(request, form.errors)
+        return redirect('umpire_player_bonus')
+    else:
+        form = PlayerBonusForm()
+        context = {
+            # TODO context
+        }
+        # TODO umpire_form.html
+        return render(request, 'games/umpire_form.html', context)
+
+####################################################################################################
+         
+@login_required(login_url='login')
+def umpirePlayerBonusDelete(request, id=-1):
+    game = getUmpireGame()
+    if game is None:
+        return redirect('play')
+
+    if request.user.assassin != game.xas_group.umpire:
+        return redirect('play')
+
+    try:
+        bonus = PlayerBonus.objects.get(id=id)
+    except:
+        return redirect('umpire_player_bonus')
+
+    bonus.delete()
+    return redirect('umpire_player_bonus')
+
+####################################################################################################
+         
+@login_required(login_url='login')
+def umpireFlagBonus(request, id=-1):
+    game = getUmpireGame()
+    if game is None:
+        return redirect('play')
+
+    if request.user.assassin != game.xas_group.umpire:
+        return redirect('play')
+
+    if id == -1:
+        context = {
+            # TODO context
+        }
+        # TODO umpire_player_bonus.html
+        return render(request, 'games/umpire_flag_bonus.html', context)
+
+    try:
+        bonus = FlagBonus.objects.get(id=id)
+    except:
+        return redirect('umpire_flag_bonus')
+        
+    if request.method == "POST":
+        form = FlagBonusForm(request.POST, instance=bonus)
+        if form.is_valid():
+            form.save()
+        else:
+            alertErrors(request, form.errors)
+        return redirect('umpire_flag_bonus')
+    else:
+        form = FlagBonusForm(instance=bonus)
+        context = {
+            # TODO context
+        }
+        # TODO umpire_form.html
+        return render(request, 'games/umpire_form.html', context)
+
+####################################################################################################
+         
+@login_required(login_url='login')
+def umpireFlagBonusNew(request):
+    game = getUmpireGame()
+    if game is None:
+        return redirect('play')
+
+    if request.user.assassin != game.xas_group.umpire:
+        return redirect('play')
+
+    if request.method == "POST":
+        form = FlagBonusForm(request.POST)
+        if form.is_valid():
+            form.save()
+        else:
+            alertErrors(request, form.errors)
+        return redirect('umpire_flag_bonus')
+    else:
+        form = FlagBonusForm()
+        context = {
+            # TODO context
+        }
+        # TODO umpire_form.html
+        return render(request, 'games/umpire_form.html', context)
+
+####################################################################################################
+         
+@login_required(login_url='login')
+def umpireFlagBonusDelete(request, id=-1):
+    game = getUmpireGame()
+    if game is None:
+        return redirect('play')
+
+    if request.user.assassin != game.xas_group.umpire:
+        return redirect('play')
+
+    try:
+        bonus = FlagBonus.objects.get(id=id)
+    except:
+        return redirect('umpire_flag_bonus')
+
+    bonus.delete()
+    return redirect('umpire_flag_bonus')
+
+####################################################################################################
+         
+@login_required(login_url='login')
+def umpireBounty(request, id=-1):
+    game = getUmpireGame()
+    if game is None:
+        return redirect('play')
+
+    if request.user.assassin != game.xas_group.umpire:
+        return redirect('play')
+
+    if id == -1:
+        context = {
+            # TODO context
+        }
+        # TODO umpire_bounty.html
+        return render(request, 'games/umpire_bounty.html', context)
+
+    try:
+        bounty = PlayerBounty.objects.get(id=id)
+    except:
+        return redirect('umpire_bounty')
+        
+    if request.method == "POST":
+        form = PlayerBountyForm(request.POST, instance=bounty)
+        if form.is_valid():
+            form.save()
+        else:
+            alertErrors(request, form.errors)
+        return redirect('umpire_bounty')
+    else:
+        form = PlayerBountyForm(instance=bounty)
+        context = {
+            # TODO context
+        }
+        # TODO umpire_form.html
+        return render(request, 'games/umpire_form.html', context)
+
+
+####################################################################################################
+         
+@login_required(login_url='login')
+def umpireBountyNew(request):
+    game = getUmpireGame()
+    if game is None:
+        return redirect('play')
+
+    if request.user.assassin != game.xas_group.umpire:
+        return redirect('play')
+
+    if request.method == "POST":
+        form = PlayerBountyForm(request.POST)
+        if form.is_valid():
+            form.save()
+        else:
+            alertErrors(request, form.errors)
+        return redirect('umpire_bounty')
+    else:
+        form = PlayerBountyForm()
+        context = {
+            # TODO context
+        }
+        # TODO umpire_form.html
+        return render(request, 'games/umpire_form.html', context)
+
+####################################################################################################
+         
+@login_required(login_url='login')
+def umpireBountyDelete(request, id=-1):
+    game = getUmpireGame()
+    if game is None:
+        return redirect('play')
+
+    if request.user.assassin != game.xas_group.umpire:
+        return redirect('play')
+
+    try:
+        bonus = PlayerBounty.objects.get(id=id)
+    except:
+        return redirect('umpire_bounty')
+
+    bonus.delete()
+    return redirect('umpire_bounty')
+
+####################################################################################################
+         
+@login_required(login_url='login')
+def umpirePlayers(request, id=-1):
+    game = getUmpireGame()
+    if game is None:
+        return redirect('play')
+
+    if request.user.assassin != game.xas_group.umpire:
+        return redirect('play')
+
+    if id == -1:
+        context = {
+            # TODO context
+        }
+        # TODO umpire_players.html
+        return render(request, 'games/umpire_players.html', context)
+
+    try:
+        player = Player.objects.get(id=id)
+    except:
+        return redirect('umpire_players')
+
+    if request.method == "POST":
+        form = PlayerForm(request.POST, instance=player)
+        if form.is_valid():
+            form.save()
+        else:
+            alertErrors(request, form.errors)
+        return redirect('umpire_players')
+    else:
+        form = PlayerForm(instance=player)
+        context = {
+            # TODO context
+        }
+        # TODO umpire_form.html
+        return render(request, 'games/umpire_form.html', context)
+ 
+####################################################################################################
+         
+@login_required(login_url='login')
+def umpireFlags(request, id=-1):
+    game = getUmpireGame()
+    if game is None:
+        return redirect('play')
+
+    if request.user.assassin != game.xas_group.umpire:
+        return redirect('play')
+
+    if id == -1:
+        context = {
+            # TODO context
+        }
+        # TODO umpire_flags.html
+        return render(request, 'games/umpire_flags.html', context)
+
+    try:
+        flag = Flag.objects.get(id=id)
+    except:
+        return redirect('umpire_flags')
+
+    if request.method == "POST":
+        form = FlagForm(request.POST, instance=flag)
+        if form.is_valid():
+            form.save()
+        else:
+            alertErrors(request, form.errors)
+        return redirect('umpire_flags')
+    else:
+        form = FlagForm(instance=flag)
+        context = {
+            # TODO context
+        }
+        # TODO umpire_form.html
+        return render(request, 'games/umpire_form.html', context)
+             
